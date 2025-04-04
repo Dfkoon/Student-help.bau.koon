@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="="theme-color" content="#506400">
+    <title>مساعدات الطلابية BAU</title>
+    <!-- روابط الأنماط -->
+    <link rel="stylesheet" href="css/c1.koon.css">
+    <link rel="icon" type="image/png" href="images/koon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- إضافة خط جديد -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* تطبيق الخط الجديد */
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        /* تنسيقات مخصصة للصفحة الرئيسية */
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 5%;
+            background-color: #ffffff87;
+            color: #ee1111;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin: 0;
+        }
+        .logo img {
+            width: 60px;
+            height: 60px;
+        }
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background-color: #d11616;
+            margin: 4px 0;
+        }
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        .nav-links li {
+            margin: 0 1rem;
+        }
+        .nav-links a {
+            color: #000000; /* Black text color */
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s; /* Smooth transition for color change */
+        }
+        .nav-links a:hover {
+            color: #ff0000; /* Red text color on hover */
+        }
+        .nav-links a.active {
+            border-bottom: 4px solid #ff0000; /* Red underline for active link */
+        }
+        @media (max-width: 900px) {
+            .menu-toggle {
+            display: flex;
+            }
+            .nav-links {
+            display: none;
+            flex-direction: column;
+            width: 100%;
+            text-align: center;
+            }
+            .nav-links li {
+            margin: 1rem 0;
+            }
+        }
+
+        /* تنسيقات مخصصة للراديو */
+        .radio-inputs {
+            position: relative;
+            display: flex;
+            border-radius: 0.5rem;
+            background-color: #ce2308;
+            box-sizing: border-box;
+            font-size: 14px;
+            width: 90%;
+            padding: 1rem 1rem 0 1rem;
+        }
+
+        .radio-inputs .radio input {
+            display: none;
+        }
+
+        .radio-inputs .radio .name {
+            display: flex;
+            cursor: pointer;
+            align-items: center;
+            justify-content: center;
+            border-top-left-radius: 0.5rem;
+            border-top-right-radius: 0.5rem;
+            border: none;
+            padding: 0.5rem 0.8rem;
+            color: #000;
+            transition: all 0.15s ease-in-out;
+            position: relative;
+        }
+
+        .radio-inputs .radio input:checked + .name {
+            background-color: #e8e8e8;
+            font-weight: 600;
+        }
+        .radio-inputs .radio input + .name:hover {
+            color: #fff;
+        }
+        .radio-inputs .radio input:checked + .name:hover {
+            color: #1d1d29;
+        }
+
+        .radio-inputs .radio input:checked + .name::after,
+        .radio-inputs .radio input:checked + .name::before {
+            content: "";
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #e2392d;
+            bottom: 0;
+        }
+
+        .radio-inputs .radio input:checked + .name::after {
+            right: -10px;
+            border-bottom-left-radius: 300px;
+            box-shadow: -3px 3px 0px 3px #e8e8e8;
+        }
+        .radio-inputs .radio input:checked + .name::before {
+            left: -10px;
+            border-bottom-right-radius: 300px;
+            box-shadow: 3px 3px 0px 3px #e8e8e8;
+        }
+                /* شريط البحث */
+                .search-bar {
+            text-align: center;
+            margin: 1rem 00;
+        }
+
+        .search-bar input[type="text"] {
+            padding: 0.5rem;
+            width: 300px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        /* تنسيقات الجدول */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            direction: rtl;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #506400;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #50640045;
+            cursor: pointer;
+        }
+
+        /* إخفاء النتائج عند عدم البحث */
+        .hidden {
+            display: none;
+        }
+
+        /* رسالة عدم وجود نتائج */
+        .no-results {
+            text-align: center;
+            margin: 2rem 0;
+            color: #888;
+            font-size: 1.2rem;
+        }
+
+        /* روابط سريعة */
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            padding: 3rem 5%;
+        }
+
+        .main-hero {
+            background: linear-gradient(#eefcfc72, #0a0a0a83),
+                        url('images/22220.jpg') center/cover;
+            padding: 350px 30% 10px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .quick-card {
+            background: #fff;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(147, 143, 143, 0.275);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* قسم الإعلانات المهمة */
+        .announcement-section {
+            background: #f8f9fa;
+            padding: 4rem 5%;
+        }
+        /* التقويم الأكاديمي */
+        .calendar-section {
+            padding: 9rem 1%;
+            background: #fff;
+            margin-top: -9rem; /* تعديل المسافة العلوية */
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .upcoming-events {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+    </style>
+</head>
+<header style="background-color: #ffffff7d; padding: 1rem; color:  flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+    <div class="logo" style="font-size: 1.5rem; font-weight: bold; display: flex; align-items: center;">
+        <img src="images/ookoon.png" alt="شعار الموقع" style="width: 50px; height: auto; vertical-align: middle; margin-right: 10px;">
+    </div>
+</header>
+
+
+</script>
+<nav class="sidebar" style="background-color: rgba(255, 255, 255, 0.234); backdrop-filter: blur(10px); width: 200px; height: 95vh; position: fixed; top: 0; left: -250px; display: flex; flex-direction: column; align-items: center; padding: 1.6rem; box-shadow: 2px 0 5px rgba(31, 1, 1, 0.5); transition: left 0.5s; border-bottom-left-radius: 15px; border-top-right-radius: 15px;">
+    <div class="logo" style="margin-bottom: 2rem;">
+        <img src="images/ookoon.png" alt="شعار الموقع" style="width: 80px; height: auto; border-radius: 50%;">
+    </div>
+    <ul class="nav-links" id="navLinks" style="width: 100%; padding: 0; margin: 0; list-style: none; text-align: center;"></ul>
+    <span style="font-size: 1.2rem; font-weight: bold; background-color: #201e1e80; color: white; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); display: inline-block; margin-bottom: 1rem;">القائمة الصفحات الموقع</span>
+    <ul style="list-style: none; padding: 3px; margin: 0px 0; background-color: #ca5a5a61; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: right;">
+
+    <li style="margin: 0.5rem 0;">
+        <a href="index.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الصفحة الرئيسية</a>
+    </li>
+    <li style="margin: 0.5rem 0;">
+        <a href="mame.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';"> المواد</a>
+    </li>
+    <li style="margin: 0.5rem 0;">
+        <a href="general-news.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">التقويم الاكاديمي</a>
+    </li>
+    <li style="margin: 0.5rem 0;">
+        <a href="ohsc.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';"> الوصف قاعات </a>
+    </li>
+    </ul>
+    <div class="page-sections" style="margin-top: 2rem; text-align: center; width: 100%;"></div>
+    <a href="javascript:void(0)" onclick="toggleMoreTools()" class="dropdown-toggle" style="color: #333; text-decoration: none; font-size: 1rem; transition: color 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+        <div style="text-align: center; width: 100%;">
+            <span style="font-size: 1.2rem; font-weight: bold; background-color: #201e1e80; color: white; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">اقسام الصفحة الرئيسية</span>
+            <ul style="list-style: none; padding: 10px; margin: 10px 0; background-color: #ca5a5a61; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: right;">
+                <li style="margin: 0.5rem 0;">
+                    <a href="#notes-section" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">ملاحظات</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#upcoming-events" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الأحداث القادمة</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#quick-links" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">خدماتنا</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#tree-plans" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الخطط الشجرية</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#electronic-services-section" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">خدمات إلكترونية</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#success-stories" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">قصص النجاح</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#supporters-section" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الداعمين</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#student-work" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الأعمال الطلابية</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#visitor-reviews" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">آراء الزائرين</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#contact-us" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">تواصل معنا</a>
+                </li>
+                <li style="margin: 0.5rem 0;">
+                    <a href="#site-credibility" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">مصداقية الموقع</a>
+                </li>
+            </ul>
+        </div>
+        <i class="fas fa-chevron-down" style="font-size: 1.5rem; color: #333; margin-top: 0.5rem;"></i>
+    </a>
+    <script>
+        function highlightSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                const header = section.querySelector('h2');
+                if (header) {
+                    header.scrollIntoView({ behavior: 'smooth' });
+                    header.style.transition = 'background-color 0.5s ease';
+                    header.style.backgroundColor = 'rgba(255, 0, 0, 0.2)'; // Highlight color
+                    setTimeout(() => {
+                        header.style.backgroundColor = ''; // Reset background color
+                    }, 1500);
+                }
+            }
+        }
+    </script>
+    <!-- زر الرجوع -->
+    <div class="back-arrow" onclick="toggleSidebar()" style="margin-top: auto; cursor: pointer; text-align: center; padding: 10px; background-color: #ca5a5a61; color: white; border-radius: 5px; width: 80%;">
+        <i class="fas fa-arrow-left" style="font-size: 1.5rem;"></i>
+    </div>
+</nav>
+
+<!-- زر القائمة -->
+<div class="menu-toggle" onclick="toggleSidebar()" style="position: fixed; top: 17px; left: 15px; z-index: 1000; cursor: pointer; display: flex; flex-direction: column; gap: 1px;">
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.left = sidebar.style.left === '0px' ? '-250px' : '0px';
+    }
+
+    function toggleMoreTools() {
+        const tools = document.querySelector('.hidden-tools');
+        tools.style.display = tools.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
+
+    <!-- القسم الرئيسي -->
+    <section id="main-hero" class="main-hero">
+        <h2>مرحبًا بك في موقع مساعدات طلابية BAU</h2>
+        <p>هنا تجدون كل ما تحتاجونه من مساعدات دراسية ومواد تعليمية</p>
+        <div class="marquee"></div>
+            </section>
+
+    <div style="display: flex; align-items: center; justify-content: center; padding: 10px; background-color: rgba(158, 153, 153, 0.392); border-radius: 10px; margin: 20px auto; max-width: 80%;">
+        <span style="font-size: 2.2rem; margin-left: 10px; color: #ffffff; font-weight: bold; background-color: rgb(231, 9, 9); padding: 0 5px; border-radius: 5px;">عاجل</span>
+        <marquee behavior="scroll" direction="left" scrollamount="5" loop="infinite" style="font-size: 2.2rem; color: white;">
+            <span style="margin-left: 20px; font-weight: bold;">آخر موعد لتسليم المشاريع: 15 يونيو 2024</span> 
+            <img src="images/ookoon.png" alt="شعار" style="margin-left: 20px; width: 30px; height: 30px;">
+            <span style="font-weight: bold;">بدء ظهور مواعيد السحب والإضافة على بوابات الآن</span>
+        </marquee>
+    </div>
+   
+<!-- قسم الملاحظات -->
+<section class="notes-section" style="margin-top: 2rem; padding: 2rem; background-color: #ffe0e0fc; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #ff0000;">
+    <h2 style="color: #ff0000; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #ff0000; border-radius: 5px;">ملاحظات</h2>
+    <br>
+
+    <p style="color: #333; font-size: 1rem; margin-bottom: 1.5rem;">
+        <strong>موقع متخصص لطلاب كلية الذكاء الاصطناعي وبالأخص طلاب تخصص تحقيقات الجنائية.</strong>
+    </p>
+        <data style="color: #ff0000; font-size: 1.2rem; font-weight: bold;">قريبا سيتم تعاون مع ارشاد التخصصات الكلية واضافة المواد تخصصية لكل تخصصات الكلية </data>
+    </p>
+</section>
+<br>
+<br>
+<div class="gift-box" style="margin: 2rem auto; text-align: center; position: relative;"></div>
+<section id="upcoming-events" class="upcoming-events" style="margin-top: 3rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #1565c0; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">الأحداث القادمة</h2>
+    <br>
+<br>
+    <ul id="eventsList" class="events-list" style="list-style: none; padding: 0; margin: 0 auto; max-width: 800px;"></ul>
+</section>
+
+<style>
+    .upcoming-events h2 {
+        font-size: 2rem;
+        color: #1565c0;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    .events-list li {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background: #ffffff;
+        padding: 1rem;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .events-list li:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .event-date {
+        font-weight: bold;
+        color: #2e7d32;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .event-name {
+        color: #333;
+        font-size: 1rem;
+        text-align: right;
+        flex: 1;
+    }
+
+    @media (max-width: 600px) {
+        .events-list li {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .event-name {
+            margin-left: 0;
+            margin-top: 0.5rem;
+            text-align: left;
+        }
+    }
+</style>
+<br>
+<br>
+<script>
+    const events = [
+        { date: '2025-03-30', name: 'عيد الفطر' },
+        { date: '2025-04-13', name: 'امتحانات منصفية (Mid Term)' },
+        { date: '2025-05-01', name: 'يوم العمال' },
+        { date: '2025-05-15', name: 'آخر موعد للانسحاب من مادة أو أكثر أو من جميع المواد لجميع المراحل الدراسية.' },
+        { date: '2025-06-18', name: 'آخر موعد لتسجيل ساعات رسالة الماجستير (لأول مرة بعد إقرار المشروع وتعيين مشرف).' },
+        { date: '2025-06-18', name: 'فترة التسجيل لمواد الفصل الصيفي 2024/2025 لجميع المراحل الدراسية.' },
+    ];
+
+    const daysOfWeek = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+
+    function updateEvents() {
+        const eventsList = document.getElementById('eventsList');
+        eventsList.innerHTML = '';
+
+        const today = new Date();
+        const upcomingEvents = events
+            .filter(event => new Date(event.date) >= today)
+            .sort((a, b) => new Date(a.date) - new Date(b.date))
+            .slice(0, 10);
+
+        if (upcomingEvents.length === 0) {
+            const noEventsMessage = document.createElement('li');
+            noEventsMessage.textContent = 'لا توجد أحداث قادمة حالياً.';
+            noEventsMessage.style.textAlign = 'center';
+            noEventsMessage.style.color = '#888';
+            noEventsMessage.style.fontSize = '1rem';
+            eventsList.appendChild(noEventsMessage);
+        } else {
+            upcomingEvents.forEach((event, index) => {
+                const li = document.createElement('li');
+                li.style.border = '1px solid #ddd';
+                li.style.borderRadius = '5px';
+                li.style.marginBottom = '10px';
+                li.style.padding = '10px';
+                li.style.backgroundColor = index === 0 ? '#ffe0e0' : '#ffffff'; // Highlight the nearest event
+
+                const eventDate = document.createElement('div');
+                eventDate.className = 'event-date';
+                const date = new Date(event.date);
+                const dayName = daysOfWeek[date.getDay()];
+                eventDate.textContent = `${dayName} - ${date.getDate()} / ${date.getMonth() + 1} / ${date.getFullYear()}`;
+
+                const eventName = document.createElement('div');
+                eventName.className = 'event-name';
+                eventName.textContent = event.name;
+
+                li.appendChild(eventDate);
+                li.appendChild(eventName);
+                eventsList.appendChild(li);
+            });
+        }
+    }
+
+    updateEvents();
+
+    setInterval(() => {
+        updateEvents();
+    }, 24 * 60 * 60 * 1000);
+</script>
+<section id="about-me" class="about-me-section" style="margin-top: 2rem; padding: 2rem; background-color: #ec8d8d6e; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: right; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #ff0000; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">من نحن</h2>
+    <br>
+
+    <p style="color: #ffffff; font-size: 1rem; margin-bottom: 1.5rem;">
+        <strong>أنا حسين، او mr Koon طالب في كلية الذكاء الاصطناعي بجامعة البلقاء التطبيقية، تخصص تخقيقات جنائية الرقمية . أعمل على تقديم المساعدة للطلاب من خلال توفير الموارد التعليمية، شروحات المواد، وأدلة دراسية متخصصة. هدفي هو تسهيل العملية التعليمية ودعم زملائي في تحقيق أهدافهم الأكاديمية.</strong>
+    </p>
+    <p style="color: #e33f3f; font-size: 1rem;">
+        <strong>إذا كنت بحاجة إلى أي مساعدة أو استفسار، لا تتردد في التواصل معي عبر وسائل التواصل الاجتماعي في اسفل الصفحة .</strong>
+    </p>
+</section>
+<br>
+<br>
+<section class="my-work-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">أعمالي</h2>
+    <br>
+    <div class="my-work-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+        <div class="work-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <img src="images/-removebg-preview.png" alt="Telegram Logo" style="width: 50px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">قناة تلجرام</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">تابع قناتي على تلجرام للحصول على شروحات بعض مواد كلية الذكاء الاصطناعي.</p>
+            <a href="https://t.me/introtoai1" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة القناة</a>
+        </div>
+        <div class="work-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <img src="images/ookoon.png" alt="Website Logo" style="width: 50px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">موقعي الثاني</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">استكشف موقعي الثاني للحصول على المزيد من المعلومات. في حال حدوث عطل تقني في هاذا موقع .</p>
+            <a href="https://sites.google.com/view/df-koon" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة الموقع</a>
+        </div>
+        <div class="work-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <img src="images/ookoon.png" alt="Writing Icon" style="width: 50px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">كتاباتي</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">استعرض مقالاتي وكتاباتي حول حب الذات.</p>
+            <a href="https://s.craft.me/UNUi9tzHMcJvpi" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">قراءة المزيد</a>
+        </div>
+    </div>
+</section>
+
+<style>
+    .supporter-card:hover, .work-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<br>
+<br>
+<section class="quick-links" style="position: relative; margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">خدماتنا</h2>
+    
+    
+    
+    <div class="quick-card">
+        <i class="fas fa-book icon"></i>
+        <h3>المواد الدراسية</h3>
+        <p>تنزيل أحدث المواد بصيغة PDF</p>
+        <button class="go-btn" onclick="window.location.href='mame.html'">انتقل</button>
+    </div>
+    <div class="quick-card">
+        <i class="fas fa-question-circle icon"></i>
+        <h3>بنك الأسئلة</h3>
+        <p>أسئلة السنوات السابقة مع الحلول</p>
+        <button class="go-btn" onclick="window.location.href='mame.html'">انتقل</button>
+    </div>
+    <div class="quick-card">
+        <i class="fas fa-chalkboard-teacher icon"></i>
+        <h3>الدروس التعليمية</h3>
+        <p>شروحات مفصلة للمواد الدراسية</p>
+        <button class="go-btn" onclick="window.location.href='https://t.me/introtoai1'">انتقل</button>
+    </div>
+    <div class="quick-card">
+        <i class="fas fa-calendar-alt icon"></i>
+        <h3>التقويم الأكاديمي</h3>
+        <p>مواعيد مهمة وتقويم الأكاديمية</p>
+        <button class="go-btn" onclick="window.location.href='general-news.html'">انتقل</button>
+    </div>
+    <div class="quick-card">
+        <i class="fas fa-chart-line icon"></i>
+        <h3>نظام العلامات</h3>
+        <p>تتبع الأداء الأكاديمي والدرجات</p>
+        <button class="go-btn" onclick="window.location.href='grading-system.html'">انتقل</button>
+    </div>
+    <div class="quick-card">
+        <i class="fas fa-door-open icon"></i>
+        <h3>وصف قاعات</h3>
+        <p>تعرف على تفاصيل القاعات الدراسية والمرافق، بما في ذلك مختبرات الكلية ومواقعها داخل الحرم الجامعي</p>
+        <button class="go-btn" onclick="window.location.href='ohsc.html'">انتقل</button>
+    </div>
+</section>
+
+<style>
+    .quick-links {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-top: 2rem;
+    }
+
+    .quick-card {    
+        background: #fff;
+        border-radius: 15px;
+        padding: 2rem;
+        box-shadow: 0 5px 15px rgba(147, 143, 143, 0.275);
+        transition: transform 0.3s;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .quick-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .icon {
+        font-size: 2rem;
+        color: #506400;
+    }
+
+    .quick-card h3 {
+        margin: 1rem 0;
+        color: #506400;
+    }
+
+    .quick-card p {
+        color: #333;
+    }
+
+    .go-btn {
+        background-color: #506400;
+        color: #fff;
+        padding: 10px 40px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+    .go-btn:hover {
+        background-color: #3a4700;
+    }
+</style>
+<br>
+<br>
+<section id="morning-evening-dhikr" class="morning-evening-dhikr" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">أذكار الصباح والمساء</h2>
+    <br>
+    <div class="dhikr-container" style="text-align: right; line-height: 1.8;">
+        <p style="color: #333; font-size: 1rem; margin-bottom: 1rem;">
+            <strong>أذكار الصباح:</strong> 
+            <br> 
+            - "اللّهُ لا إلهَ إلاّ هُوَ الحَيُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ..." (آية الكرسي).
+            <br>
+            - "أصبحنا وأصبح الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير..."
+            <br>
+            - "اللهم بك أصبحنا وبك أمسينا وبك نحيا وبك نموت وإليك النشور."
+            <br>
+            - "اللهم إني أصبحت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك..."
+            <br>
+            - "اللهم ما أصبح بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك، فلك الحمد ولك الشكر."
+            <br>
+            - "حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم." (سبع مرات)
+            <br>
+            - "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم." (ثلاث مرات)
+            <br>
+            - "رضيت بالله رباً وبالإسلام ديناً وبمحمد صلى الله عليه وسلم نبياً." (ثلاث مرات)
+            <br>
+            - "اللهم إني أسألك العفو والعافية في الدنيا والآخرة..."
+        </p>
+        <p style="color: #333; font-size: 1rem; margin-bottom: 1rem;">
+            <strong>أذكار المساء:</strong> 
+            <br> 
+            - "اللّهُ لا إلهَ إلاّ هُوَ الحَيُّ القَيّومُ لا تَأخُذُهُ سِنَةٌ وَلا نَومٌ..." (آية الكرسي).
+            <br>
+            - "أمسينا وأمسى الملك لله والحمد لله، لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير..."
+            <br>
+            - "اللهم بك أمسينا وبك أصبحنا وبك نحيا وبك نموت وإليك المصير."
+            <br>
+            - "اللهم إني أمسيت أشهدك وأشهد حملة عرشك وملائكتك وجميع خلقك أنك أنت الله لا إله إلا أنت وحدك لا شريك لك..."
+            <br>
+            - "اللهم ما أمسى بي من نعمة أو بأحد من خلقك فمنك وحدك لا شريك لك، فلك الحمد ولك الشكر."
+            <br>
+            - "حسبي الله لا إله إلا هو عليه توكلت وهو رب العرش العظيم." (سبع مرات)
+            <br>
+            - "بسم الله الذي لا يضر مع اسمه شيء في الأرض ولا في السماء وهو السميع العليم." (ثلاث مرات)
+            <br>
+            - "رضيت بالله رباً وبالإسلام ديناً وبمحمد صلى الله عليه وسلم نبياً." (ثلاث مرات)
+            <br>
+            - "اللهم إني أسألك العفو والعافية في الدنيا والآخرة..."
+        </p>
+</section>
+<section id="tree-plans" class="tree-plans" style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #1565c0;">
+    <h2 style="color: #1565c0; margin-bottom: 2.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #1565c0; border-radius: 5px;">الخطط الشجرية</h2>
+    <br>
+    <div class="service-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; justify-content: center;">
+        <div class="service-card" style="border: 2px solid #1565c0; border-radius: 15px; padding: 1.5rem; text-align: center; background-color: #ffffff; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-user-secret" style="font-size: 2rem; color: #1565c0; margin-bottom: 1rem;"></i>
+            <h3 style="margin: 10px 0; font-size: 1.2rem;">
+                <a href="https://drive.google.com/file/d/1xqzsAfWlJ_tWXOjnAB-mhUmcnGasVXKe/view?usp=share_link" style="color: #333; text-decoration: none;">تحقيقات جنائية الرقمية</a>
+            </h3>
+            <p style="color: #666; font-size: 0.9rem;">تعرف على خطة تخصص تحقيقات جنائية الرقمية.</p>
+        </div>
+        <div class="service-card" style="border: 2px solid #1565c0; border-radius: 15px; padding: 1.5rem; text-align: center; background-color: #ffffff; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-shield-alt" style="font-size: 2rem; color: #1565c0; margin-bottom: 1rem;"></i>
+            <h3 style="margin: 10px 0; font-size: 1.2rem;">
+                <a href="https://drive.google.com/file/d/1TyobydDkEZCL4uukuAOkFuXSEtiMt3w4/view?usp=share_link" style="color: #333; text-decoration: none;">أمن معلومات والفضاء الالكتروني</a>
+            </h3>
+            <p style="color: #666; font-size: 0.9rem;">اكتشف خطة تخصص أمن المعلومات والفضاء الإلكتروني.</p>
+        </div>
+        <div class="service-card" style="border: 2px solid #1565c0; border-radius: 15px; padding: 1.5rem; text-align: center; background-color: #ffffff; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-robot" style="font-size: 2rem; color: #1565c0; margin-bottom: 1rem;"></i>
+            <h3 style="margin: 10px 0; font-size: 1.2rem;">
+                <a href="https://drive.google.com/file/d/1TAZkvXoDigJj_Sg29fOBao7E2Vazuj7J/view?usp=share_link" style="color: #333; text-decoration: none;">الذكاء الاصطناعي والروبوتات</a>
+            </h3>
+            <p style="color: #666; font-size: 0.9rem;">تعرف على خطة تخصص الذكاء الاصطناعي والروبوتات.</p>
+        </div>
+        <div class="service-card" style="border: 2px solid #1565c0; border-radius: 15px; padding: 1.5rem; text-align: center; background-color: #ffffff; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-database" style="font-size: 2rem; color: #1565c0; margin-bottom: 1rem;"></i>
+            <h3 style="margin: 10px 0; font-size: 1.2rem;">
+                <a href="https://drive.google.com/file/d/1UiU9eSrbPCqT3G4lIb233D9PYJ5FHYrf/view?usp=share_link" style="color: #333; text-decoration: none;">علم بيانات</a>
+            </h3>
+            <p style="color: #666; font-size: 0.9rem;">اكتشف خطة تخصص علم البيانات.</p>
+        </div>
+        <div class="service-card" style="border: 2px solid #1565c0; border-radius: 15px; padding: 1.5rem; text-align: center; background-color: #ffffff; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <i class="fas fa-vr-cardboard" style="font-size: 2rem; color: #1565c0; margin-bottom: 1rem;"></i>
+            <h3 style="margin: 10px 0; font-size: 1.2rem;">
+                <a href="https://drive.google.com/file/d/1KjgthPcIltpgJU59ChjgPN1dqT7Twc97/view?usp=share_link" style="color: #333; text-decoration: none;">الواقع الافتراضي</a>
+            </h3>
+            <p style="color: #666; font-size: 0.9rem;">تعرف على خطة تخصص الواقع الافتراضي.</p>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<!-- قسم الخدمات الإلكترونية -->
+<section class="electronic-services-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">الخدمات الإلكترونية لجامعة البلقاء التطبيقية</h2>
+    <br>
+    <div class="services-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem;">
+        <div class="service-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <img src="images/جامعة-ل.png" alt="Registration Logo" style="width: 50px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">نظام التسجيل</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">تسجيل المواد الدراسية ومتابعة الجدول الدراسي.</p>
+            <a href="https://live.bau.edu.jo/Reg.aspx" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة النظام</a>
+        </div>
+        <div class="service-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <i class="fas fa-graduation-cap" style="font-size: 2rem; color: #506400; margin-bottom: 1rem;"></i>
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">نظام العلامات</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">عرض العلامات والتقارير الأكاديمية.</p>
+            <a href="https://grades.bau.edu.jo/" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة النظام</a>
+        </div>
+        <div class="service-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <i class="fas fa-book" style="font-size: 2rem; color: #506400; margin-bottom: 1rem;"></i>
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">دليل الطالب</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">كل ما يحتاجه الطالب من معلومات وإرشادات.</p>
+            <a href="https://www.bau.edu.jo/media/dalel2/mobile/index.html" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة الدليل</a>
+        </div>
+        <div class="service-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <img src="images/images-removebg-preview111.png" alt="E-Learning Logo" style="width: 50px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">نظام التعلم الإلكتروني</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">متابعة المحاضرات والمواد الدراسية إلكترونياً.</p>
+            <a href="https://www.bau.edu.jo/elearning.aspx" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة النظام</a>
+        </div>
+        <div class="service-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <i class="fas fa-calculator" style="font-size: 2rem; color: #506400; margin-bottom: 1rem;"></i>
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">حساب المعدل</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">حساب المعدل التراكمي والفصلي بسهولة.</p>
+            <a href="https://app2.bau.edu.jo:7799/courses/index.jsp?param=1" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة النظام</a>
+        </div>
+        <div class="service-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <i class="fas fa-chalkboard-teacher" style="font-size: 2rem; color: #506400; margin-bottom: 1rem;"></i>
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;">تقييم المدرسين</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">تقييم أداء المدرسين وملاحظات الطلاب.</p>
+            <a href="https://app2.bau.edu.jo:7799/eval/Login.jsp" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة النظام</a>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<!-- قسم قصص النجاح -->
+<section id="success-stories" class="success-stories" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #ad1457; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">قصص النجاح</h2>
+    <br>
+    <div class="stories-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; justify-content: center;"></div>
+        <div class="add-story-card" style="background: #ffffff; padding: 2rem; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <h4 style="color: #ad1457; font-size: 1.5rem; margin-bottom: 1rem;">أضف قصتك</h4>
+            <p style="color: #333; font-size: 1rem; margin-bottom: 1.5rem;">شاركنا قصة نجاحك لتكون مصدر إلهام وحافز للطلاب الآخرين.</p>
+            <button style="background-color: #ad1457; color: #fff; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s;" onclick="window.location.href='https://forms.gle/your-form-link';">
+                أضف قصتك الآن
+            </button>
+        </div>
+    </div>
+</section>
+
+<style>
+    .success-stories {
+        background: linear-gradient(135deg, #fce4ec, #f3e5f5);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        margin-top: 3rem;
+        text-align: center;
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .success-stories h2 {
+        font-size: 2rem;
+        color: #ad1457;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    .add-story-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+</style>
+<br>
+<br>
+<!-- قسم الداعمين -->
+<section class="supporters-section" style="margin-top: 4rem; padding: 1.5rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 85%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">الداعمين</h2>
+    <br>
+    <div class="supporters-list" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 1rem;">
+        <div class="supporter-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s, box-shadow 0.3s;">
+            <img src="images/opt.png" alt="Supporter 1 Logo" style="width: 80px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;"> الداعم الأول</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">موقع من داعمين لفكرة موقعنا وهوا احد الاشخاص مساهمين في هاذا العمل القيم وهوا ايضا ممثل ومستشار طلاب الامن السيبراني</p>
+            <a href="https://sites.google.com/view/optesc/home?authuser=0" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة الموقع</a>
+        </div>
+        <div class="supporter-card" style="background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; transition: transform 0.3s;">
+            <img src="images/photo_2024-12-07_13.17.10-removebg-preview.png" alt="Supporter 2 Logo" style="width: 80px; height: auto; margin-bottom: 1rem;">
+            <h3 style="color: #506400; font-size: 1.2rem; margin-bottom: 1rem;"> الداعم الثاني</h3>
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">قناة تلجرام توفر الموارد وشروحات التعليمية للمواد مشتركة بين كلية Ai وكلية IT</p>
+            <a href="https://t.me/+gnyyMS7vffM3Yjg0" style="text-decoration: none; color: #fff; background-color: #506400; padding: 0.5rem 1rem; border-radius: 5px;">زيارة القناة</a>
+        </div>
+    </div>
+</section>
+<br>
+<br>
+<!-- قسم الأعمال الطلابية -->
+<section class="student-work" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">الأعمال الطلابية</h2>
+    <br>
+
+    <p style="color: #333; font-size: 1rem; margin-bottom: 1.5rem;">
+        استعرض هنا بعض من أفضل الأعمال والمشاريع التي قام بها الطلاب في مختلف المجالات الأكاديمية.
+    </p>
+    <div style="background-color: #f1f8e9; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; margin-bottom: 1.5rem;">
+        <p style="color: #333; font-size: 1rem; margin-bottom: 1rem;">
+            كن أول من يقوم بعرض الأعمال التي ساهمت في تقديم المساعدة للطلاب.
+        </p>
+        <button style="background-color: #506400; color: #fff; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; transition: background-color 0.3s;" onclick="window.location.href='https://wa.me/qr/664NU4BEEWI6K1';">
+            أضف عملك الآن
+        </button>
+    </div>
+</section>
+<br>
+<br>
+<!-- قسم آراء الزائرين -->
+<section class="visitor-reviews" style="margin-top: 2rem; padding: 2rem; background-color: #e3f2fd; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #1565c0; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">آراء الزائرين</h2>
+    <br>
+
+    <p style="color: #333; font-size: 1rem; margin-bottom: 1.5rem;">
+        نرحب بآرائكم وملاحظاتكم لتحسين تجربتكم على الموقع. سعيدون بإعطائنا رأيكم بالموقع!
+    </p>
+    <div id="reviewsCarousel" class="reviews-carousel" style="display: flex; overflow-x: auto; gap: 1rem; padding: 1rem; scroll-snap-type: x mandatory;">
+        <div class="review-card" style="flex: 0 0 300px; background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; scroll-snap-align: center;">
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">"الموقع رائع جدًا وساعدني كثيرًا في دراستي. شكرًا لكم!"</p>
+            <h4 style="color: #1565c0; font-size: 1rem;">- أحمد</h4>
+        </div>
+        <div class="review-card" style="flex: 0 0 300px; background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; scroll-snap-align: center;">
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">"موقع مفيد جدًا وسهل الاستخدام. أتمنى لكم المزيد من النجاح."</p>
+            <h4 style="color: #1565c0; font-size: 1rem;">- سارة</h4>
+        </div>
+        <div class="review-card" style="flex: 0 0 300px; background-color: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); text-align: center; scroll-snap-align: center;">
+            <p style="color: #333; font-size: 0.9rem; margin-bottom: 1rem;">"أفضل موقع تعليمي استخدمته حتى الآن. شكرًا على جهودكم."</p>
+            <h4 style="color: #1565c0; font-size: 1rem;">- ليلى</h4>
+        </div>
+    </div>
+    <div style="margin-top: 2rem;"></div>
+        <a href="https://forms.gle/jcE7TxQKGCX2HA3K8" style="text-decoration: none; color: #fff; background-color: #1565c0; padding: 0.5rem 1rem; border-radius: 5px; font-size: 1rem;">إعطائنا رأيك</a>
+    </div>
+</section>
+<br>
+<br>
+<section class="contact-us" style="margin-top: 2rem; padding: 2rem; background-color: #f1f8e9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #33691e; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">تواصل معنا</h2>
+    <br>
+
+    <p style="color: #333; font-size: 1rem; margin-bottom: 1.5rem;">
+        نحن هنا لمساعدتك! إذا كان لديك أي استفسار أو اقتراح، لا تتردد في التواصل معنا عبر وسائل التواصل الاجتماعي أو البريد الإلكتروني.
+    </p>
+    <div class="social-links" style="display: flex; justify-content: center; gap: 1.5rem; margin-top: 1rem;">
+        <a href="https://wa.me/qr/664NU4BEEWI6K1" style="text-decoration: none; color: #fff; background-color: #25d366; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fab fa-whatsapp" style="font-size: 1.5rem;"></i> واتساب
+        </a>
+        <a href="https://t.me/Conan_200" style="text-decoration: none; color: #fff; background-color: #0088cc; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fab fa-telegram" style="font-size: 1.5rem;"></i> تلجرام
+        </a>
+        <a href="mailto:koon.bau.jo.com" style="text-decoration: none; color: #fff; background-color: #d93025; padding: 0.5rem 1rem; border-radius: 5px; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-envelope" style="font-size: 1.5rem;"></i> البريد الإلكتروني
+        </a>
+    </div>
+</section>
+<br>
+<br>
+<section class="site-credibility" style="margin-top: 2rem; padding: 2rem; background-color: #e8f5e9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #2e7d32; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">مصداقية الموقع</h2>
+    <br>
+
+    <p style="color: #333; font-size: 1rem; margin-bottom: 1.5rem;">
+        هذا الموقع تم إنشاؤه بهدف تقديم المساعدة للطلاب وتوفير الموارد التعليمية. نحن نؤكد أن الموقع خالٍ تمامًا من أي محتوى ضار أو محاولات احتيال. جميع الروابط والمعلومات المقدمة تم التحقق منها لضمان سلامة المستخدمين.
+    </p>
+    <p style="color: #333; font-size: 1rem;">
+        إذا واجهت أي مشكلة أو لديك استفسار، لا تتردد في التواصل معنا عبر وسائل التواصل الاجتماعي أو البريد الإلكتروني المدرج في أسفل الصفحة.
+    </p>
+    <i class="fas fa-shield-alt" style="font-size: 3rem; color: #2e7d32; margin-top: 1rem;"></i>
+</section>
+<br>
+<br>
+<!-- قسم مواقع تفيدك -->
+<section class="useful-sites" style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #e3f2fd, #bbdefb); border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #1565c0;">
+    <h2 style="color: #1565c0; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #1565c0; border-radius: 5px;">مواقع تفيدك</h2>
+    <br>
+    <div class="sites-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1.5rem; justify-content: center;">
+        <div class="site-card" style="border: 2px solid #1565c0; border-radius: 10px; padding: 1.5rem; text-align: center; background-color: #ffffff; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);">
+            <span style="font-size: 1.5rem; color: #1565c0; font-weight: bold;">قريباً<span class="dots">...</span></span>
+        </div>
+    </div>
+</section>
+<br>
+<script>
+    const dots = document.querySelector('.dots');
+    let dotCount = 0;
+    setInterval(() => {
+        dotCount = (dotCount + 1) % 4;
+        dots.textContent = '.'.repeat(dotCount);
+    }, 500);
+</script>
+<!-- قسم الإلهام -->
+<section class="inspiration-section" style="margin-top: 2rem; padding: 2rem; background: linear-gradient(135deg, #f3edf4, #ea252563); border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #8e24aa;">
+    <h2 style="color: #aa2424; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #8e24aa; border-radius: 5px;">كلمات ملهمة</h2>
+    <br>
+    <p style="color: #333; font-size: 1.2rem; margin-bottom: 1.5rem;">
+        "النجاح ليس وجهة، بل رحلة مستمرة. استمر في التعلم، واستمر في النمو، واستمر في الإلهام"
+    </p>
+    <p style="color: #333; font-size: 1.2rem; margin-bottom: 1.5rem;">
+        "لا تدع الأمس يستهلك الكثير من اليوم. كل يوم هو فرصة جديدة لبداية جديدة"
+    </p>
+    <p style="color: #333; font-size: 1.2rem; margin-bottom: 1.5rem;">
+        "الإيمان بنفسك هو أول خطوة لتحقيق أحلامك. ثق بقدراتك وامضِ قدماً"
+    </p>
+</section>
+<br>
+<br>
+<!-- قسم الأسئلة الشائعة -->
+<section class="faq-section" style="margin-top: 2rem; padding: 2rem; background-color: #f1f8e9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">الأسئلة الشائعة</h2>
+    <br>
+    <div class="faq-container" style="text-align: right;">
+        <div class="faq-item" style="margin-bottom: 1.5rem;">
+            <h3 class="hover-text" style="color: #333; font-size: 1.2rem; margin-bottom: 0.5rem;">ما هو الهدف من هذا الموقع؟</h3>
+            <p class="hover-text" style="color: #666; font-size: 1rem;">يهدف الموقع إلى تقديم المساعدة للطلاب من خلال توفير الموارد التعليمية، شروحات المواد، وأدلة دراسية متخصصة.</p>
+        </div>
+        <div class="faq-item" style="margin-bottom: 1.5rem;">
+            <h3 class="hover-text" style="color: #333; font-size: 1.2rem; margin-bottom: 0.5rem;">كيف يمكنني التواصل معكم؟</h3>
+            <p class="hover-text" style="color: #666; font-size: 1rem;">يمكنك التواصل معنا عبر وسائل التواصل الاجتماعي أو البريد الإلكتروني المدرج في قسم "تواصل معنا".</p>
+        </div>
+        <div class="faq-item" style="margin-bottom: 1.5rem;">
+            <h3 class="hover-text" style="color: #333; font-size: 1.2rem; margin-bottom: 0.5rem;">هل يمكنني المساهمة في الموقع؟</h3>
+            <p class="hover-text" style="color: #666; font-size: 1rem;">نعم، يمكنك المساهمة من خلال مشاركة قصص النجاح او مساعدتنا في ايجاد ملخصات واسئلة سنوات او شروحات أو إضافة أعمالك الطلابية عبر الروابط المتاحة.</p>
+        </div>
+    </div>
+    <style>
+        .hover-text:hover {
+            color: #ff5722; /* لون مميز عند تمرير الماوس */
+        }
+    </style>
+</section>
+
+<br>
+<br>
+<section class="feedback-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #ff5722; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">هل كان موقعنا مفيدًا؟</h2>
+    <p style="color: #333; font-size: 1.2rem; margin-bottom: 1.5rem;">
+        <br>
+        نود أن نسمع رأيك! هل كان موقعنا مفيدًا لك؟
+        <br>
+        هل رأيتم بأن موقعنا كان مفيدًا وقدرنا نقدم المساعدة المطلوبة أو الحاجة المطلوبة؟
+    </p>
+    <div style="display: flex; justify-content: center; gap: 1rem;">
+        <button id="yesButton" style="background-color: #4caf50; color: #fff; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem;">نعم</button>
+        <button id="noButton" style="background-color: #f44336; color: #fff; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; position: relative;">لا</button>
+    </div>
+    <p id="thankYouMessage" style="color: #4caf50; font-size: 1.2rem; margin-top: 1.5rem; display: none;">شكرًا لزيارتك موقعنا! سعيدين برأيك القيم ❤️😂</p>
+    <script>
+        let noButtonClickCount = 0;
+
+        noButton.addEventListener('mouseover', () => {
+            const randomX = Math.random() * 200 - 100;
+            const randomY = Math.random() * 200 - 100;
+            noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            noButtonClickCount++;
+
+            if (noButtonClickCount >= 5) {
+                if (!document.querySelector('.no-button-alert')) {
+                    const alertMessage = document.createElement('div');
+                    alertMessage.className = 'no-button-alert';
+                    alertMessage.textContent = "أنت تحاول الضغط على الزر 'لا' كثيرًا! هل أنت متأكد من ذلك؟";
+
+                    if (noButtonClickCount >= 8) {
+                        const secondAlertMessage = document.createElement('div');
+                        secondAlertMessage.className = 'no-button-alert';
+                        secondAlertMessage.textContent = "مان مالنا يكفي! مارح تقدر تمسكها 😂";
+                        secondAlertMessage.style.position = 'fixed';
+                        secondAlertMessage.style.bottom = '20px';
+                        secondAlertMessage.style.left = '20px'; /* Changed to left */
+                        secondAlertMessage.style.backgroundColor = '#f44336';
+                        secondAlertMessage.style.color = '#fff';
+                        secondAlertMessage.style.padding = '10px';
+                        secondAlertMessage.style.borderRadius = '5px';
+                        secondAlertMessage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                        document.body.appendChild(secondAlertMessage);
+
+                        setTimeout(() => {
+                            secondAlertMessage.remove();
+                        }, 3000);
+                    }
+                    alertMessage.style.position = 'fixed';
+                    alertMessage.style.bottom = '20px';
+                    alertMessage.style.left = '20px'; /* Changed to left */
+                    alertMessage.style.backgroundColor = '#f44336';
+                    alertMessage.style.color = '#fff';
+                    alertMessage.style.padding = '10px';
+                    alertMessage.style.borderRadius = '5px';
+                    alertMessage.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+                    document.body.appendChild(alertMessage);
+
+                    setTimeout(() => {
+                        alertMessage.remove();
+                    }, 3000);
+                }
+                noButton.style.transform = 'translate(0, 0)'; // Reset position
+                noButtonClickCount = 0; // Reset the counter
+            }
+        });
+    </script>
+</section>
+
+<script>
+    document.getElementById('yesButton').addEventListener('click', () => {
+        document.getElementById('thankYouMessage').style.display = 'block';
+    });
+
+    const noButton = document.getElementById('noButton');
+    noButton.addEventListener('mouseover', () => {
+        const randomX = Math.random() * 200 - 100;
+        const randomY = Math.random() * 200 - 100;
+        noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    });
+</script></div>
+<br>
+
+<div style="text-align: center; margin-top: 2rem;">
+    <img src="images/ookoon.png" alt="شعار الموقع" style="width: 100px; height: auto;">
+    <img src="images/png-transparent-jordan-flag-fingerprint-country-pride-identity-symbol-sign-finger-print-thumbnail-removebg-preview.png" alt="بصمة" style="width: 60px; height: auto; margin-top: 1rem;">
+</div>
+<p style="text-align: center; font-size: 1.5rem; color: #506400; font-weight: bold; font-family: 'Cairo', sans-serif;">DF - KOON</p>
+<br>
+<br>
+
+<br>
+<footer class="main-footer">
+    <div class="footer-content">
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h4>Contact Information</h4>
+            <p>Phone: 0782934685</p>
+            <p>Email: koon.bau.jo.com</p>
+        </div>
+        <!-- Social Media Links -->
+        <div class="social-media">
+            <h4>Social Media</h4>
+            <a href="https://wa.me/qr/664NU4BEEWI6K1"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="telegram-channel">
+            <h4>Telegram Channel for Recorded Lectures</h4>
+            <a href="https://t.me/introtoai1"><i class="fab fa-telegram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .main-footer {
+        background-color: #333;
+        color: #fff;
+        padding: 2rem 5%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .main-footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(40deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        transform: translateX(-50%) skewX(-30deg);
+        animation: moveBackground 5s linear infinite;
+    }
+    @keyframes moveBackground {
+        0% {
+            transform: translateX(-50%) skewX(-30deg);
+        }
+        100% {
+            transform: translateX(50%) skewX(-30deg);
+        }
+    }
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .contact-info, .social-media, .telegram-channel {
+        flex: 1;
+        margin: 1rem;
+    }
+    .contact-info h4, .social-media h4, .telegram-channel h4 {
+        margin-bottom: 1rem;
+        font-size: 0.7rem;
+        color: #506400;
+    }
+    .contact-info p, .social-media a, .telegram-channel a {
+        font-size: 0.7rem;
+        color: #ddd;
+    }
+    .social-media a, .telegram-channel a {
+        margin: 0 0.5rem;
+        transition: color 0.3s;
+    }
+    .social-media a:hover, .telegram-channel a:hover {
+        color: #506400;
+    }
+    .social-media i, .telegram-channel i {
+        font-size: 1.6rem;
+    }
+</style>
+<!-- صندوق الأدوات -->
+<div class="tools-box" style="position: fixed; bottom: 20px; left: 20px; z-index: 1000; background-color: #55555283; color: white; padding: 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); cursor: pointer; text-align: center;">
+    <div style="position: relative;">
+        <!-- زر الإغلاق -->
+        <div class="close-tools" style="position: absolute; top: -10px; right: -10px; background-color: #ffffff; color: #506400; width: 20px; height: 20px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);">
+            &times;
+        </div>
+    </div>
+    <div style="display: flex; flex-direction: column; gap: 10px;">
+        <!-- زر المشاركة -->
+        <div class="share-tool" style="background-color: #ffffff; color: #506400; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer;">
+            <i class="fas fa-share-alt" style="font-size: 1.2rem;"></i> مشاركة
+        </div>
+        <!-- زر أعمال نؤجر عليها -->
+        <div class="reward-tool" style="background-color: #ffffff; color: #506400; padding: 10px; border-radius: 5px; display: flex; align-items: center; justify-content: center; gap: 5px; cursor: pointer;">
+            <i class="fas fa-hands-helping" style="font-size: 1.2rem;"></i> أعمال نؤجر عليها
+        </div>
+    </div>
+</div>
+
+<script>
+    // وظيفة زر المشاركة
+    document.querySelector('.share-tool').addEventListener('click', () => {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            alert('تم نسخ رابط الموقع إلى الحافظة!');
+        }).catch(err => {
+            alert('حدث خطأ أثناء نسخ الرابط.');
+        });
+    });
+
+    // وظيفة زر أعمال نؤجر عليها
+    document.querySelector('.reward-tool').addEventListener('click', () => {
+        const dhikrSection = document.getElementById('morning-evening-dhikr');
+        if (dhikrSection) {
+            dhikrSection.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    // وظيفة زر الإغلاق
+    document.querySelector('.close-tools').addEventListener('click', () => {
+        document.querySelector('.tools-box').style.display = 'none';
+    });
+</script>
+<footer class="footer" style="background-color: #5a555523; text-align: center; padding: 1rem; color: #000000;">
+<p>جميع الحقوق محفوظة &copy; 2025</p>
+</footer>
+
+<!-- ملف البرمجة -->
+<script src="js/script.js"></script>
+</body>
+</html>

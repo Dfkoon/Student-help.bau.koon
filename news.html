@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الأخبار - مساعدات الطلابية BAU</title>
+    <!-- روابط الأنماط -->
+    <link rel="stylesheet" href="css/c1.koon.css">
+    <link rel="icon" type="image/png" href="images/koon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* تنسيقات عامة */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        /* شريط التنقل */
+        nav {
+            background-color: #fdfdfd99;
+            color: white;
+            padding: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 0rem;
+        }
+
+        /* القسم الرئيسي */
+        .main-hero {
+            background: linear-gradient(#b7eeee8e, rgba(0, 0, 0, 0.5)),
+                url("images/hero-bg.jpg") center/cover;
+            padding: 180px 4%;
+            text-align: center;
+            color: #ffffff;
+            margin-top: 14vh; /* تنزيل الصورة تحت خط شريط التنقل */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <!-- شريط التنقل -->
+    <nav>
+        <div class="logo">
+            <img src="images/ookoon.png" alt="شعار الموقع" class="site-logo">
+        </div>
+        <ul class="nav-links">
+            <li><a href="main.html">الصفحة الرئيسية</a></li>
+            <li><a href="mame.html">المواد الدراسية</a></li>
+            <li><a href="news.html">الأخبار</a></li>
+            <li><a href="general-news.html"> تقويم الأكاديمي</a></li>
+            <li><a href="grading-system.html">نظام العلامات</a></li>
+        </ul>
+    </nav>
+
+    <!-- القسم الرئيسي -->
+    <section class="main-hero">
+        <h1>مرحبًا بك في صفحة الأخبار</h1>
+        <p>استعرض أحدث الأخبار والتحديثات.</p>
+    </section>
+    <!-- الروابط السريعة -->
+    <section class="quick-links">
+        <div class="quick-card">
+            <i class="fas fa-newspaper"></i>
+            <h4>أخبار المكرمة</h4>
+            <p>استعرض أحدث الأخبار المتعلقة بالمكرمة.</p>
+            <a href="#scholarship-news" class="btn">اقرأ المزيد</a>
+        </div>
+        <div class="quick-card">
+            <i class="fas fa-bullhorn"></i>
+            <h4>أخبار عامة</h4>
+            <p>تابع الأخبار العامة والتحديثات الجامعية.</p>
+            <a href="#general-news" class="btn">اقرأ المزيد</a>
+        </div>
+    </section>
+
+    <!-- قسم أخبار المكرمة -->
+    <section id="scholarship-news" class="announcement-section">
+        <div class="container">
+            <h3>أخبار المكرمة</h3>
+            <div class="announcement-grid">
+                <div class="announcement-card">
+                    <div class="announcement-content">
+                        <p>
+                            <span class="font-semibold">إعلان هام:</span> تم الإعلان عن منح دراسية جديدة للطلاب المتفوقين.
+                        </p>
+                    </div>
+                </div>
+                <div class="announcement-card">
+                    <div class="announcement-content">
+                        <p>
+                            <span class="font-semibold">نشاط طلابي:</span> دعوة لحضور ورشة عمل حول الذكاء الاصطناعي.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- قسم الأخبار العامة -->
+    <section id="general-news" class="announcement-section">
+        <div class="container">
+            <h3>أخبار عامة</h3>
+            <div class="announcement-grid">
+                <div class="announcement-card">
+                    <div class="announcement-content">
+                        <p>
+                            <span class="font-semibold">إعلان هام:</span> تم تمديد فترة تسجيل المواد حتى يوم الخميس القادم.
+                        </p>
+                    </div>
+                </div>
+                <div class="announcement-card">
+                    <div class="announcement-content">
+                        <p>
+                            <span class="font-semibold">نشاط طلابي:</span> دعوة لحضور ندوة حول ريادة الأعمال.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .quick-links {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .quick-card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            width: 45%;
+            transition: transform 0.3s;
+        }
+
+        .quick-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .quick-card i {
+            font-size: 2rem;
+            color: #ffdd57a5;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-card h4 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quick-card p {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .quick-card .btn {
+            background-color: #ffdd57ab;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .quick-card .btn:hover {
+            background-color: #e6c84f9d;
+        }
+
+        .announcement-section {
+            margin: 2rem 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .announcement-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .announcement-card {
+            background-color: #f5ef7d6c;
+            border-radius: 10px;
+            box-shadow: 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            flex: 1 1 calc(50% - 1rem);
+            transition: transform 0.3s;
+        }
+
+        .announcement-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .announcement-content {
+            color: #555353;
+        }
+
+        .announcement-content .font-semibold {
+            color: #fb0808dc;
+        }
+    </style>
+
+    <!-- تذييل الصفحة -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="contact-info">
+                <h4>معلومات الاتصال</h4>
+                <p>هاتف: 0782934685</p>
+                <p>البريد الإلكتروني: koon.bau.jo.com</p>
+            </div>
+            <div class="social-media">
+                <h4>وسائل التواصل</h4>
+                <a href="https://wa.me/qr/664NU4BEEWI6K1"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <div class="telegram-channel">
+                <h4>قناة تلجرام لمحاضرات مسجلة</h4>
+                <a href="https://t.me/introtoai1"><i class="fab fa-telegram"></i></a>
+            </div>
+        </div>
+    </footer>
+    <style>
+        .main-footer {
+            background-color: #333;
+            color: #fff;
+            padding: 2rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            transform: translateX(-50%) skewX(-30deg);
+            animation: moveBackground 5s linear infinite;
+        }
+
+        @keyframes moveBackground {
+            0% {
+                transform: translateX(-50%) skewX(-30deg);
+            }
+            100% {
+                transform: translateX(50%) skewX(-30deg);
+            }
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .contact-info, .social-media, .telegram-channel {
+            flex: 1;
+            margin: 1rem;
+        }
+
+        .contact-info h4, .social-media h4, .telegram-channel h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #ffdd57;
+        }
+
+        .contact-info p, .social-media a, .telegram-channel a {
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+
+        .social-media a, .telegram-channel a {
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-media a:hover, .telegram-channel a:hover {
+            color: #ffdd57;
+        }
+
+        .social-media i, .telegram-channel i {
+            font-size: 1.5rem;
+        }
+    </style>
+
+<!-- قسم الحقوق -->
+<footer class="footer" style="background-color: #5a555523; text-align: center; padding: 1rem; color: #000000;">
+    <p>جميع الحقوق محفوظة &copy; 2025</p>
+</footer>
+
+<!-- ملف البرمجة -->
+<script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المواد الدراسية   - جامعة البلقاء التطبيقية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <!-- إضافة خط جديد -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* تطبيق الخط الجديد */
+        * {
+            font-family: 'Cairo', sans-serif;
+        }
+        body {
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+
+        /* تنسيقات شريط التنقل */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #506400;
+            padding: 1rem 2rem;
+            color: #fff;
+        }
+        nav .logo img {
+            height: 50px;
+        }
+        nav .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        nav .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background: #fff;
+            margin: 4px 0;
+        }
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav .nav-links li a:hover {
+            text-decoration: underline;
+        }
+        /* تنسيقات مخصصة للصفحة الرئيسية */
+        .main-hero {
+            background: linear-gradient(#eefcfc72, #0a0a0a83),
+                        url('images/22220.jpg') center/cover;
+            padding: 350px 30% 10px;
+            text-align: center;
+            color: #fff;
+        }
+        .main-hero h1 {
+            font-size: rem;
+            margin-bottom: 1rem;
+        }
+        .main-hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        /* تنسيقات عامة */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        /* قسم التقويم الأكاديمي */
+        .calendar-section {
+            padding: 2rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+        /* تنسيق الأحداث التي فات تاريخها */
+        .past-event {
+            color: #b1afaf; /* لون النص للأحداث التي فات تاريخها */
+        }
+        .section-title {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        /* تنسيقات الجدول */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            direction: rtl;
+        }
+        th, td {
+            border: 1px solid #0a8433;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #506400;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        tr:hover {
+            background-color: #7fa67358;
+        }
+        /* تنسيقات قائمة المواد */
+        .course-section {
+            padding: 2rem;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 2rem auto;
+            max-width: 1200px;
+        }
+        .course-section h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 1.5rem;
+        }
+        .course-list {
+            list-style: none;
+            padding: 0;
+        }
+        .course-item {
+            margin-bottom: 1rem;
+            cursor: pointer;
+        }
+        .course-item details {
+            background: #f9f9f9;
+            padding: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .course-item summary {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #506400;
+        }
+        .course-item summary:hover {
+            color: #333;
+        }
+        .course-details ul {
+            list-style: none;
+            padding: 0;
+        }
+        .course-details li {
+            margin-bottom: 0.5rem;
+        }
+        .course-details a {
+            color: #506400;
+            text-decoration: none;
+        }
+        .course-details a:hover {
+            text-decoration: underline;
+        }
+        /* Footer Section */
+        .main-footer {
+            background-color: #333;
+            color: #fff;
+            padding: 2rem 5%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .main-footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+            transform: translateX(-50%) skewX(-30deg);
+            animation: moveBackground 5s linear infinite;
+        }
+        @keyframes moveBackground {
+            0% {
+                transform: translateX(-50%) skewX(-30deg);
+            }
+            100% {
+                transform: translateX(50%) skewX(-30deg);
+            }
+        }
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        .contact-info, .social-media, .telegram-channel {
+            flex: 1;
+            margin: 1rem;
+        }
+        .contact-info h4, .social-media h4, .telegram-channel h4 {
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            color: #506400;
+        }
+        .contact-info p, .social-media a, .telegram-channel a {
+            font-size: 0.9rem;
+            color: #ddd;
+        }
+        .social-media a, .telegram-channel a {
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+        .social-media a:hover, .telegram-channel a:hover {
+            color: #506400;
+        }
+        .social-media i, .telegram-channel i {
+            font-size: 1.5rem;
+        }
+        .footer {
+            background-color: #5a555523;
+            text-align: center;
+            padding: 1rem;
+            color: #000000;
+        }
+    </style>
+</head>
+<body>
+<!-- زر القائمة -->
+<div class="menu-toggle" onclick="toggleSidebar()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; display: flex; flex-direction: column; gap: 5px;">
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 50px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 50px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 50px;"></span>
+</div>
+
+    <header style="background-color: #ffffff7d; padding: 1rem; color:  flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+        <div class="logo" style="font-size: 1.5rem; font-weight: bold; display: flex; align-items: center;">
+            <img src="images/ookoon.png" alt="شعار الموقع" style="width: 50px; height: auto; vertical-align: middle; margin-right: 10px;">
+        </div>
+    </header>
+    
+    
+    </script>
+    <nav class="sidebar" style="background-color: #ffffffb1;  width: 200px; height: 95vh; position: fixed; top: 0; left: -250px; display: flex; flex-direction: column; align-items: center; padding: 1rem; box-shadow: 2px 0 5px rgba(31, 1, 1, 0.5); transition: left 0.3s;">
+        <div class="logo" style="margin-bottom: 2rem;">
+            <img src="images/ookoon.png" alt="شعار الموقع" style="width: 80px; height: auto; border-radius: 50%;">
+        </div>
+        <ul class="nav-links" id="navLinks" style="width: 100%; padding: 0; margin: 0; list-style: none; text-align: center;"></ul>
+        <span style="font-size: 1.2rem; font-weight: bold; background-color: #201e1e80; color: white; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 8px #0000001a; display: inline-block; margin-bottom: 1rem;">القائمة الصفحات الموقع</span>
+        <ul style="list-style: none; padding: 21px; margin: 0px 0; background-color: #ca5a5a61; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: right;">
+    
+        <li style="margin: 0.5rem 0;">
+            <a href="index.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الصفحة الرئيسية</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="mame.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';"> المواد</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="general-news.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">التقويم الاكاديمي</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="ohsc.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';"> الوصف قاعات </a>
+            
+        </li>
+        </ul>
+    <span 
+    style="font-size: 1.2rem; font-weight: bold; background-color: #201e1e80; color: white; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">اقسام الصفحة الرئيسية</span>
+    <ul style="list-style: none; padding: 10px; margin: 10px 0; background-color: #ca5a5a61; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: right;">
+        <li style="margin: 0.5rem 0;">
+            <a href="#mandatory-university-requirements" onclick="scrollToSection('mandatory-university-requirements')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">متطلبات الجامعة الإجبارية</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#optional-university-requirements" onclick="scrollToSection('optional-university-requirements')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">متطلبات الجامعة الاختيارية</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#mandatory-college-requirements" onclick="scrollToSection('mandatory-college-requirements')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">متطلبات الكلية الإجبارية</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#mandatory-specialization-requirements" onclick="scrollToSection('mandatory-specialization-requirements')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">متطلبات التخصص الإجبارية</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#optional-specialization-requirements" onclick="scrollToSection('optional-specialization-requirements')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">متطلبات التخصص الاختيارية</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#supporting-sciences" onclick="scrollToSection('supporting-sciences')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">علوم مساندة</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#labs-list" onclick="scrollToSection('labs-list')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">قائمة المختبرات</a>
+        </li>
+        <li style="margin: 0.5rem 0;">
+            <a href="#remedial-materials" onclick="scrollToSection('remedial-materials')" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">مواد الاستدراكي</a>
+        </li>
+    </ul>
+
+<script>
+    function scrollToSection(id) {
+        const section = document.getElementById(id);
+        if (section) {
+            section.scrollIntoView({ behavior: 'smooth' });
+        }
+    }
+</script>
+    </div>
+    <i class="fas fa-chevron-down" style="font-size: 1.5rem; color: #333; margin-top: 0.5rem;"></i>
+</a>
+        <div class="page-sections" style="margin-top: 2rem; text-align: center; width: 100%;"></div>
+        <a href="javascript:void(0)" onclick="toggleMoreTools()" class="dropdown-toggle" style="color: #fff; text-decoration: none; font-size: 1rem; transition: color 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+            <div style="text-align: center; width: 100%;">
+                <div style="text-align: center; width: 100%;">
+                    </a>
+
+                </div>
+        </div>
+
+        <!-- زر الرجوع -->
+        <div class="back-arrow" onclick="toggleSidebar()" style="margin-top: auto; cursor: pointer; text-align: center; padding: 10px; background-color: #7c7c7cb7; color: white; border-radius: 5px; width: 80%;">
+            <i class="fas fa-arrow-left" style="font-size: 1.5rem;"></i>
+        </div>
+    </nav>
+    
+    <!-- زر القائمة -->
+    <div class="menu-toggle" onclick="toggleSidebar()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; display: flex; flex-direction: column; gap: 5px;">
+        <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+        <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+        <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    </div>
+    
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            sidebar.style.left = sidebar.style.left === '0px' ? '-250px' : '0px';
+        }
+    
+        function toggleMoreTools() {
+            const tools = document.querySelector('.hidden-tools');
+            tools.style.display = tools.style.display === 'block' ? 'none' : 'block';
+        }
+    </script>
+
+    <!-- القسم الرئيسي -->
+    <section class="main-hero">
+        <h1>مرحبًا بك في صفحة المواد الدراسية</h1>
+        <p>استكشف جميع المواد الدراسية ومصادرها المتنوعة.</p>
+    </section>
+<script>
+    // وظيفة لتبديل تفاصيل المواد
+    function toggleDetails(id) {
+        const details = document.getElementById(id);
+        if (details.style.display === "block") {
+            details.style.display = "none";
+        } else {
+            details.style.display = "block";
+        }
+    }
+</script>
+<script>
+    // وظيفة لتبديل قائمة التنقل
+    function toggleMenu() {
+        const navLinks = document.getElementById("navLinks");
+        if (navLinks.style.display === "block") {
+            navLinks.style.display = "none";
+        } else {
+            navLinks.style.display = "block";
+        }
+    }
+    // إضافة حدث عند تحميل الصفحة   
+    window.addEventListener("load", function() {
+        // تفتح القائمة التنقل عندما تحميل الصفحة
+        const navLinks = document.getElementById("navLinks");
+        navLinks.style.display = "block";
+    });
+</script>
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">متطلبات الجامعة الإجبارية</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item">
+            <details>
+                <summary>الابتكار والريادة والإبداع <i class="fas fa-lightbulb"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item">
+            <details>
+                <summary>التربية الوطنية والسلوك الجامعي <i class="fas fa-flag"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item">
+            <details>
+                <summary>لغة إنجليزية تطبيقية (2) <i class="fas fa-language"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item">
+            <details>
+                <summary>لغة إنجليزية تطبيقية (1) <i class="fas fa-language"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item">
+            <details>
+                <summary>لغة عربية تطبيقية <i class="fas fa-pen"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item">
+            <details>
+                <summary>مهارات الحاسوب والتعليم الإلكتروني <i class="fas fa-laptop"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item">
+            <details>
+                <summary>العلوم العسكرية <i class="fas fa-shield-alt"></i></summary>
+                <div class="course-details">
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/file/d/1QVPBcYpK2BIhJMQNOhh1WCKR13MSFqM8/view" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+    </ul>
+</section>
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">متطلبات الجامعة الاختيارية</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('optional-1')">
+            <details>
+                <summary>بيئة والمجتمع <i class="fas fa-leaf"></i></summary>
+                <div id="optional-1" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-2')">
+            <details>
+                <summary>مفاهيم الاقتصادية <i class="fas fa-chart-line"></i></summary>
+                <div id="optional-2" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-3')">
+            <details>
+                <summary>الثقافة الاسلامية <i class="fas fa-mosque"></i></summary>
+                <div id="optional-3" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-4')">
+            <details>
+                <summary>القانون والاعلام والمجتمع <i class="fas fa-balance-scale"></i></summary>
+                <div id="optional-4" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-5')">
+            <details>
+                <summary>مدخل الى علم النفس <i class="fas fa-brain"></i></summary>
+                <div id="optional-5" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-6')">
+            <details>
+            <summary>مهارات الاتصال <i class="fas fa-comments"></i></summary>
+            <div id="optional-6" class="course-details">
+                <br>
+                <ul>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                </ul>
+            </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-7')">
+            <details>
+            <summary>مجتمع رقمي <i class="fas fa-digital-tachograph"></i></summary>
+            <div id="optional-7" class="course-details">
+                <br>
+                <ul>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: red;"></i> ملف المادة (PDF)</a></li>
+                <li><a href="https://forms.gle/SvfTHC4kxDjEJKgz5" target="_blank" style="color: green;"><i class="fas fa-question-circle" style="color: green;"></i> أسئلة السنوات السابقة</a></li>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                </ul>
+            </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-8')">
+            <details>
+                <summary>الزراعة في الاردن <i class="fas fa-seedling"></i></summary>
+                <div id="optional-8" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: red;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1AfsE5seHE0DSoRgGJTMaHoquLZesogbH" target="_blank" style="color: green;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-9')">
+            <details>
+                <summary>الرياضة والصحة للجميع <i class="fas fa-heartbeat"></i></summary>
+                <div id="optional-9" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf" style="color: red;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle" style="color: red;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt" style="color: red;"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+    </ul>
+</section>
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">متطلبات كلية الاجبارية</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('other-1')">
+            <details>
+                <summary>مهارات حاسوب (2) لطلبة الكليات العلمية <i class="fas fa-laptop-code"></i></summary>
+                <div id="other-1" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1Opy4WC6SUWdfA9qEf4h9Xzgs3YCQvJe4" target="_blank" style="color: green;"><i class="fas fa-file-pdf" style="color: green;"></i> كتاب المادة </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1voqW_AtC5KPm1zjpwO47JkFA9wqlKkL1" target="_blank" style="color: green;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1tu8PQlzh5vbjQayPACN5SIq1ja32Y1p-?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle" style="color: green;"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/file/d/1StnIAxAymIOfKH17LR-6lG6YT-tZf2iN/view?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt" style="color: green;"></i> ملخص المادة</a></li>
+                        <li><a href="https://t.me/c/1555428522/712" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher" style="color: green;"></i> شرح المادة / د سوسن ابو طالب </a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('other-2')">
+            <details>
+                <summary>برمجة موجهة للكائنات <i class="fas fa-code"></i></summary>
+                <div id="other-2" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1Uay2WmDQwHihcVCMV7rEahvRmG8DBIuJ" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1C9qyEMNyV-G2t3h9leNhpOZ6fxYhFHl0" target="_blank"><i class="fas fa-book"></i> كتاب المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1892HdMgDbgL-GTasNrI-vcopEipc4cXP" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/16Bwnetoq6FZUC2ZiAV74EnTW3w156L1S?usp=share_link" target="_blank"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://bauniversity-my.sharepoint.com/:f:/g/personal/32209338086_std_bau_edu_jo/Egw2AXltwupBva2jFLCyTR8B5W3dLfNmZUi6ybrwHkU4iA?e=B5r1Sm" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / د هديل الزعبي </a></li>
+                        <li><a href="https://youtu.be/FaaM6uVbuJM?si=2h7p-Z0Yc3QpmB3n" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / م عادل نسيم </a></li>
+                        <li><a href="https://youtu.be/8MJN0Zb71FI?si=F3fsmFDwbIyeu0ad" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / د محمد الريالات </a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('other-3')">
+            <details>
+                <summary>برمجة الذكاء الاصطناعي <i class="fas fa-robot"></i></summary>
+                <div id="other-3" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1lxFJwJyXTUPy2lgvO93t53QC_glU3YbW" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1xYEvDAYZBeFxlWELzD8HNe9m0lPCNSuz" target="_blank"><i class="fas fa-book"></i> كتاب المادة</a></li>
+                        <li><a href="https://drive.google.com/file/d/1GF1fzOAW4R0lx723CJyJoJx22KTBaV83/view?usp=drive_link" target="_blank"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://youtu.be/mvZHDpCHphk?si=HqFUKzJJB4HYe-fV" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / يوتيوب</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('other-4')">
+            <details>
+                <summary>مقدمة الذكاء الاصطناعي <i class="fas fa-brain"></i></summary>
+                <div id="other-4" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1o1Me0_tw2nVdfa43aTila1flq_MM4wIA?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/mobile/folders/10oXYICv1k7BGIg3Rnj5R1mzFY6AVPvhz?usp=share_link&fbclid=PAAaZFPYrpIQeUwntwRtkf60SbIjxNAdpW0eMEZXE1w7HzFHlRYdkMJFnqY3E" target="_blank"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1U1ONkBEwXDDhtHMNVlbrbdxeqbFk4TDE?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://t.me/introtoai1" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / د هديل عزام</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1Vx3qoCclKFdXnfzhv8YI_F6zpmrL6Exz?usp=drive_link" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / د ارياف العدوان</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('other-5')">
+            <details>
+                <summary>مقدمة الى اليونكس <i class="fas fa-terminal"></i></summary>
+                <div id="other-5" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1S2WBx5WAI5B99w2-kUtp70cP5cfMEATk" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1NECKs2_JCk9Y8bnX6AOmgtj5FPTk4nDQ" target="_blank"><i class="fas fa-book"></i> كتاب المادة</a></li>
+                        <li><a href="https://forms.gle/T1Zz1oSt1QsjLKaD8" target="_blank"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1eJGsRoab6E8ywsxviStf1XAhaevsy6_4?usp=drive_link" target="_blank"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1VC2GngiLpvc52IqDdDdf601_NCT5qRdT?usp=share_link" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('other-6')">
+            <details>
+                <summary>التفاضل والتكامل (1) <i class="fas fa-square-root-alt"></i></summary>
+                <div id="other-6" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://youtu.be/kLsRm_ZaKXQ?si=IVA-cRVuVcUbC9nM" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / م عبادة الهباهبة </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1yfO-6OExZmLYrdKKDwHn8yTpxuLQm_Gf?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> اسئلة سنوات </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1hP9FsupfPD0JIMm9fRYWQE8Sbqjk1mcu?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('other-7')">
+            <details>
+                <summary>التفاضل والتكامل (2) <i class="fas fa-square-root-alt"></i></summary>
+                <div id="other-7" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1yNY0w9NhNRVTPvqZOvGeDIW2KG7UuHRp?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> كتاب المادة </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1VfOFUKXbNMTuPV-6it0vQm6iID7B7yHE?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1vy6kH2G-DfVwJlRpqM3pQgVkHB0IyzEL?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://t.me/c/1555428522/2804" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / د عروبة الزعبي</a></li>
+                        <li><a href="https://youtu.be/KFodxcfifhM?si=VAcWMUYMjPgZPlkW" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / م عبادة الهباهبة </a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+    </ul>
+</section>
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">متطلبات تخصص الإجبارية</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('mandatory-1')">
+            <details>
+                <summary>تصميم المنطق الرقمي <i class="fas fa-cogs"></i></summary>
+                <div id="mandatory-1" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://youtu.be/uqTY4v_JTj8?si=Nx3uwrMlg8BE2o8b" target="_blank"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / م مي ابو بقر</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-2')">
+            <details>
+                <summary>شبكات حاسوب(1) <i class="fas fa-network-wired"></i></summary>
+                <div id="mandatory-2" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/14t6DR0kauhB1oAc0jhydahoQDitV13wC" target="_blank" style="color: green;"><i class="fas fa-file-pdf" style="color: green;"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1fhtV6zK4a2BXz1HPpHNT8JEpYsVwCelF" target="_blank" style="color: green;"><i class="fas fa-book"></i> سلايدات المادة سيسكو</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1CB9oiAG0zaq7ic6LCt7gc_zpK5GvRqpF?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-book"></i>   كتاب المادة</a></li>
+                        <li><a href="https://forms.gle/fcDsr16BW1cLccdK6" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة 1</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1ydl1Y05w7K3PLQypV5zXHz8HOUxAJCxT" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i>  اسئلة سنوات السابقة 2</a></li>
+                        <li><a href="https://abdulazizzabin.notion.site/Computer-Networks-1-54d2faba886049d3a9850c00d9c5014f?pvs=4" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة 1</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/17KBjrPv2N-rD7bEaAfGml3CI82xcHXN5?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة 2</a></li>
+                        <li><a href="https://youtu.be/dp5ytKCTjH8?si=znsQF7mZTWjjJz57" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-3')">
+            <details>
+                <summary>امن شبكات <i class="fas fa-lock"></i></summary>
+                <div id="mandatory-3" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1SDCi6mlWuCy4xf4uGxaiY1twzz8P1Oup" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1WBnjJ0u8Q3TpR4XatOmJu7P4AEdp4wfX" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://t.me/introtoai1/33" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-4')">
+            <details>
+                <summary>هياكل بيانات <i class="fas fa-database"></i></summary>
+                <div id="mandatory-4" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1OCPGdIguKltQWZIx7Q20W3BuIb4KFA1T?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> سلايدات المادة / د ارياف </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/12YKFm_YdlxyeXcY4bfWhr_jnHM2BOA10?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> سلايدات المادة / د سليمان </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1cnf_p5PcFQLk3SzK9u0n23RWCl27dlRG?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> سلايدات المادة / د ايناس رمضان</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1BBATpR5nntagfFVBZsgWoU-KmUxu5M19?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i>كتاب مادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/11x3oLn2BE9xYpug4VArNmoSm0X9uqUA9" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1u3_RKDKm5YmQhTU85lREOR3Hg7snWxE4?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://docs.google.com/document/d/1KDZsMxHjXJKD_9XXXHzC1bw68x9VmeJkP6vscXfTOHI/edit?tab=t.0" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-5')">
+            <details>
+                <summary>قواعد بيانات <i class="fas fa-table"></i></summary>
+                <div id="mandatory-5" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-6')">
+            <details>
+                <summary>استعادة بيانات <i class="fas fa-database"></i></summary>
+                <div id="mandatory-6" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-7')">
+            <details>
+                <summary>خصوصية وحماية بيانات <i class="fas fa-user-shield"></i></summary>
+                <div id="mandatory-7" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-8')">
+            <details>
+                <summary>نظم تشغيل للتحقيقات جنائية <i class="fas fa-gavel"></i></summary>
+                <div id="mandatory-8" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://www.youtube.com/watch?v=NzyuxPtrRRM&list=PLxIvc-MGOs6ib0oK1z9C46DeKd9rRcSMY" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-9')">
+            <details>
+                <summary>التهديدات الامنية ومكافحتها /قريبا <i class="fas fa-shield-alt"></i></summary>
+                <div id="mandatory-9" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1aIPVIMhghB01XUS53VrhWcgs4gcBS3Xa" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-10')">
+            <details>
+                <summary>القوانين الوطنية للجرائم الالكترونية <i class="fas fa-balance-scale"></i></summary>
+                <div id="mandatory-10" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-11')">
+            <details>
+                <summary>تحليل وتصميم وخوارزميات <i class="fas fa-code"></i></summary>
+                <div id="mandatory-11" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1xRMkbD-ICSed89myzn42TwAXlu5OHA-0?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1qJucYNbNyvQuYPpCyX_NEtDUbg4x9UT9?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1utjKxGdt0ogR1yney13BSRvSi6t1Hgsy" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/105ZUR0rpaE7bkI9fP9NWPXc6H2C_OAvL?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة ، مادة فاينل</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-12')">
+            <details>
+                <summary>تحقيقات جنائية في الشبكات <i class="fas fa-network-wired"></i></summary>
+                <div id="mandatory-12" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-13')">
+            <details>
+                <summary>مبادئ امن معلومات <i class="fas fa-lock"></i></summary>
+                <div id="mandatory-13" class="course-details">
+                    <br>
+
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/17Kzh4T12Rbsm_Bb5YMFyO8JMFty1ivSF?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> سلايدات مادة </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1zCoRqF_q9dp8NXJ7767-ooUlBsQdK6m3" target="_blank" style="color: green;"><i class="fas fa-file-powerpoint"></i> سلايدات المادة د نادر</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1WTedQ6RAuJohyeECMRphpbZo3u0zdQOD" target="_blank" style="color: green;"><i class="fas fa-book"></i> كتاب المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/mobile/folders/1V_lMBdvS4kLpDpUkEhP3Ta0rb6sFo5Im/1Iqioug1hIKfBJr0xYwHad0Rp-MepW2pb?usp=share_link&fbclid=PAAaYjk9ivG8dRuvzdz8wNGtwXLWZ1qpTVVtnfmFoa2bzvyQlUBePQ0SV3VFc&sort=13&direction=a" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1Byql6sfdfJNZ8uaM5XCuYT983hko7EvH" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-14')">
+            <details>
+                <summary>اساسيات تشفير <i class="fas fa-key"></i></summary>
+                <div id="mandatory-14" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/15JTMSnKVx8bfgpFTqp6Jsw2dHpMEu20x" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/11lZdxdr7SVwfdF-jDVMksqXGkIZNIVKO" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> كتاب مادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1dpCDzo_9DruYkzSpuZpH_qY7qGNxhTAo?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://docs.google.com/document/d/1BE-UDYaBJM_LJqaDBwixwCrKYY_-GeVkXlkDHpgd9WY/edit?tab=t.0" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-15')">
+            <details>
+                <summary>تعلم الاَلة <i class="fas fa-robot"></i></summary>
+                <div id="mandatory-15" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/122kwhRIoPdZ6qUcDbxUBX0T0RiaqEatC" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/166CY0DqNCwP1-LoLXTed45DvUzHVLFI0?fbclid=PAAabiGImFJhEsLjcT-2zotyiJmXHq0zHoCANInSWukjX_gMwIaFYmIRGddy0&sort=13&direction=a" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://docs.google.com/document/d/1M-v4cC0vdDNazHJ2tyABCbaQiZx_Bm2PTG87_T9PeN8/edit?tab=t.0" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-16')">
+            <details>
+                <summary> تحقيقات جنائية في موقع الجريمة <i class="fas fa-lock"></i></summary>
+                <div id="mandatory-16" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1HXHnw0-_iEZ6xnvrbL0rMC0-yJKYkCLo" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أس��لة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-17')">
+            <details>
+                <summary> تحقيقات الاجهزة النقالة  <i class="fas fa-laptop-code"></i></summary>
+                <div id="mandatory-17" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1WwZpLilJY22L40fGWGqeaEZXEut7MFjT" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أس��لة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('mandatory-18')">
+            <details>
+                <summary>التحقيقات الجنائية الرقمية والعدالة الجنائية <i class="fas fa-desktop"></i></summary>
+                <div id="mandatory-18" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <div style="background-color: #f9f9f9; border: 2px solid #506400; border-radius: 10px; padding: 1.5rem; margin: 2rem auto; max-width: 800px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); text-align: center;">
+            <p style="font-size: 1.2rem; color: #506400; font-weight: bold; margin-bottom: 1rem;">
+            ساهم بإعطائنا مواد تخصصك لتكون متوفرة لدينا وتفيد الأجيال القادمة
+            </p>
+            <ul style="list-style: none; padding: 0; margin: 0; color: #333; font-size: 1rem;">
+            <li style="margin-bottom: 0.5rem;">علم البيانات</li>
+            <li style="margin-bottom: 0.5rem;">الأمن السيبراني</li>
+            <li style="margin-bottom: 0.5rem;">الذكاء الاصطناعي والروبوتات</li>
+            <li>الواقع الافتراضي</li>
+            </ul>
+            <br>
+            <div style="background-color: #f5181864; padding: 10px; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                تواصل معنا عبر <a href="https://t.me/Conan_200" target="_blank" style="color: #000; font-weight: bold; text-decoration: underline;">تليجرام</a> أو عبر <a href="https://wa.me/qr/664NU4BEEWI6K1" target="_blank" style="color: #000; font-weight: bold; text-decoration: underline;">واتساب</a> أو من خلال قسم التواصل في الصفحة الرئيسية أو أسفل الصفحة.
+            </div></div>
+        </div>
+
+    </ul>
+
+</section>
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">متطلبات تخصص اختيارية</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('optional-1')">
+            <details>
+                <summary>مدخل الى علم القانون  <i class="fas fa-gavel"></i></summary>
+                <div id="optional-1" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/file/d/1rn8r2aU4mHNB55WAAn9CPxUu8Ma3rh_u/view?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-2')">
+            <details>
+                <summary>جرائم التكنولوجيا المعلومات <i class="fas fa-laptop-code"></i></summary>
+                <div id="optional-2" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://forms.gle/r7xQcAVDiHf4bjFX8" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة سنوات السابقة 1</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> 2 أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-3')">
+            <details>
+                <summary>قانون العقوبات قسم العام  <i class="fas fa-balance-scale"></i></summary>
+                <div id="optional-3" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-4')">
+            <details>
+                <summary>التحقيقات الجنائية لقواعد امن البيانات /قريبا <i class="fas fa-shield-alt"></i></summary>
+                <div id="optional-4" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('optional-5')">
+            <details>
+                <summary>تدقيق الذكاء السيبراني <i class="fas fa-book-open"></i></summary>
+                <div id="optional-5" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1ob3-VOTIenhm1UEl1GLNrfjIMf_GeVzY" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+    </ul>
+</section>
+
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">علوم مساندة</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('support-1')">
+            <details>
+                <summary>هياكل الرياضيات منفصلة <i class="fas fa-calculator"></i></summary>
+                <div id="support-1" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1VaUqvsZSSNHcFe6Ddw-jj_VGSPg8KXxk?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> كتاب المادة </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1wBVvHzNl-lS4dex5hChehaKl-_mObXGu?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة 1</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1H8zgeHP2Eovk6SVEuNOx9d1zMFeWE-ES?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة 2</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/19Bz416a_U1jLhSDNi3up8XPZG6dc6TXi?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('support-2')">
+            <details>
+                <summary>الاحتمالات والاحصاء <i class="fas fa-chart-bar"></i></summary>
+                <div id="support-2" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/file/d/1Anl7NdamDhgjwcSqOYNXWqXYnL3Kzulw/view?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1BhBlUlM4i88LldbMNv7t42oJWZBKej1e?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)سلايدات د اماني</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/10YEFFUXYX92op79Ej4pqQqEaagKTf0lM?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1EqMSIYnnMq03m9ORImQGgL2wKTD6MeZA?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('support-3')">
+            <details>
+                <summary>مبادئ تحليل الوسطي  <i class="fas fa-chart-line"></i></summary>
+                <div id="support-3" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/14lDpxS7NCLKUTj_3Hd1K4ET57y07Vsyr?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1YRByWM3A48hmXgDAiV1Qpy_91G5b_boI?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1uic0oHHMlKsPqghw_Ah92oa-WgXzjUEx?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('support-4')">
+            <details>
+                <summary>مقدمة في نظرية الاعداد <i class="fas fa-sort-numeric-up"></i></summary>
+                <div id="support-4" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1vi8UINqGb_hK0Bf4ta1qPSbrKo5PAVVh?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1rM5PevvVSnOYcLkpkKT2WxuyNvjL-vE6?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-book"></i> كتاب المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1BATlRZyPMpB07So7ylj_zCQ1s2Yb5MDQ?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/15nJGLMuErBA99GpwcwE1yn6klnudbhQt?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://docs.google.com/document/d/1B0zzW1gXq1lrZlr6aidKcz0RHaDJ24n9rBgsrCmPrxI/edit?tab=t.0" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('support-5')">
+            <details>
+                <summary> مبادئ تحليل عددي <i class="fas fa-calculator"></i></summary>
+                <div id="support-5" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://t.me/finalrevision_numerical" target="_blank" style="color: #008000"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+    </ul>
+</section>
+
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">قائمة المختبرات (Lab)</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('lab-1')">
+            <details>
+                <summary>مختبر شبكات حاسوب (1) <i class="fas fa-network-wired"></i></summary>
+                <div id="lab-1" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1k_4bRIL5yHKPVcpi98uKdT-kwOJ6BOh-?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://forms.gle/TvNpy7Qop5HBmr7V6" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1OcBTgp691XU0yNiY9w7d9NAjDWaERSCg?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://t.me/introtoai1/72" target="_blank" style="color: #008000;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-2')">
+            <details>
+                <summary>مختبر امن شبكات <i class="fas fa-lock"></i></summary>
+                <div id="lab-2" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1B9kaXAMi5ixxapTa1Sqd_NhAsAP-eKxp?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1YWRzVp6D-ZK-2E8Th_CUy9aijF8l41dJ" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-3')">
+            <details>
+            <summary>مختبر قواعد بيانات <i class="fas fa-database"></i></summary>
+            <div id="lab-3" class="course-details">
+                <br>
+                <ul>
+                <li><a href="https://drive.google.com/drive/folders/18bbPwWQgMfVg8zZ6axob-HuXUuTXSdxU" target="_blank" style="color: green;"><i class="fas fa-book"></i> كتاب المادة </a></li>
+                <li><a href="https://drive.google.com/drive/folders/18mS6btzgo51BtYaQtyvHF95vCXxJ_m2P?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> سلايدات المادة (PDF)</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1pkiJEQKNeHHNS6w9VThTaP32kYqZ9WDP?usp=sharing" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                <li><a href="https://drive.google.com/drive/folders/1UijgEdexCiMRQ9e0BRimGCmTSoigoHcu?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة كويزات </a></li>
+                <li><a href="https://drive.google.com/drive/folders/1GtVZTtX3ry5ibgBBU4uC8nu_eij1KV2r?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة 1</a></li>
+                <li><a href="https://drive.google.com/file/d/1CyYNIh-X9vaGLgEuYnQRWBe1ewT-3u3w/view?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة 2</a></li>
+                <li><a href="https://t.me/ITLecturesBAU/3150" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</a></li>
+                </ul>
+            </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-4')">
+            <details>
+                <summary>مختبر هياكل بيانات وخوارزميات <i class="fas fa-code"></i></summary>
+                <div id="lab-4" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1C6D_XlMleF8WYNXeWGR35QLb0El8PVwu?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/105ZUR0rpaE7bkI9fP9NWPXc6H2C_OAvL?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i>  شرح المادة / د ارياف، ماده فاينل </a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-5')">
+            <details>
+                <summary>مختبر تعلم الاَلة <i class="fas fa-robot"></i></summary>
+                <div id="lab-5" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/drive/folders/1Wvo1yqfX4VYKl0EnGiSKn_nN_BnkAlJs?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> كتاب المادة </a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1zg0WcFzB3hTs571pFWy2rd00iwQ98N2d" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-6')">
+            <details>
+                <summary>مختبر استعادة بيانات / قريبا <i class="fas fa-database"></i></summary>
+                <div id="lab-6" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-7')">
+            <details>
+                <summary>مختبر تصميم المنطق الرقمي <i class="fas fa-cogs"></i></summary>
+                <div id="lab-7" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="https://drive.google.com/file/d/1CdW3CcT7OBZjmWdfaOJ_d-ZhhwZtW96y/view?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1cb2zh30P568dtMIQ4SzjUHWq8HS6X6Cy?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1iSGs7-tHSlBVd5Al_9bZe4T50btE5290?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                        <li><a href="https://drive.google.com/drive/folders/1DzwvA3iUBvuqvx1-2Q4AFHmikrIM8fIR?usp=drive_link" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i>حلول لاب    </a></li>
+                        <li><a href="https://youtu.be/qPvcSbDOJvs?si=oMoDy5RqI8JLoqSY" target="_blank" style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / م مي ابو بقر </a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('lab-8')">
+            <details>   
+        <summary>مختبر برمجة موجهة للكائنات <i class="fas fa-code"></i></summary>
+        <div id="lab-8" class="course-details">
+            <br>
+            <ul>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / م عادل نسيم </a></li>
+                <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة / د محمد الريالات </a></li>
+            </ul>
+        </div>
+            </details>
+        </li>
+    </ul>
+</section>
+
+<section class="course-section" style="margin-top: 2rem; padding: 2rem; background-color: #f9f9f9; border-radius: 15px; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); max-width: 90%; margin: 2rem auto; text-align: center; position: relative; border: 2px solid #506400;">
+    <h2 style="color: #506400; margin-bottom: 1.5rem; font-size: 2rem; font-weight: bold; position: absolute; top: -15px; right: 15px; background: #ffffff; padding: 0 10px; border: 2px solid #506400; border-radius: 5px;">قسم مواد الاستدراكي</h2>
+    <br>
+    <ul class="course-list">
+        <li class="course-item" onclick="toggleDetails('remedial-lab-1')">
+            <details>
+                <summary>عربي استدراكي <i class="fas fa-pen" style="margin-top: 5px;"></i></summary>
+                <div id="remedial-lab-1" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('remedial-lab-2')">
+            <details>
+                <summary>انجليزي استدراكي <i class="fas fa-language"></i></summary>
+                <div id="remedial-lab-2" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+        <li class="course-item" onclick="toggleDetails('remedial-lab-3')">
+            <details>
+                <summary>حاسوب استدراكي <i class="fas fa-laptop"></i></summary>
+                <div id="remedial-lab-3" class="course-details">
+                    <br>
+                    <ul>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-pdf"></i> ملف المادة (PDF)</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</a></li>
+                        <li><a href="#" target="_blank" style="color: red;"><i class="fas fa-file-alt"></i> ملخص المادة</a></li>
+                    </ul>
+                </div>
+            </details>
+        </li>
+    </ul>
+</section>
+</div>
+</div>
+<script>
+    // وظيفة لتبديل عرض تفاصيل المادة
+    function toggleDetails(id) {
+        const details = document.getElementById(id);
+        if (details.classList.contains('active')) {
+            details.classList.remove('active');
+        } else {
+            details.classList.add('active');
+        }
+    }
+
+    // وظيفة لتبديل عرض تفاصيل المادة
+    function toggleDetails(id) {
+        const details = document.getElementById(id);
+        if (details.classList.contains('active')) {
+            details.classList.remove('active');
+        } else {
+            details.classList.add('active');
+        }
+    }
+
+</script>
+<script>
+    // ملاحظة توضيحية
+    const note = document.createElement('div');
+    note.style.backgroundColor = '#f8d7da';
+    note.style.border = '1px solid #f5c6cb';
+    note.style.padding = '1rem';
+    note.style.margin = '2rem auto';
+    note.style.maxWidth = '1200px';
+    note.style.borderRadius = '5px';
+    note.style.textAlign = 'center';
+    note.style.color = '#721c24';
+    note.style.fontWeight = 'bold';
+    note.innerHTML = `
+        <p>الرموز الحمراء تعني أن المادة لم يتم إضافتها بعد، بينما الرموز الخضراء تعني أن المادة متاحة.</p>
+        <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 1rem;">
+            <li style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</li>
+            <li style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</li>
+            <li style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</li>
+        </ul>
+    `;
+    document.querySelector('.main-hero').insertAdjacentElement('afterend', note);
+</script>
+</html>
+<script>
+    // ملاحظة توضيحية
+    const note = document.createElement('div');
+    note.style.backgroundColor = '#f8d7da';
+    note.style.border = '1px solid #f5c6cb';
+    note.style.padding = '1rem';
+    note.style.margin = '2rem auto';
+    note.style.maxWidth = '1200px';
+    note.style.borderRadius = '5px';
+    note.style.textAlign = 'center';
+    note.style.color = '#721c24';
+    note.style.fontWeight = 'bold';
+    note.innerHTML = `
+        <p>الرموز الحمراء تعني أن المادة لم يتم إضافتها بعد، بينما الرموز الخضراء تعني أن المادة متاحة.</p>
+        <ul style="list-style: none; padding: 0; display: flex; justify-content: center; gap: 1rem;">
+            <li style="color: green;"><i class="fas fa-file-alt"></i> ملخص المادة</li>
+            <li style="color: red;"><i class="fas fa-question-circle"></i> أسئلة السنوات السابقة</li>
+            <li style="color: green;"><i class="fas fa-chalkboard-teacher"></i> شرح المادة</li>
+        </ul>
+    `;
+    document.querySelector('.course-section:last-of-type').appendChild(note);
+</script>
+<section class="course-section volunteer-section">
+    <h2>هل لديك مواد ترغب في التطوع فيها؟</h2>
+    <p>إذا كان لديك ملفات PDF أو ملخصات أو أسئلة سنوات سابقة وترغب في مشاركتها، يرجى ملء النموذج التالي:</p>
+    <div class="form-container"></div>
+        <a href="https://forms.gle/your-form-link" target="_blank" class="btn">ملء النموذج</a>
+    </div>
+</section>
+<style>
+    .btn {
+        display: inline-block;
+        padding: 0.5rem 1rem;
+        background-color: #506400;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s;
+    }
+    .btn:hover {
+        background-color: #333;
+    }
+</style>
+</div>
+</div>
+<div class="note" style="background-color: #f9f9f9; border: 1px solid #506400; border-radius: 10px; padding: 1.5rem; margin: 2rem auto; max-width: 800px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">
+    <p style="text-align: center; font-size: 1.2rem; color: #506400; margin: 0;">
+        نتمنى أن نكون قد قدمنا أكبر قدر من المساعدة، وآملين أن تدعوا لنا ولكم بالمثل.
+    </p>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-content">
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h4>Contact Information</h4>
+            <p>Phone: 0782934685</p>
+            <p>Email: koon.bau.jo.com</p>
+        </div>
+        <!-- Social Media Links -->
+        <div class="social-media">
+            <h4>Social Media</h4>
+            <a href="https://wa.me/qr/664NU4BEEWI6K1"><i class="fab fa-whatsapp"></i></a>
+        </div>
+        <div class="telegram-channel">
+            <h4>Telegram Channel for Recorded Lectures</h4>
+            <a href="https://t.me/introtoai1"><i class="fab fa-telegram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .main-footer {
+        background-color: #333;
+        color: #fff;
+        padding: 2rem 5%;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    .main-footer::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: 200%;
+        height: 100%;
+        background: linear-gradient(40deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+        transform: translateX(-50%) skewX(-30deg);
+        animation: moveBackground 5s linear infinite;
+    }
+    @keyframes moveBackground {
+        0% {
+            transform: translateX(-50%) skewX(-30deg);
+        }
+        100% {
+            transform: translateX(50%) skewX(-30deg);
+        }
+    }
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+    .contact-info, .social-media, .telegram-channel {
+        flex: 1;
+        margin: 1rem;
+    }
+    .contact-info h4, .social-media h4, .telegram-channel h4 {
+        margin-bottom: 1rem;
+        font-size: 0.7rem;
+        color: #506400;
+    }
+    .contact-info p, .social-media a, .telegram-channel a {
+        font-size: 0.7rem;
+        color: #ddd;
+    }
+    .social-media a, .telegram-channel a {
+        margin: 0 0.5rem;
+        transition: color 0.3s;
+    }
+    .social-media a:hover, .telegram-channel a:hover {
+        color: #506400;
+    }
+    .social-media i, .telegram-channel i {
+        font-size: 1.6rem;
+    }
+</style>
+
+<!-- قسم الحقوق -->
+<footer class="footer" style="background-color: #5a555523; text-align: center; padding: 1rem; color: #000000;">
+<p>جميع الحقوق محفوظة &copy; 2025</p>
+</footer>
+
+<!-- ملف البرمجة -->
+<script src="js/script.js"></script>
+</body>
+<!-- filepath: /Users/hussienaldayyat/Desktop/df.koon.wab/mame.html -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المواد الدراسية - جامعة البلقاء التطبيقية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="css/c1.koon.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <style>
+        /* تنسيقات إضافية */
+    </style>
+</head>
+<body>
+
+    <script src="js/script.js"></script>
+    <script>
+        // تطبيق تأثير الحركة باستخدام anime.js
+        document.addEventListener('DOMContentLoaded', () => {
+            anime({
+                targets: '.course-item',
+                translateY: [-50, 0],
+                opacity: [0, 1],
+                delay: anime.stagger(100, { start: 500 }),
+                easing: 'easeOutExpo'
+            });
+        });
+    </script>
+</body>
+</html>

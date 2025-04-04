@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام العلامات - مساعدات الطلابية BAU</title>
+    <!-- روابط الأنماط -->
+    <link rel="stylesheet" href="css/c1.koon.css">
+    <link rel="icon" type="image/png" href="images/koon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- إضافة خط جديد -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* تطبيق الخط الجديد */
+        body {
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* تنسيقات عامة */
+        body {
+            background-color: #f9f9f9;
+        }
+
+        /* تنسيقات شريط التنقل */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #06510680;
+            padding: 0.5rem 2rem;
+            color: #fff;
+        }
+        nav .logo img {
+            height: 40px;
+        }
+        nav .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+        }
+        nav .menu-toggle span {
+            height: 3px;
+            width: 25px;
+            background: #fff;
+            margin: 4px 0;
+        }
+        nav .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+        nav .nav-links li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        nav .nav-links li a:hover {
+            text-decoration: underline;
+        }
+
+        /* القسم الرئيسي */
+        .main-hero {
+            background: linear-gradient(#b7eeee8e, #282a2acc),
+                        url("images/22220.jpg") center/cover;
+            padding: 170px 5%;
+            text-align: center;
+            color: white;
+        }
+
+        /* قائمة المواد */
+        .grading-system-section {
+            padding: 1rem;
+            background-color: hsla(0, 13%, 95%, 0);
+            margin: 2rem auto;
+            border-radius: 5px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .grading-system-section h2 {
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .grading-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        .grading-table th, .grading-table td {
+            border: 1px solid #064934a8;
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .grading-table th {
+            background-color: #06510680;
+            color: #fff;
+        }
+
+        .grading-table tr:hover {
+            background-color: #409c3024;
+        }
+
+        /* وسائل التواصل الاجتماعي */
+        .social-media ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .social-media a {
+            color: #f11010ed;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-media a:hover {
+            color: #007bff;
+        }
+    </style>
+    <script>
+        // تفعيل الوضع الداكن
+        const isDarkMode = localStorage.getItem('darkMode');
+        if (isDarkMode === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // تغيير اللون الخلفي
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+    </script>
+    <!-- إضافة ملفات JavaScript -->
+    <script src="script/jquery-3.6.0.min.js"></script>
+    <script src="script/bootstrap.min.js"></script>
+    <script src="script/fontawesome.js"></script>
+    <script src="script/main.js"></script>
+</head>
+<body>
+<!-- زر القائمة -->
+<div class="menu-toggle" onclick="toggleSidebar()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; display: flex; flex-direction: column; gap: 5px;">
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+</div>
+
+<header style="background-color: #ffffff7d; padding: 1rem; color:  flex; justify-content: space-between; align-items: center; position: fixed; top: 0; width: 100%; z-index: 1000; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);">
+    <div class="logo" style="font-size: 1.5rem; font-weight: bold; display: flex; align-items: center;">
+        <img src="images/ookoon.png" alt="شعار الموقع" style="width: 50px; height: auto; vertical-align: middle; margin-right: 10px;">
+    </div>
+</header>
+
+
+</script>
+<nav class="sidebar" style="background-color: #ffffffb1;  width: 200px; height: 95vh; position: fixed; top: 0; left: -250px; display: flex; flex-direction: column; align-items: center; padding: 1rem; box-shadow: 2px 0 5px rgba(31, 1, 1, 0.5); transition: left 0.3s;">
+    <div class="logo" style="margin-bottom: 2rem;">
+        <img src="images/ookoon.png" alt="شعار الموقع" style="width: 80px; height: auto; border-radius: 50%;">
+    </div>
+    <ul class="nav-links" id="navLinks" style="width: 100%; padding: 0; margin: 0; list-style: none; text-align: center;"></ul>
+    <span style="font-size: 1.2rem; font-weight: bold; background-color: #201e1e80; color: white; padding: 10px 15px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); display: inline-block; margin-bottom: 1rem;">القائمة الصفحات الموقع</span>
+    <ul style="list-style: none; padding: 21px; margin: 0px 0; background-color: #ca5a5a61; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); text-align: right;">
+
+    <li style="margin: 0.5rem 0;">
+        <a href="index.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">الصفحة الرئيسية</a>
+    </li>
+    <li style="margin: 0.5rem 0;">
+        <a href="mame.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';"> المواد</a>
+    </li>
+    <li style="margin: 0.5rem 0;">
+        <a href="general-news.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';">التقويم الاكاديمي</a>
+    </li>
+    <li style="margin: 0.5rem 0;">
+        <a href="ohsc.html" style="color: #333; text-decoration: none; font-size: 1rem; padding: 5px 10px; display: block; border-radius: 5px; transition: background-color 0.3s;" onmouseover="this.style.backgroundColor='#f0f0f0';" onmouseout="this.style.backgroundColor='';"> الوصف قاعات </a>
+    </li>
+    </ul>
+    <div class="page-sections" style="margin-top: 2rem; text-align: center; width: 100%;"></div>
+    <a href="javascript:void(0)" onclick="toggleMoreTools()" class="dropdown-toggle" style="color: #fff; text-decoration: none; font-size: 1rem; transition: color 0.3s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;">
+        <div style="text-align: center; width: 100%;">
+        <span style="font-size: 1.2rem; font-weight: bold; background-color: #4CAF50; color: white; padding: 10px 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); display: inline-block; cursor: pointer; margin-bottom: 1rem; transition: background-color 0.3s;">المزيد من الأدوات</span>   
+        <i class="fas fa-caret-down" style="font-size: 1.2rem; margin-left: 5px; color: #4CAF50; margin-top: 10px; transition: transform 0.3s;"></i>
+        </a>
+        <div class="hidden-tools" style="display: none; margin-top: 1rem; text-align: center; width: 100%; background-color: #ffffff; padding: 1rem; border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <a href="https://www.bau.edu.jo/" target="_blank" class="tool-link" style="display: block; margin: 0.5rem 0; color: #4CAF50; text-decoration: none; font-size: 1rem; font-weight: bold; transition: color 0.3s;">البوابة الالكترونية</a>
+        <a href="https://www.bau.edu.jo/" target="_blank" class="tool-link" style="display: block; margin: 0.5rem 0; color: #4CAF50; text-decoration: none; font-size: 1rem; font-weight: bold; transition: color 0.3s;">الصفحة الرسمية للجامعة</a>
+        </div>
+    </div>
+
+    <!-- زر الرجوع -->
+    <div class="back-arrow" onclick="toggleSidebar()" style="margin-top: auto; cursor: pointer; text-align: center; padding: 10px; background-color: #ca5a5a61; color: white; border-radius: 5px; width: 80%;">
+        <i class="fas fa-arrow-left" style="font-size: 1.5rem;"></i>
+    </div>
+</nav>
+
+<!-- زر القائمة -->
+<div class="menu-toggle" onclick="toggleSidebar()" style="position: fixed; top: 20px; left: 20px; z-index: 1000; cursor: pointer; display: flex; flex-direction: column; gap: 5px;">
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+    <span style="width: 30px; height: 3px; background-color: #000; border-radius: 2px;"></span>
+</div>
+
+<script>
+    function toggleSidebar() {
+        const sidebar = document.querySelector('.sidebar');
+        sidebar.style.left = sidebar.style.left === '0px' ? '-250px' : '0px';
+    }
+
+    function toggleMoreTools() {
+        const tools = document.querySelector('.hidden-tools');
+        tools.style.display = tools.style.display === 'block' ? 'none' : 'block';
+    }
+</script>
+
+    <!-- القسم الرئيسي -->
+    <section class="main-hero">
+        <h1>مرحبًا بك في صفحة نظام العلامات</h1>
+        <p>استكشف أنظمة العلامات المختلفة والمعلومات المتعلقة بها.</p>
+    </section>
+<!-- قسم الإعلانات المهمة -->
+<section class="announcement-section">
+    <h2 class="section-title" style="color: red;">إعلانات هامة</h2>
+    <div class="announcement-grid">
+        <div class="announcement-card urgent">
+            <i class="fas fa-exclamation-circle" style="border: 1px solid black; padding: 0.2rem; border-radius: 50%;"></i>
+            <p>يرجى ملاحظة أن هذه الجداول هي لأغراض توضيحية فقط وقد تختلف التقديرات الفعلية بناءً على سياسات الجامعة.</p>
+        </div>
+        <div class="announcement-card urgent">
+            <i class="fas fa-exclamation-circle" style="border: 1px solid black; padding: 0.2rem; border-radius: 50%;"></i>
+            <p>للحصول على معلومات دقيقة حول نظام العلامات، يرجى الرجوع إلى دليل الطالب أو التواصل مع قبول والتسجيل.</p>
+        </div>
+    </div>
+</section>
+<style>
+    .announcement-card {
+        transition: transform 0.3s;
+    }
+
+    .announcement-card:hover {
+        transform: translateY(-5px);
+    }
+</style>
+<style>
+    .announcement-section {
+        padding: 5rem;
+        background-color: #ffffff00;
+        margin: 0rem auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px #00000000;
+    }
+
+    .section-title {
+        margin-bottom: 1rem;
+        color: #333;
+        text-align: center;
+    }
+
+    .announcement-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .announcement-card {
+        background-color: #f8f9fa;
+        padding: 1rem;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 2px 4px rgba(102, 6, 6, 0.479);
+    }
+
+    .announcement-card.urgent {
+        background-color: #ffdddd;
+    }
+
+    .announcement-card i {
+        font-size: 1.5rem;
+        color: #007bff;
+    }
+
+    .announcement-card.urgent i {
+        color: #ff0000;
+    }
+
+    .announcement-card p {
+        margin: 0;
+        color: #555;
+    }
+</style>
+
+<style>
+    .notes-section {
+        padding: 2rem;
+        background-color: #f1f1f100;
+        margin: 2rem auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .notes-section h2 {
+        margin-bottom: 1rem;
+        color: #333;
+        text-align: center;
+    }
+
+    .note-box {
+        background-color: #fff;
+        padding: 1rem;
+        margin: 1rem 0;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .note-box p {
+        margin: 0;
+        color: #555;
+    }
+</style>
+
+   
+    <!-- نظام العلامات -->
+    <section id="grading-system" class="grading-system-section">
+        
+        <h3 style="text-align: center;">نظام العلامات (<span style="color: red;">الافريج</span>)</h3>
+        <p style="text-align: center;">يوضح الجدول التالي رموز التقديرات وفقًا لنظام الافريج:</p>
+        
+        <table class="grading-table">
+            <thead>
+                <tr>
+                    <th>التقدير (Grade)</th>
+                    <th>العلامة المئوية (Percentage)</th>
+                    <th>النقاط (Points)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td>95-100</td>
+                    <td>4.0</td>
+                </tr>
+                <tr>
+                    <td>-A</td>
+                    <td>88-94</td>
+                    <td>3.75</td>
+                </tr>
+                <tr>
+                    <td>+B</td>
+                    <td>79-87</td>
+                    <td>3.5</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>71-78</td>
+                    <td>3.0</td>
+                </tr>
+                <tr>
+                    <td>-B</td>
+                    <td>67-70</td>
+                    <td>2.75</td>
+                </tr>
+                <tr>
+                    <td>+C</td>
+                    <td>61-66</td>
+                    <td>2.5</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>57-60</td>
+                    <td>2.0</td>
+                </tr>
+                <tr>
+                    <td>-C</td>
+                    <td>53-56</td>
+                    <td>1.75</td>
+                </tr>
+                <tr>
+                    <td>+D</td>
+                    <td>49-52</td>
+                    <td>1.5</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>45-48</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>-D</td>
+                    <td>36-44</td>
+                    <td>0.75</td>
+                </tr>
+                <tr>
+                    <td>F</td>
+                    <td>0-35</td>
+                    <td>0.35</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br><br>
+        <h3 style="text-align: center;">نظام العلامات (<span style="color: red;">السكيل</span>)</h3>
+        <p style="text-align: center;">يوضح الجدول التالي رموز التقديرات وفقًا لنظام السكيل:</p>
+        <table class="grading-table">
+        <table class="grading-table">
+            <thead>
+                <tr>
+                    <th>التقدير (Grade)</th>
+                    <th>العلامة المئوية (Percentage)</th>
+                    <th>النقاط (Points)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>A</td>
+                    <td>90-100</td>
+                    <td>4.0</td>
+                </tr>
+                <tr>
+                    <td>-A</td>
+                    <td>88-89.99</td>
+                    <td>3.75</td>
+                </tr>
+                <tr>
+                    <td>+B</td>
+                    <td>85-87.99</td>
+                    <td>3.5</td>
+                </tr>
+                <tr>
+                    <td>B</td>
+                    <td>80-84.99</td>
+                    <td>3.0</td>
+                </tr>
+                <tr>
+                    <td>-B</td>
+                    <td>78-79.99</td>
+                    <td>2.75</td>
+                </tr>
+                <tr>
+                    <td>+C</td>
+                    <td>74-77.99</td>
+                    <td>2.5</td>
+                </tr>
+                <tr>
+                    <td>C</td>
+                    <td>70-73.99</td>
+                    <td>2.0</td>
+                </tr>
+                <tr>
+                    <td>-C</td>
+                    <td>65-69.99</td>
+                    <td>1.75</td>
+                </tr>
+                <tr>
+                    <td>+D</td>
+                    <td>63-64.99</td>
+                    <td>1.5</td>
+                </tr>
+                <tr>
+                    <td>D</td>
+                    <td>60-62.99</td>
+                    <td>1.0</td>
+                </tr>
+                <tr>
+                    <td>-D</td>
+                    <td>45-59.99</td>
+                    <td>0.75</td>
+                </tr>
+                <tr>
+                    <td>F</td>
+                    <td>0-44.99</td>
+                    <td>0.35</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+   
+<h2 style="text-align: center;">نظام العلامات بالحروف</h2>
+<p style="text-align: center;">يوضح الجدول التالي رموز التقديرات وفقًا لنظام العلامات بالحروف:</p>
+<table class="grading-table" style="margin: 0 auto; width: 90%;">
+    <thead>
+        <tr>
+            <th>التقدير</th>
+            <th>النقاط</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>ممتاز</td>
+            <td>4.0 – 3.65</td>
+        </tr>
+        <tr>
+            <td>جيد جدا</td>
+            <td>3.64 – 3.0</td>
+        </tr>
+        <tr>
+            <td>جيد</td>
+            <td>2.99 – 2.5</td>
+        </tr>
+        <tr>
+            <td>مقبول</td>
+            <td>2.49 – 2.0</td>
+        </tr>
+        <tr>
+            <td>ضعيف</td>
+            <td>دون 2</td>
+        </tr>
+    </tbody>
+</table>
+<br><br>
+<footer class="main-footer">
+    <div class="footer-content">
+       <!-- Contact Information -->
+       <div class="contact-info">
+        <h4>Contact Information</h4>
+        <p>Phone: 0782934685</p>
+        <p>Email: koon.bau.jo.com</p>
+    </div>
+    <!-- Social Media Links -->
+    <div class="social-media">
+        <h4>Social Media</h4>
+        <a href="https://wa.me/qr/664NU4BEEWI6K1"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <div class="telegram-channel">
+        <h4>Telegram Channel for Recorded Lectures</h4>
+        <a href="https://t.me/introtoai1"><i class="fab fa-telegram"></i></a>
+    </div>
+</div>
+</footer>
+
+<style>
+.main-footer {
+    background-color: #333;
+    color: #fff;
+    padding: 2rem 5%;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.main-footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 200%;
+    height: 100%;
+    background: linear-gradient(40deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+    transform: translateX(-50%) skewX(-30deg);
+    animation: moveBackground 5s linear infinite;
+}
+@keyframes moveBackground {
+    0% {
+        transform: translateX(-50%) skewX(-30deg);
+    }
+    100% {
+        transform: translateX(50%) skewX(-30deg);
+    }
+}
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.contact-info, .social-media, .telegram-channel {
+    flex: 1;
+    margin: 1rem;
+}
+.contact-info h4, .social-media h4, .telegram-channel h4 {
+    margin-bottom: 1rem;
+    font-size: 0.7rem;
+    color: #506400;
+}
+.contact-info p, .social-media a, .telegram-channel a {
+    font-size: 0.7rem;
+    color: #ddd;
+}
+.social-media a, .telegram-channel a {
+    margin: 0 0.5rem;
+    transition: color 0.3s;
+}
+.social-media a:hover, .telegram-channel a:hover {
+    color: #506400;
+}
+.social-media i, .telegram-channel i {
+    font-size: 1.6rem;
+}
+</style>
+
+<!-- قسم الحقوق -->
+<footer class="footer" style="background-color: #5a555523; text-align: center; padding: 1rem; color: #000000;">
+    <p>جميع الحقوق محفوظة &copy; 2025</p>
+    </footer>
+    
+    <!-- ملف البرمجة -->
+    <script src="js/script.js"></script>
+    </body>
+    </html>
