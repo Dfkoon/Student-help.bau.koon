@@ -1,0 +1,263 @@
+/* متغيرات CSS */
+:root {
+    --primary-color: #c0daa9;
+    --secondary-color: #34495e;
+    --background-color: #f1f0f0;
+    --text-color: #2c3e50;
+    --hover-color: #a21505;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* التنسيقات العامة */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    direction: rtl;
+}
+
+body {
+    font-family: 'Cairo', sans-serif;
+    line-height: 1.6;
+    padding-top: 70px;
+    background: var(--background-color);
+    color: var(--text-color);
+}
+
+/* شريط التنقل */
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 5%;
+    background: var(--primary-color);
+    box-shadow: 0 2px 10px var(--shadow-color);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo h1 {
+    color: var(--text-color);
+    font-size: 1.8rem;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--secondary-color);
+    font-weight: 500;
+    transition: color 0.3s;
+    padding: 0.5rem 1rem;
+}
+
+.nav-links a:hover {
+    color: var(--hover-color);
+}
+
+/* القسم الرئيسي */
+.hero {
+    background: #f5f6f6ba;
+    padding: 120px 5% 60px;
+    text-align: center;
+}
+
+.hero-content {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.hero-content h2 {
+    margin-bottom: 1rem;
+    color: var(--text-color);
+}
+
+.hero-content p {
+    margin-bottom: 2rem;
+    color: var(--secondary-color);
+}
+
+.hero-content button {
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 12px 30px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+.hero-content button:hover {
+    background: var(--hover-color);
+    color: white;
+    transform: translateY(-2px);
+}
+
+/* قسم الخدمات */
+.services {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 4rem 5%;
+    background: var(--primary-color);
+}
+
+.service-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px var(--shadow-color);
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px var(--shadow-color);
+}
+
+.service-card h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.service-card p {
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+}
+
+.go-btn {
+    background: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    padding: 10px 25px;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: bold;
+}
+
+.go-btn:hover {
+    background: var(--hover-color);
+    color: white;
+    transform: scale(1.05);
+}
+
+/* قسم الأخبار */
+.news-section {
+    padding: 4rem 5%;
+    background: var(--primary-color);
+}
+
+.news-section h2 {
+    text-align: center;
+    color: var(--text-color);
+    margin-bottom: 2rem;
+}
+
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.news-card {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 3px 10px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.news-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px var(--shadow-color);
+}
+
+.news-card h3 {
+    color: var(--text-color);
+    margin-bottom: 1rem;
+}
+
+.news-card p {
+    color: var(--secondary-color);
+    margin-bottom: 1rem;
+}
+
+.news-card a {
+    color: var(--hover-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.news-card a:hover {
+    color: var(--primary-color);
+}
+
+/* قائمة الجوال */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+/* استجابة للشاشات الصغيرة */
+@media (max-width: 768px) {
+    .nav-links {
+        position: fixed;
+        right: -100%;
+        top: 70px;
+        flex-direction: column;
+        background: white;
+        width: 100%;
+        text-align: center;
+        transition: 0.3s;
+        padding: 2rem 0;
+        box-shadow: 0 5px 10px var(--shadow-color);
+    }
+
+    .nav-links.active {
+        right: 0;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+    
+    .menu-toggle.active span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+    
+    .menu-toggle.active span:nth-child(2) {
+        opacity: 0;
+    }
+    
+    .menu-toggle.active span:nth-child(3) {
+        transform: rotate(-45deg) translate(7px, -6px);
+    }
+
+    .hero-content {
+        padding: 0 1rem;
+    }
+
+    .services, .news-grid {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+    }
+}
