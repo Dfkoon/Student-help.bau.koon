@@ -619,7 +619,7 @@
                     { name: "فاطمة حسن", description: "المدبرة (45 عاماً) - تعمل في المنزل 10 سنوات، تعرف جميع تحركات العائلة" },
                     { name: "الدكتور عماد نصار", description: "زميل (50 عاماً) - منافس أكاديمي، كان يريد قطعة أثرية نادرة من مجموعة العلواني" }
                 ],
-                solution: " احمد الخولي"
+                solution: " أحمد الخولي"
             },
             {
                 title: "اختفاء الوديعة",
@@ -859,12 +859,28 @@
         }
 
         // فحص الحل
+        function normalizeArabic(text) {
+            return text
+                .replace(/[إأآا]/g, 'ا')
+                .replace(/[ى]/g, 'ي')
+                .replace(/[ة]/g, 'ه')
+                .replace(/[ؤئ]/g, 'ء')
+                .replace(/[ًٌٍَُِّْ]/g, '') // حذف الحركات
+                .replace(/\s+/g, '') // حذف المسافات
+                .replace(/-/g, '') // حذف شرطة الوصل
+                .replace(/'/g, '') // حذف علامات اقتباس
+                .replace(/ـ/g, '') // حذف المد
+                .toLowerCase();
+        }
+
         function checkSolution() {
             const userAnswer = document.getElementById('solutionInput').value.trim();
             const correctAnswer = cases[currentCase].solution;
+            const normUser = normalizeArabic(userAnswer);
+            const normCorrect = normalizeArabic(correctAnswer);
             const resultDiv = document.getElementById('resultMessage');
-            if (userAnswer.includes(correctAnswer) || correctAnswer.includes(userAnswer)) {
-                let countdown = 20;
+            if (normUser && normCorrect && (normUser.includes(normCorrect) || normCorrect.includes(normUser))) {
+                let countdown = 30; // 30 ثانية للعد التنازلي
                 resultDiv.innerHTML = `
                     <div class="result-correct">
                         🎉 إجابة صحيحة! أحسنت التحليل!
