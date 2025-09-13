@@ -1,1123 +1,134 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
+
 <head>
-    <!-- إضافة مكتبة Firebase في رأس الصفحة -->
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>اكاديمية المحقق كونان - منصة التحقيق التفاعلية</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0a0a23, #1a1a3a, #2d2d5f);
-            min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-            color: #fff;
-        }
-
-        /* شبكة العنكبوت المتحركة */
-        .spider-web {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        .web-line {
-            position: absolute;
-            background: linear-gradient(90deg, transparent, rgba(64, 224, 208, 0.3), transparent);
-            animation: webPulse 4s ease-in-out infinite;
-        }
-
-        @keyframes webPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
-        }
-
-        /* توهج في الخلفية */
-        .glow-orb {
-            position: fixed;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(64, 224, 208, 0.2), transparent);
-            animation: float 6s ease-in-out infinite;
-            pointer-events: none;
-            z-index: 1;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-
-        .container {
-            position: relative;
-            z-index: 10;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-
-        /* الرأس */
-        .header {
-            text-align: center;
-            margin-bottom: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Safari support */
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid rgba(64, 224, 208, 0.3);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-        }
-
-        .header h1 {
-            font-size: 3rem;
-            background: linear-gradient(45deg, #40e0d0, #87ceeb);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(64, 224, 208, 0.5);
-            margin-bottom: 10px;
-        }
-
-        .header p {
-            font-size: 1.2rem;
-            color: #b0c4de;
-            margin-bottom: 20px;
-        }
-
-        /* شريط التقدم */
-        .progress-section {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(64, 224, 208, 0.3);
-        }
-
-        .progress-bar {
-            background: #333;
-            height: 20px;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 10px;
-        }
-
-        .progress-fill {
-            background: linear-gradient(90deg, #40e0d0, #87ceeb);
-            height: 100%;
-            transition: width 0.5s ease;
-            border-radius: 10px;
-        }
-
-        /* شارات الإنجاز */
-        .badges {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin: 20px 0;
-            flex-wrap: wrap;
-        }
-
-        .badge {
-            background: linear-gradient(45deg, #ffd700, #ffed4e);
-            color: #333;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
-            transform: scale(0.9);
-            opacity: 0.5;
-            transition: all 0.3s ease;
-        }
-
-        .badge.earned {
-            transform: scale(1);
-            opacity: 1;
-            animation: badgeGlow 2s ease-in-out infinite alternate;
-        }
-
-        @keyframes badgeGlow {
-            0% { box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3); }
-            100% { box-shadow: 0 5px 25px rgba(255, 215, 0, 0.6); }
-        }
-
-        /* أزرار المستويات */
-        .levels {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .level-btn {
-            background: linear-gradient(135deg, rgba(64, 224, 208, 0.2), rgba(135, 206, 235, 0.2));
-            border: 2px solid rgba(64, 224, 208, 0.5);
-            color: #fff;
-            padding: 15px 20px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 1rem;
-            font-weight: bold;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .level-btn:hover {
-            background: linear-gradient(135deg, rgba(64, 224, 208, 0.4), rgba(135, 206, 235, 0.4));
-            border-color: #40e0d0;
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(64, 224, 208, 0.3);
-        }
-
-        .level-btn:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s;
-        }
-
-        .level-btn:hover:before {
-            left: 100%;
-        }
-
-        /* منطقة القضية */
-        .case-area {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px); /* Safari support */
-            border-radius: 20px;
-            padding: 30px;
-            border: 2px solid rgba(64, 224, 208, 0.3);
-            display: none;
-            margin-bottom: 20px;
-        }
-
-        .case-title {
-            font-size: 2rem;
-            color: #40e0d0;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .case-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        .case-description,
-        .suspects-list {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid rgba(64, 224, 208, 0.2);
-        }
-
-        .evidence-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin: 20px 0;
-        }
-
-        .evidence-item {
-            background: rgba(64, 224, 208, 0.1);
-            border: 1px solid rgba(64, 224, 208, 0.3);
-            padding: 10px;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .evidence-item:hover {
-            background: rgba(64, 224, 208, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .evidence-item.important {
-            border-color: #ffd700;
-            background: rgba(255, 215, 0, 0.1);
-        }
-
-        .suspect {
-            background: rgba(255, 69, 0, 0.1);
-            border: 1px solid rgba(255, 69, 0, 0.3);
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-
-        .suspect h4 {
-            color: #ff6347;
-            margin-bottom: 8px;
-        }
-
-        /* منطقة الحل */
-        .solution-area {
-            background: rgba(0, 0, 0, 0.4);
-            padding: 20px;
-            border-radius: 15px;
-            border: 2px solid rgba(64, 224, 208, 0.3);
-            text-align: center;
-            display: none;
-            margin-top: 20px;
-        }
-
-        .solution-input {
-            width: 80%;
-            max-width: 400px;
-            padding: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 2px solid rgba(64, 224, 208, 0.5);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 1.1rem;
-            margin-bottom: 15px;
-        }
-
-        .submit-btn {
-            background: linear-gradient(45deg, #32cd32, #00ff00);
-            border: none;
-            color: #000;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .submit-btn:hover {
-            background: linear-gradient(45deg, #00ff00, #32cd32);
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(50, 205, 50, 0.4);
-        }
-
-        /* نموذج الشهادة */
-        .certificate-form {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 30px;
-            border-radius: 20px;
-            border: 2px solid #ffd700;
-            display: none;
-            margin-top: 20px;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #ffd700;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid #ffd700;
-            border-radius: 8px;
-            color: #fff;
-        }
-
-        .result-message {
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 15px;
-            font-weight: bold;
-            text-align: center;
-        }
-
-        .result-correct {
-            background: rgba(50, 205, 50, 0.2);
-            border: 2px solid #32cd32;
-            color: #32cd32;
-        }
-
-        .result-wrong {
-            background: rgba(255, 69, 0, 0.2);
-            border: 2px solid #ff4500;
-            color: #ff6347;
-        }
-
-        .site-footer {
-            width: 100%;
-            background: linear-gradient(90deg, #0a0a23, #1a1a3a);
-            color: #ffd700;
-            text-align: center;
-            padding: 18px 0 10px 0;
-            font-size: 1.1rem;
-            position: sticky;
-            left: 0;
-            bottom: 0;
-            z-index: 100;
-            letter-spacing: 1px;
-            margin-top: 40px;
-        }
-
-        .footer-content {
-            opacity: 0.8;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 7px;
-            }
-            .header {
-                padding: 12px;
-                font-size: 1.1rem;
-            }
-            .header h1 {
-                font-size: 1.5rem;
-            }
-            .header p {
-                font-size: 1rem;
-            }
-            .progress-section {
-                padding: 10px;
-                font-size: 0.95rem;
-            }
-            .badges {
-                gap: 7px;
-                margin: 10px 0;
-            }
-            .badge {
-                padding: 5px 10px;
-                font-size: 0.8rem;
-            }
-            .levels {
-                gap: 7px;
-                margin-bottom: 15px;
-            }
-            .level-btn {
-                padding: 10px 8px;
-                font-size: 0.95rem;
-                border-radius: 10px;
-            }
-            .case-area {
-                padding: 10px;
-                border-radius: 12px;
-            }
-            .case-title {
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            }
-            .case-content {
-                gap: 10px;
-            }
-            .case-description, .suspects-list {
-                padding: 10px;
-                border-radius: 8px;
-                font-size: 0.95rem;
-            }
-            .evidence-grid {
-                gap: 5px;
-            }
-            .evidence-item {
-                padding: 7px;
-                font-size: 0.8rem;
-                border-radius: 7px;
-            }
-            .suspect {
-                padding: 8px;
-                border-radius: 7px;
-                font-size: 0.9rem;
-            }
-            .solution-area {
-                padding: 10px;
-                border-radius: 10px;
-            }
-            .solution-input {
-                padding: 10px;
-                font-size: 0.95rem;
-                border-radius: 7px;
-            }
-            .submit-btn {
-                padding: 10px 18px;
-                font-size: 0.95rem;
-                border-radius: 7px;
-            }
-            .certificate-form {
-                padding: 12px;
-                border-radius: 12px;
-            }
-            .form-group input {
-                padding: 7px;
-                font-size: 0.95rem;
-                border-radius: 7px;
-            }
-            .site-footer {
-                font-size: 0.95rem;
-                padding: 10px 0 7px 0;
-            }
-        }
-    </style>
+    <title>  المحقق كون  </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 
 </head>
 <body>
-    <!-- شبكة العنكبوت والتأثيرات -->
-    <div class="spider-web" id="spiderWeb"></div>
-    <div class="glow-orb" style="width: 200px; height: 200px; top: 10%; left: 10%;"></div>
-    <div class="glow-orb" style="width: 150px; height: 150px; top: 60%; right: 15%; animation-delay: -2s;"></div>
-    <div class="glow-orb" style="width: 100px; height: 100px; top: 80%; left: 20%; animation-delay: -4s;"></div>
+    <header>
+        <img src="img/hiu-removebg-preview.png" alt="شعار ألغاز الجريمة" class="main-logo-img">
+        <div class="header-overflow-fix">
+            <div class="logo"><i class="fas fa-detective"></i>  المحقق كـــون</div>
+            <p class="tagline">تحقيق في أغرب القضايا وأكثرها تعقيدًا</p>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill progress-fill-100"></div>
+            </div>
+        </div>
+        <div class="notice-box-main">
+            <span class="notice-red">
+               <strong>ملاحظة:</strong> جميع القضايا والقصص المعروضة هنا من وحي الخيال ولا تمت للواقع بأي صلة.
+            </span>
+        </div>
+
+        <!-- شريط التقدم -->
+        <div class="progress-section">
+            <div class="progress-header">
+                <h3><i class="fas fa-trophy"></i> تقدمك في الحل</h3>
+                <div class="progress-stats">
+                    <span id="solved-count">0</span> / <span id="total-count">0</span> قضية محلولة
+                </div>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+                <div class="progress-text" id="progress-text">0%</div>
+            </div>
+            <div class="notice-box-progress">
+                <strong>ملاحظة:</strong> شريط التقدم يعكس نسبة القضايا التي تم حلها من إجمالي القضايا المعروضة.<br>
+                <span class="notice-lightred"></span>
+            </div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active" data-category="all">
+                جميع القضايا
+                <span class="tab-counter" id="all-counter">0</span>
+            </div>
+            <div class="tab" data-category="murder">
+                جرائم قتل
+                <span class="tab-counter" id="murder-counter">0</span>
+            </div>
+            <div class="tab" data-category="theft">
+                سرقات
+                <span class="tab-counter" id="theft-counter">0</span>
+            </div>
+            <div class="tab" data-category="mystery">
+                غموض
+                <span class="tab-counter" id="mystery-counter">0</span>
+            </div>
+            <div class="tab" data-category="special">
+                قضية خاصة
+                <span class="tab-counter" id="special-counter">1</span>
+            </div>
+
+            <div class="tab" data-category="arson">
+                القضايا التي تم حلها
+                <span class="tab-counter" id="arson-counter">0</span>
+            </div>
+
+        </div>
+    </header>
+
 
     <div class="container">
-        <!-- الرأس -->
-        <div class="header">
-            <h1>🔍 اكاديمية المحقق كونان </h1>
-            <p>منصة التحقيق التفاعلية - استخدم مهاراتك التحليلية لكشف الجرائم</p>
+        <h2 class="section-title">القضايا المعقدة</h2>
+        <div class="cases-grid" id="cases-container">
+            <!-- سيتم ملء هذا القسم بواسطة JavaScript -->
         </div>
+                    <div class="notice-box">
+                        <strong>ملاحظة:</strong> عند الانتهاء من حل القضايا، يمكنك طلب شهادة مشابهة للنموذج المعروض أدناه.
+                        <br>
+                        <span class="certificate-note">
+                            عمل سكرين شوت لقسم القضايا التي تم حلها من اجل طلب الشهادة.
+                        </span>
+                        <span class="notice-lightred"></span>
+                        <img src="img/‏لقطة الشاشة ٢٠٢٥-٠٩-١٣ في ١١.٤٢.٥٨.png" alt="نموذج الشهادة" class="certificate-img certificate-img-custom">
+                        <span class="notice-lightred"></span>
+                        <a href="https://forms.gle/dhQFcnDsJVmFHqKa7" target="_blank" rel="noopener" class="certificate-link certificate-link-custom">
+                            <i class="fas fa-certificate"></i> طلب شهادة
+                        </a>
+                    </div>
 
-        <div class="header">
-            <h2>🔍   ملاحظة:</h2>
-            <p>عند رغبتك بي حصول ع شهادة تصوير الاجابات من اجل ارفاقهم بي نموذج عند الاتمام من حل جميع القضايا</p>
+        <div id="case-details">
+            <!-- سيتم عرض تفاصيل القضية هنا -->
         </div>
-
-            <!-- شريط التقدم -->
-            <div class="progress-section">
-                <h3>تقدم المستخدم</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
-                </div>
-                <p><span id="solvedCases">0</span> من <span id="totalCases">10</span> قضية تم حلها</p>
-            </div>
-
-            <!-- شارات الإنجاز -->
-            <div class="badges">
-                <div class="badge" id="badge1">🥉 مبتدئ</div>
-                <div class="badge" id="badge2">🥈 متوسط</div>
-                <div class="badge" id="badge3">🥇 عالي</div>
-                <div class="badge" id="badge4">👑 متقدم</div>
-                <div class="badge" id="badge5">🌟 أسطورة</div>
-                <div class="badge" id="badge6">🏅 بطل</div>
-                <div class="badge" id="badge7">🏅 خبير</div>
-
-
-
-            </div>
-        </div>
-
-        <!-- أزرار المستويات -->
-        <div class="levels">
-            <button class="level-btn" onclick="showCase(0)">🔍 الغرفة المقفلة</button>
-            <button class="level-btn" onclick="showCase(1)">💰 اختفاء الوديعة</button>
-            <button class="level-btn" onclick="showCase(2)">🚂 القتل في القطار</button>
-            <button class="level-btn" onclick="showCase(3)">🔥 حريق المصنع</button>
-            <button class="level-btn" onclick="showCase(4)">📚 السرقة في المكتبة</button>
-            <button class="level-btn" onclick="showCase(5)">💼 الاختلاس المكتبي</button>
-            <button class="level-btn" onclick="showCase(6)">🔒 القتل في الغرفة المقفلة</button>
-            <button class="level-btn" onclick="showCase(7)">💻 الاختطاف الرقمي</button>
-            <button class="level-btn" onclick="showCase(8)">🏰 لغز القصر المهجور</button>
-            <button class="level-btn" onclick="showCase(9)">🖼️ جريمة المتحف الليلي</button>
-            
-        </div>
-
-        <!-- منطقة القضية -->
-        <div class="case-area" id="caseArea">
-            <h2 class="case-title" id="caseTitle"></h2>
-            <div class="case-content">
-                <div class="case-description">
-                    <h3>🎯 تفاصيل القضية</h3>
-                    <div id="caseDescription"></div>
-                    
-                    <h3>🔎 الأدلة</h3>
-                    <div class="evidence-grid" id="evidenceGrid"></div>
-                </div>
-                
-                <div class="suspects-list">
-                    <h3>🕵️ المشتبه بهم</h3>
-                    <div id="suspectsList"></div>
-                </div>
-            </div>
-        </div>
-
-        <!-- منطقة الحل -->
-        <div class="solution-area" id="solutionArea">
-            <h3>🎯 مَن هو الجاني؟</h3>
-            <p>أدخل اسم المشتبه به الذي تعتقد أنه الجاني:</p>
-            <input type="text" class="solution-input" id="solutionInput" placeholder="أدخل اسم المشتبه به...">
-            <br>
-            <button class="submit-btn" onclick="checkSolution()">تأكيد الحل</button>
-            <div id="resultMessage"></div>
-        </div>
-
-        <!-- نموذج الشهادة -->
-        <div class="certificate-form" id="certificateForm">
-            <h2 style="color: #ffd700; text-align: center; margin-bottom: 20px;">🏆 تهانينا! احصل على شهادة الإتمام</h2>
-            <img src="img/hi.png" alt="شهادة" style="max-width: 220px; width: 100%; margin: 15px auto; border-radius: 12px; box-shadow: 0 2px 12px #ffd70055; display: block;">
-            <div class="certificate-box" style="text-align:center; margin-top:15px;">
-                <strong>من يرغب بإصدار شهادة اجتياز يرجى تعبئة النموذج التالي وإرفاق صورة لإجاباتك:</strong>
-                <br>
-                <a href="https://forms.gle/z2KjEW96as14QVN28" target="_blank" class="certificate-link" style="color:#40e0d0; font-weight:bold; font-size:1.1rem; text-decoration:underline; margin-top:10px; display:inline-block;">فتح نموذج الشهادة</a>
+    </div>
+    <!-- نافذة الحل -->
+    <div id="solution-modal" class="solution-modal">
+        <div class="solution-content">
+            <h3><i class="fas fa-search"></i> من هو الجاني؟</h3>
+            <p>ادخل اسم المشتبه الذي تعتقد أنه الجاني:</p>
+            <input type="text" id="solution-input" class="solution-input" placeholder="اكتب اسم المشتبه...">
+            <div class="solution-buttons">
+                <button id="submit-solution" class="submit-solution">
+                    <i class="fas fa-check"></i> تأكيد الحل
+                </button>
+                <button id="cancel-solution" class="cancel-solution">
+                    <i class="fas fa-times"></i> إلغاء
+                </button>
             </div>
         </div>
     </div>
 
+    <footer>
+        <p>© 2025 جميع الحقوق محفوظة  -   حسين الديات</p>
+    </footer>
+
+<script src="script.js"></script>
+<script src="script1.js"></script>
 
 
-    <br>
-    <div class="celebration-message" id="celebrationMessage" style="display: none;">
-        <h2>🎉 تهانينا! لقد حليت القضية بنجاح! 🎉</h2>
-    </div>
-
-    <script>
-        // إعدادات مشروعك من Firebase (استبدل القيم بما يظهر في لوحة Firebase لديك)
-        const firebaseConfig = {
-          apiKey: "AIzaSyAWAcaUAY84ppTy4UhrrNfdfVIHkEUVmNk",
-          authDomain: "koon-793eb.firebaseapp.com",
-          projectId: "koon-793eb",
-          storageBucket: "koon-793eb.appspot.com",
-          messagingSenderId: "188101768266",
-          appId: "1:188101768266:web:7062f461ea8e2871cc22b3",
-          measurementId: "G-N4Y2FXLLTV"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        // بيانات القضايا
-        const cases = [
-            {
-                title: "جريمة الغرفة المقفلة",
-                description: `
-                    <p><strong>المجني عليه:</strong> الدكتور محمد العلواني (65 عاماً) - عالم آثار مشهور</p>
-                    <p><strong>مكان الجريمة:</strong> مكتبه الخاص في الطابق الثالث من منزله</p>
-                    <p><strong>سبب الوفاة:</strong> طعنة في الصدر بخنجر أثري من مجموعته</p>
-                    <p><strong>الوقت:</strong> تم اكتشاف الجثة في الساعة 9 صباحاً من قبل المدبرة</p>
-                `,
-                evidence: [
-                    { text: "الغرفة مقفلة من الداخل", important: true },
-                    { text: "النافذة مفتوحة (ارتفاع 12م)", important: true },
-                    { text: "بصمات مجهولة على مقبض الخنجر", important: true },
-                    { text: "أوراق مبعثرة وخزنة مفتوحة فارغة", important: false },
-                    { text: "كوب شاي نصف فارغ يحتوي على مهدئ", important: true },
-                    { text: "كاميرات المراقبة توقفت عن العمل في الساعة 11 ليلاً", important: true }
-                ],
-                suspects: [
-                    { name: "سارة العلواني", description: "الابنة (32 عاماً) - محامية، وريثة وحيدة، كانت تتشاجر مع والدها حول بيع المنزل" },
-                    { name: "أحمد الخولي", description: "المساعد (28 عاماً) - عمل مع الدكتور 5 سنوات، يعرف أسرار المجموعة الأثرية" },
-                    { name: "فاطمة حسن", description: "المدبرة (45 عاماً) - تعمل في المنزل 10 سنوات، تعرف جميع تحركات العائلة" },
-                    { name: "الدكتور عماد نصار", description: "زميل (50 عاماً) - منافس أكاديمي، كان يريد قطعة أثرية نادرة من مجموعة العلواني" }
-                ],
-                solution: " أحمد الخولي"
-            },
-            {
-                title: "اختفاء الوديعة",
-                description: `
-                    <p><strong>المجني عليها:</strong> ليلى أبو زيد (38 عاماً) - مصرفية في بنك الأهلي</p>
-                    <p><strong>الجريمة:</strong> سرقة مبلغ 2 مليون دينار من صندوق أمانات البنك واختفاء الموظفة</p>
-                    <p><strong>آخر مشاهدة:</strong> كاميرات تظهر ليلى تدخل قسم الأمانات في الساعة 7:30 مساء</p>
-                    <p><strong>الغريب:</strong> سيارتها وهاتفها موجودان في البنك، لا يوجد تسجيل لخروجها</p>
-                `,
-                evidence: [
-                    { text: "اختفاء المبلغ من صندوق الأمانات رقم 247", important: true },
-                    { text: "بصمات ليلى على الصندوق والأوراق المالية", important: true },
-                    { text: "تسجيلات كاميرات تظهر ليلى تدخل قسم الأمانات", important: true },
-                    { text: "سيارتها موجودة في موقف البنك", important: false },
-                    { text: "هاتفها المحمول موجود في مكتبها", important: false },
-                    { text: "رسالة في درج مكتبها تقول 'لن تجدوني أبداً'", important: true }
-                ],
-                suspects: [
-                    { name: "خالد الزعبي", description: "مدير البنك (45 عاماً) - يواجه ضغوط مالية شخصية، له صلاحية الوصول لجميع الصناديق" },
-                    { name: "منى الشريف", description: "زميلة العمل (30 عاماً) - تعرف الرقم السري للصندوق، كانت تحسد ليلى على ترقيتها" },
-                    { name: "عبد الله أبو زيد", description: "الزوج (40 عاماً) - يعمل في شركة بناء متعثرة، يحتاج المال بشدة" },
-                    { name: "نادر الكردي", description: "عامل الأمن (35 عاماً) - يعرف جميع الإجراءات الأمنية، له مشاكل مع القمار" }
-                ],
-                solution: "خالد الزعبي"
-            },
-            {
-                title: "القتل في القطار",
-                description: `
-                    <p><strong>المجني عليه:</strong> رامي الحداد (42 عاماً) - رجل أعمال ثري</p>
-                    <p><strong>مكان الجريمة:</strong> عربة الدرجة الأولى في قطار عمان-دمشق</p>
-                    <p><strong>سبب الوفاة:</strong> تسمم بمادة السيانيد في كوب القهوة</p>
-                    <p><strong>التوقيت:</strong> شرب القهوة في الساعة 3:15 عصراً وتوفي في الساعة 3:45</p>
-                `,
-                evidence: [
-                    { text: "كوب القهوة يحتوي على بقايا السيانيد", important: true },
-                    { text: "تذكرة القطار باسم رامي الحداد للمقعد رقم 12A", important: false },
-                    { text: "حقيبة تحتوي على عقود تجارية مهمة", important: false },
-                    { text: "خاتم ذهبي مفقود من يده", important: false },
-                    { text: "رسالة تهديد في جيبه: 'ستدفع الثمن'", important: true },
-                    { text: "عبوة سيانيد فارغة في حمام القطار", important: true }
-                ],
-                suspects: [
-                    { name: "سلمى الحداد", description: "الزوجة (38 عاماً) - تسافر في نفس القطار، تعرف بخيانة زوجها، وريثة أموال كبيرة" },
-                    { name: "جمال العاصي", description: "الشريك (50 عاماً) - مسافر في القطار، كان بينهما خلاف مالي حول مشروع" },
-                    { name: "هند الياسين", description: "الموظفة في القطار (25 عاماً) - قدمت له القهوة، كانت تعمل سابقاً في شركة رامي" },
-                    { name: "مروان الشامي", description: "المقاول (45 عاماً) - في المقعد المجاور، له دعوى قضائية ضد رامي" }
-                ],
-                solution: " هند الياسين"
-            },
-            {
-                title: "حريق المصنع",
-                description: `
-                    <p><strong>المجني عليه:</strong> المهندس طارق الفيصل (55 عاماً) - مالك مصنع نسيج</p>
-                    <p><strong>مكان الجريمة:</strong> مكتبه في مصنع النسيج</p>
-                    <p><strong>سبب الوفاة:</strong> الاختناق من دخان الحريق (لكن وُجد مقيداً إلى كرسيه)</p>
-                    <p><strong>التوقيت:</strong> الحريق بدأ في الساعة 11:30 ليلاً يوم الجمعة</p>
-                `,
-                evidence: [
-                    { text: "حبال حول معصمي وكاحلي الضحية", important: true },
-                    { text: "بداية الحريق في ثلاث نقاط مختلفة (حريق مفتعل)", important: true },
-                    { text: "خزنة المكتب مفتوحة ونقود مفقودة (50 ألف دينار)", important: false },
-                    { text: "كاميرا المراقبة تظهر دخان كثيف قبل انقطاع التيار", important: true },
-                    { text: "بقايا مادة القطران على الأرضية", important: true },
-                    { text: "رسالة على الكمبيوتر: 'العدالة تأخذ مجراها'", important: true }
-                ],
-                suspects: [
-                    { name: "يوسف العبيدي", description: "مدير المصنع (48 عاماً) - يعرف أن المصنع مؤمن بمبلغ كبير، له مشاكل مالية" },
-                    { name: "عائشة الفيصل", description: "الابنة (30 عاماً) - محاسبة في المصنع، تعلم بوضع الشركة المتدهور" },
-                    { name: "كمال الأسمر", description: "عامل سابق (40 عاماً) - طُرد من العمل الشهر الماضي، توعد بالانتقام" },
-                    { name: "الدكتورة نجلاء حمود", description: "شريكة سابقة (52 عاماً) - انفصلت عن الشراكة في ظروف غامضة، تطالب بأموال" }
-                ],
-                solution: "كمال الأسمر"
-            },
-            {
-                title: "جريمة السرقة في المكتبة",
-                description: `سُرقت كتب قيمة من المكتبة الجامعية. هناك ثلاثة مشتبه بهم.`,
-                evidence: [
-                    { text: "بصمات الأصابع: وُجدت بصمات على خزانة الكتب تطابق أحمد الطالب", important: true },
-                    { text: "كاميرات المراقبة: تظهر الكاميرات أحمد يدخل المكتبة في الساعة 3:00 م ويخرج في 3:30 م", important: true },
-                    { text: "شهادة الشهود: شاهد أمين المكتبة أحمد يحمل حقيبة كبيرة عند الخروج", important: true },
-                    { text: "سجل الإعارة: الكتب المسروقة لم تكن مسجلة للإعارة لأي شخص", important: false }
-                ],
-                suspects: [
-                    { name: "أحمد الطالب", description: "طالب جامعي، شوهد يحمل حقيبة كبيرة عند الخروج" },
-                    { name: "سامي الموظف", description: "موظف المكتبة، كان في الدوام وقت الجريمة" },
-                    { name: "منى الطالبة", description: "طالبة، كانت تدرس في المكتبة بنفس الوقت" }
-                ],
-                solution: "أحمد الطالب"
-            },
-            {
-                title: "جريمة الاختلاس المكتبي",
-                description: `اختفت أموال من صندوق الشركة. المبلغ 50,000 ريال.`,
-                evidence: [
-                    { text: "سجل دخول النظام: تم الدخول للنظام المالي باستخدام حساب مريم في الساعة 9:30 م يوم الجمعة", important: true },
-                    { text: "شهادة حارس الأمن: رأى خالد يغادر المبنى في الساعة 9:45 م، لكن خالد قال أنه غادر في الساعة 8:30 م", important: true },
-                    { text: "فحص الحواسيب: تم العثور على برنامج للتحكم عن بُعد مثبت على حاسوب خالد", important: true }
-                ],
-                suspects: [
-                    { name: "خالد", description: "موظف، لديه برنامج تحكم عن بعد على جهازه" },
-                    { name: "مريم", description: "موظفة، تم استخدام حسابها في النظام المالي" },
-                    { name: "سعيد", description: "مدير القسم، كان خارج الشركة وقت الجريمة" }
-                ],
-                solution: "خالد"
-            },
-            {
-                title: "جريمة القتل في الغرفة المقفلة",
-                description: `وُجدت الضحية في مكتبه مساء الأحد. الباب مقفل من الداخل، والنوافذ في الطابق الخامس.`,
-                evidence: [
-                    { text: "موقع الجثة: الضحية جالس على مكتبه، رأسه على الطاولة، رائحة لوز مُر خفيفة", important: true },
-                    { text: "نظام التكييف: نظام التهوية في المبنى يعمل بنظام مركزي، ويمكن التحكم به عن بُعد", important: true },
-                    { text: "سجلات الدخول: آخر من دخل المبنى هو عامل الصيانة لنظام التكييف في الساعة 6:30 م", important: true },
-                    { text: "فحص نظام التكييف: وُجدت بقايا مادة كيميائية في قنوات التهوية المؤدية لمكتب الضحية فقط", important: true }
-                ],
-                suspects: [
-                    { name: "عامل الصيانة", description: "آخر من دخل المبنى، لديه صلاحية الوصول لنظام التكييف" },
-                    { name: "مدير المبنى", description: "كان في مكتبه وقت الجريمة" },
-                    { name: "زميل الضحية", description: "كان في اجتماع خارج المبنى" }
-                ],
-                solution: "عامل الصيانة"
-            },
-            {
-                title: "جريمة الاختطاف الرقمي",
-                description: `اختفى رجل أعمال مشهور. لا توجد آثار للعنف، لكن هناك رسائل تهديد رقمية معقدة وطلب فدية بالعملة المشفرة.`,
-                evidence: [
-                    { text: "تحليل الرسائل الرقمية: الرسائل مرسلة عبر شبكة Tor، تحليل الأسلوب يشير لشخص يتقن الإنجليزية ويستخدم مصطلحات تقنية متقدمة", important: true },
-                    { text: "تحليل الصوت في الرسالة الصوتية: ضوضاء آلات ثقيلة وصدى يشير لمكان واسع مثل مستودع", important: true },
-                    { text: "تتبع المعاملة المالية: محفظة بيتكوين جديدة مرتبطة بمعاملات شراء معدات تعدين", important: true },
-                    { text: "فحص كاميرات المراقبة: سيارة سوداء تغادر بسرعة بعد آخر ظهور للضحية", important: false }
-                ],
-                suspects: [
-                    { name: "مارك - المطور السابق", description: "طرد من شركة الضحية قبل شهرين، خبير في الأمن السيبراني" },
-                    { name: "سارة - الشريك التجاري", description: "شريكة في عدة مشاريع، لديها ديون كبيرة" },
-                    { name: "أليكس - ابن الضحية المنفصل", description: "منقطع عن الأب منذ سنوات، مشاكل مع المخدرات" }
-                ],
-                solution: "مارك - المطور السابق"
-            },
-            {
-                title: "لغز القصر المهجور",
-                description: `في قصر قديم مهجور، وُجد رجل أعمال مقتولاً في غرفة الطعام. القصر مليء بالغرف السرية والممرات المخفية، ولا يوجد أي أثر لدخول أو خروج من الأبواب الرئيسية ليلة الجريمة.`,
-                evidence: [
-                    { text: "بصمات مجهولة على مقبض باب غرفة الطعام", important: true },
-                    { text: "آثار أقدام طينية في الممر السري خلف المكتبة", important: true },
-                    { text: "رسالة تهديد مكتوبة بخط يد الضحية في غرفة النوم", important: true },
-                    { text: "زجاجة نبيذ مكسورة عليها دماء بجانب الجثة", important: true },
-                    { text: "مفتاح غرفة النوم مفقود", important: false },
-                    { text: "كاميرات المراقبة معطلة منذ أسبوع", important: true },
-                    { text: "ساعة الضحية متوقفة عند الساعة 2:17 صباحاً", important: false },
-                    { text: "خريطة قديمة للقصر عليها علامات غامضة", important: true }
-                ],
-                suspects: [
-                    { name: "مدير أعمال الضحية", description: "كان يطالب الضحية بمبالغ مالية كبيرة، شوهد يغادر القصر قبل يومين من الجريمة" },
-                    { name: "ابن الضحية", description: "كان في القصر ليلة الجريمة، لديه مشاكل إرث" },
-                    { name: "حارس القصر القديم", description: "يعرف جميع الممرات السرية، اختفى ليلة الجريمة" },
-                    { name: "الطباخة الجديدة", description: "تم تعيينها قبل أسبوع فقط، لا يعرف أحد خلفيتها الحقيقية" }
-                ],
-                solution: "حارس القصر القديم"
-            },
-            {
-                title: "جريمة المتحف الليلي",
-                description: `في ليلة افتتاح معرض نادر في المتحف الوطني، تم سرقة لوحة فنية ثمينة وقتل الحارس الليلي. جميع أنظمة الإنذار كانت تعمل، لكن لم يتم تسجيل أي حركة غير طبيعية على الكاميرات.`,
-                evidence: [
-                    { text: "بصمات مجهولة على إطار اللوحة المسروقة", important: true },
-                    { text: "مفتاح غرفة الإنذار مفقود", important: true },
-                    { text: "شريحة ذاكرة صغيرة مخبأة تحت مكتب الحارس", important: true },
-                    { text: "رسالة مشفرة على جهاز الحارس الليلي", important: true },
-                    { text: "آثار حذاء نسائي قرب نافذة الطوارئ", important: true },
-                    { text: "تقرير الطب الشرعي: الحارس توفي نتيجة ضربة على الرأس بين الساعة 2 و3 صباحاً", important: true },
-                    { text: "كاميرات المراقبة تظهر خللاً لمدة 7 دقائق فقط", important: true },
-                    { text: "مذكرة قديمة للحارس عن تهديدات سابقة من مجهولين", important: false }
-                ],
-                suspects: [
-                    { name: "مديرة المتحف", description: "كانت آخر من غادر المتحف، لديها خلافات مع الحارس" },
-                    { name: "الزائرة الأجنبية", description: "مهتمة بالفن، شوهدت تتجول قرب اللوحة قبل الإغلاق" },
-                    { name: "فني الأنظمة الأمنية", description: "مسؤول عن صيانة الإنذارات والكاميرات، لديه سجل جنائي" },
-                    { name: "ابنة الحارس", description: "زارت والدها في المتحف مساء الجريمة، لديها مشاكل عائلية" }
-                ],
-                solution: "فني الأنظمة الأمنية"
-            }
-        ];
-
-        let currentCase = 0;
-        let solvedCases = 0;
-        const totalCases = cases.length;
-
-        // إنشاء شبكة العنكبوت
-        function createSpiderWeb() {
-            const web = document.getElementById('spiderWeb');
-            for (let i = 0; i < 15; i++) {
-                const line = document.createElement('div');
-                line.className = 'web-line';
-                line.style.width = Math.random() * 300 + 'px';
-                line.style.height = '2px';
-                line.style.top = Math.random() * 100 + '%';
-                line.style.left = Math.random() * 100 + '%';
-                line.style.transform = `rotate(${Math.random() * 360}deg)`;
-                line.style.animationDelay = Math.random() * 4 + 's';
-                web.appendChild(line);
-            }
-        }
-
-        // عرض القضية
-        function showCase(index) {
-            currentCase = index;
-            const caseData = cases[index];
-            
-            document.getElementById('caseTitle').textContent = caseData.title;
-            document.getElementById('caseDescription').innerHTML = caseData.description;
-            
-            // عرض الأدلة
-            const evidenceGrid = document.getElementById('evidenceGrid');
-            evidenceGrid.innerHTML = '';
-            caseData.evidence.forEach((evidence, i) => {
-                const item = document.createElement('div');
-                item.className = 'evidence-item' + (evidence.important ? ' important' : '');
-                item.textContent = evidence.text;
-                item.onclick = () => {
-                    alert(`الدليل رقم ${i + 1}: ${evidence.text}\n\n` + 
-                         (evidence.important ? "⭐ هذا دليل مهم!" : "ℹ️ معلومة إضافية"));
-                };
-                evidenceGrid.appendChild(item);
-            });
-            
-            // عرض المشتبه بهم
-            const suspectsList = document.getElementById('suspectsList');
-            suspectsList.innerHTML = '';
-            caseData.suspects.forEach(suspect => {
-                const div = document.createElement('div');
-                div.className = 'suspect';
-                div.innerHTML = `<h4>${suspect.name}</h4><p>${suspect.description}</p>`;
-                suspectsList.appendChild(div);
-            });
-            
-            document.getElementById('caseArea').style.display = 'block';
-            document.getElementById('solutionArea').style.display = 'block';
-            document.getElementById('solutionInput').value = '';
-            document.getElementById('resultMessage').innerHTML = '';
-        }
-
-        // فحص الحل
-        function normalizeArabic(text) {
-            return text
-                .replace(/[إأآا]/g, 'ا')
-                .replace(/[ى]/g, 'ي')
-                .replace(/[ة]/g, 'ه')
-                .replace(/[ؤئ]/g, 'ء')
-                .replace(/[ًٌٍَُِّْ]/g, '') // حذف الحركات
-                .replace(/\s+/g, '') // حذف المسافات
-                .replace(/-/g, '') // حذف شرطة الوصل
-                .replace(/'/g, '') // حذف علامات اقتباس
-                .replace(/ـ/g, '') // حذف المد
-                .toLowerCase();
-        }
-
-        function checkSolution() {
-            const userAnswer = document.getElementById('solutionInput').value.trim();
-            const correctAnswer = cases[currentCase].solution;
-            const normUser = normalizeArabic(userAnswer);
-            const normCorrect = normalizeArabic(correctAnswer);
-            const resultDiv = document.getElementById('resultMessage');
-            if (normUser && normCorrect && (normUser.includes(normCorrect) || normCorrect.includes(normUser))) {
-                let countdown = 30; // 30 ثانية للعد التنازلي
-                resultDiv.innerHTML = `
-                    <div class="result-correct">
-                        🎉 إجابة صحيحة! أحسنت التحليل!
-                        <br><strong>الحل:</strong> ${correctAnswer}
-                        <br><strong>التفسير:</strong> ${getExplanation(currentCase)}
-                        <br><span id='countdownText' style='color:#ffd700;'>سيتم الانتقال تلقائياً إلى القضية التالية خلال <b>${countdown}</b> ثانية...</span>
-                    </div>
-                `;
-                // تحديث العد التنازلي كل ثانية
-                if (currentCase < cases.length - 1) {
-                    const interval = setInterval(function() {
-                        countdown--;
-                        const countdownSpan = document.getElementById('countdownText');
-                        if (countdownSpan) {
-                            countdownSpan.innerHTML = `سيتم الانتقال تلقائياً إلى القضية التالية خلال <b>${countdown}</b> ثانية...`;
-                        }
-                        if (countdown === 0) {
-                            clearInterval(interval);
-                            showCase(currentCase + 1);
-                        }
-                    }, 1000);
-                }
-                // تحديث التقدم
-                if (!document.querySelector(`[data-case="${currentCase}"]`)) {
-                    solvedCases++;
-                    updateProgress();
-                    const caseBtn = document.getElementsByClassName('level-btn')[currentCase];
-                    caseBtn.setAttribute('data-case', currentCase);
-                    caseBtn.style.background = 'linear-gradient(135deg, rgba(50, 205, 50, 0.3), rgba(0, 255, 0, 0.3))';
-                    caseBtn.innerHTML = '✅ ' + caseBtn.innerHTML;
-                }
-                // عرض نموذج الشهادة إذا تم حل جميع القضايا
-                if (solvedCases === totalCases) {
-                    setTimeout(() => {
-                        document.getElementById('certificateForm').style.display = 'block';
-                        celebrateFlowers();
-                    }, 2000);
-                }
-            } else {
-                resultDiv.innerHTML = `
-                    <div class="result-wrong">
-                        ❌ إجابة خاطئة! حاول مرة أخرى وركز على الأدلة المهمة
-                        <br>💡 نصيحة: انتبه للأدلة المميزة بالذهبي
-                    </div>
-                `;
-            }
-        }
-
-        // الحصول على تفسير الحل
-        function getExplanation(caseIndex) {
-            const explanations = [
-                "المساعد أحمد الخولي استطاع دخول المكتب بمفتاحه، وضع المهدئ في الشاي، قتل الدكتور، وخرج من النافذة بحبل. الكاميرات توقفت بتدبيره.",
-                "مدير البنك خالد الزعبي استغل صلاحياته لسرقة المال، وأجبر ليلى على كتابة الرسالة قبل إخفائها أو قتلها.",
-                "موظفة القطار هند الياسين وضعت السيانيد في القهوة انتقاماً من رامي الذي فصلها من عملها السابق في شركته.",
-                "العامل المطرود كمال الأسمر عاد للمصنع، قيّد المهندس طارق، وأشعل الحريق انتقاماً من طرده.",
-                "الطالب أحمد استغل غياب الأمن في المكتبة، وسرقة الكتب القيمة، وترك بصماته واضحة.",
-                "الموظف خالد استخدم حساب زميلته مريم للاختلاس، لكن حارس الأمن شاهده يغادر المبنى متأخراً.",
-                "عامل الصيانة كان آخر من دخل المبنى، واستخدم صلاحياته في نظام التكييف لقتل الضحية.",
-                "المطور السابق مارك كان يعرف كل أسرار الضحية، واستخدم مهاراته في الاختراق لاختطافه.",
-                "حارس القصر القديم كان يعرف جميع الممرات السرية في القصر، واستغل غفلة الجميع لقتل الضحية.",
-                "فني الأنظمة الأمنية كان لديه وصول كامل لأنظمة المتحف، واستغل معرفته لسرقة اللوحة وقتل الحارس."
-            ];
-            return explanations[caseIndex];
-        }
-
-        // تحديث شريط التقدم والشارات
-        function updateProgress() {
-            const percentage = (solvedCases / totalCases) * 100;
-            document.getElementById('progressFill').style.width = percentage + '%';
-            document.getElementById('solvedCases').textContent = solvedCases;
-            
-            // تحديث الشارات
-            if (solvedCases >= 1) {
-                document.getElementById('badge1').classList.add('earned');
-            }
-            if (solvedCases >= 2) {
-                document.getElementById('badge2').classList.add('earned');
-            }
-            if (solvedCases >= 3) {
-                document.getElementById('badge3').classList.add('earned');
-            }
-            if (solvedCases >= 4) {
-                document.getElementById('badge4').classList.add('earned');
-            }
-        }
-
-        // إنشاء الشهادة
-        function generateCertificate() {
-            const name = document.getElementById('studentName').value;
-            const email = document.getElementById('studentEmail').value;
-            if (!name || !email) {
-                alert('يرجى ملء جميع الحقول');
-                return;
-            }
-            // حفظ البيانات في قاعدة بيانات Firebase
-            db.collection('certificates').add({
-                name: name,
-                email: email,
-                date: new Date().toISOString()
-            }).then(() => {
-                document.getElementById('certificateMessage').innerHTML = `
-                    <div style='text-align:center; color:#ffd700; margin-top:15px;'>
-                        <h2>🎉 مبروك! 🎉</h2>
-                        <p>تم إرسال شهادتك بنجاح!</p>
-                        <p>أنت الآن محقق معتمد من أكاديمية كونان!</p>
-                        <div style='font-size:2rem; margin:20px 0;'>🕵️‍♂️👑🔍</div>
-                    </div>
-                `;
-            }).catch((error) => {
-                document.getElementById('certificateMessage').innerHTML = `<div style='color:red; text-align:center;'>حدث خطأ أثناء حفظ البيانات: ${error.message}</div>`;
-            });
-        }
-
-        // تهيئة الصفحة
-        document.addEventListener('DOMContentLoaded', function() {
-            createSpiderWeb();
-            updateProgress();
-            
-            // إضافة تأثيرات صوتية (محاكاة)
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('level-btn') || 
-                    e.target.classList.contains('submit-btn') ||
-                    e.target.classList.contains('evidence-item')) {
-                    // محاكاة صوت النقر
-                    console.log('🔊 Click sound effect');
-                }
-            });
-
-            // تأثير الكتابة في حقل الحل
-            document.getElementById('solutionInput').addEventListener('input', function(e) {
-                e.target.style.borderColor = e.target.value ? '#40e0d0' : 'rgba(64, 224, 208, 0.5)';
-            });
-            
-            // تأثيرات إضافية للهوفر
-            const levelBtns = document.getElementsByClassName('level-btn');
-            for (let btn of levelBtns) {
-                btn.addEventListener('mouseenter', function() {
-                    this.style.boxShadow = '0 15px 35px rgba(64, 224, 208, 0.4)';
-                });
-                btn.addEventListener('mouseleave', function() {
-                    if (!this.hasAttribute('data-case')) {
-                        this.style.boxShadow = 'none';
-                    }
-                });
-            }
-        });
-
-        // إضافة مؤثرات صوتية وبصرية عند الإجابة الصحيحة
-        function celebrateCorrectAnswer() {
-            // إنشاء كونفيتي
-            for (let i = 0; i < 50; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.style.position = 'fixed';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = '-10px';
-                    confetti.style.width = '10px';
-                    confetti.style.height = '10px';
-                    confetti.style.backgroundColor = ['#FFD700', '#40E0D0', '#FF6347', '#32CD32'][Math.floor(Math.random() * 4)];
-                    confetti.style.borderRadius = '50%';
-                    confetti.style.pointerEvents = 'none';
-                    confetti.style.zIndex = '1000';
-                    confetti.style.animation = 'fall 3s linear forwards';
-                    
-                    document.body.appendChild(confetti);
-                    
-                    setTimeout(() => {
-                        confetti.remove();
-                    }, 3000);
-                }, i * 100);
-            }
-        }
-
-        // انفجار ورود وكونفيتي ملون
-        function celebrateFlowers() {
-            // انفجار كونفيتي ملون
-            for (let i = 0; i < 60; i++) {
-                setTimeout(() => {
-                    const confetti = document.createElement('div');
-                    confetti.style.position = 'fixed';
-                    confetti.style.left = Math.random() * 100 + 'vw';
-                    confetti.style.top = '-10px';
-                    confetti.style.width = '16px';
-                    confetti.style.height = '16px';
-                    confetti.style.backgroundColor = ['#FFD700', '#FF69B4', '#40E0D0', '#FF6347', '#32CD32', '#FFB6C1'][Math.floor(Math.random() * 6)];
-                    confetti.style.borderRadius = '50%';
-                    confetti.style.pointerEvents = 'none';
-                    confetti.style.zIndex = '2000';
-                    confetti.style.animation = 'fall 3.5s linear forwards';
-                    document.body.appendChild(confetti);
-                    setTimeout(() => { confetti.remove(); }, 3500);
-                }, i * 60);
-            }
-            // انفجار ورود
-            for (let i = 0; i < 25; i++) {
-                setTimeout(() => {
-                    const flower = document.createElement('div');
-                    flower.style.position = 'fixed';
-                    flower.style.left = Math.random() * 100 + 'vw';
-                    flower.style.top = '-10px';
-                    flower.style.width = '28px';
-                    flower.style.height = '28px';
-                    flower.style.background = 'none';
-                    flower.style.pointerEvents = 'none';
-                    flower.style.zIndex = '2001';
-                    flower.style.fontSize = '2rem';
-                    flower.textContent = ['🌸','🌺','🌻','💐','🌷','🌼'][Math.floor(Math.random() * 6)];
-                    flower.style.animation = 'fall 4s linear forwards';
-                    document.body.appendChild(flower);
-                    setTimeout(() => { flower.remove(); }, 4000);
-                }, i * 120);
-            }
-        }
-
-        // CSS للكونفيتي
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes fall {
-                to {
-                    transform: translateY(100vh) rotate(360deg);
-                    opacity: 0;
-                }
-            }
-            
-            .pulsate {
-                animation: pulsate 0.5s ease-in-out 3;
-            }
-            
-            @keyframes pulsate {
-                0%, 100% { transform: scale(1); }
-                50% { transform: scale(1.1); }
-            }
-        `;
-        document.head.appendChild(style);
-    </script>
-<footer class="footer" style="background-color: #5a555523; text-align: center; padding: 1rem; color: #000000;">
-<p>جميع الحقوق محفوظة - مطور حسين الديات &copy; 2025</p>
-</footer>
+<svg id="diagonal-lines-bg" width="100vw" height="100vh" style="position:fixed;top:0;left:0;z-index:0;pointer-events:none;" viewBox="0 0 1920 1080" preserveAspectRatio="none">
+  <!-- سيتم رسم الخطوط بالـ JS -->
+</svg>
 </body>
+
 </html>
