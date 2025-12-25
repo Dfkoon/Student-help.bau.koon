@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Digital Forensics Image Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8fafc;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e2e8f0;
+        }
+
+        header {
+            border-bottom: 2px solid #6366f1;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #1e293b;
+            margin: 0;
+            font-size: 24px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        h2 {
+            color: #1e293b;
+            border-left: 4px solid #6366f1;
+            padding-left: 15px;
+            margin-top: 30px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .meta {
+            background: #f1f5f9;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .meta div b {
+            color: #6366f1;
+            display: block;
+            font-size: 11px;
+            text-transform: uppercase;
+        }
+
+        .box {
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            background: #fff;
+        }
+
+        .summary-box {
+            background: #eef2ff;
+            border: 1px solid #c7d2fe;
+        }
+
+        img {
+            max-width: 100%;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            margin-top: 15px;
+        }
+
+        code {
+            background: #f1f5f9;
+            color: #475569;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 4px;
+            color: white;
+            font-weight: 700;
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .red {
+            background: #ef4444;
+        }
+
+        .green {
+            background: #10b981;
+        }
+
+        .kv {
+            margin: 12px 0;
+        }
+
+        .kv b {
+            color: #475569;
+            font-size: 14px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="report-container">
+        <header>
+            <h1>Forensic Analysis Report</h1>
+            <div style="font-size: 12px; color: #64748b;">STELLAR FORENSICS</div>
+        </header>
+
+        <div class="meta">
+            <div><b>Report ID</b> {{report_id}}</div>
+            <div><b>Generated At (UTC)</b> {{generated_at}}</div>
+            <div><b>Input Filename</b> {{input_filename}}</div>
+            <div><b>File Size</b> {{file_size}} Bytes</div>
+        </div>
+
+        <div class="box summary-box">
+            <h2>Executive Summary</h2>
+            <div class="kv">
+                <b>Overall Status:</b>
+                <span class="badge {{plain_badge_class}}">{{plain_overall}}</span>
+            </div>
+            <div class="kv"><b>Hidden Content Detected?</b> {{plain_hidden_answer}}</div>
+            <div class="kv"><b>Technical Analysis:</b> {{plain_hidden_explain}}</div>
+            <div class="kv"><b>Metadata Authenticity:</b> {{plain_tampering_explain}}</div>
+            <p style="font-size: 12px; color: #64748b; font-style: italic; margin-top: 15px;">
+                {{plain_note}}
+            </p>
+        </div>
+
+        <div class="box">
+            <h2>1) Image Integrity (Hashes)</h2>
+            <p>Cryptographic signatures used to verify that the file content has not been altered.</p>
+            <div class="kv"><b>MD5:</b> <code>{{hashes.md5}}</code></div>
+            <div class="kv"><b>SHA-256:</b> <code>{{hashes.sha256}}</code></div>
+        </div>
+
+        <div class="box">
+            <h2>2) Metadata Analysis (EXIF)</h2>
+            <div class="kv"><b>Camera Spec:</b> {{metadata.camera_make or "N/A"}} {{metadata.camera_model or ""}}</div>
+            <div class="kv"><b>Date Transcribed:</b> {{metadata.datetime_original or "Unknown"}}</div>
+            <div class="kv"><b>GPS Coordinates:</b>
+                {% if metadata.gps.present %}
+                {{metadata.gps.latitude}}, {{metadata.gps.longitude}}
+                {% else %}
+                Not Available
+                {% endif %}
+            </div>
+            <div class="kv"><b>Analysis Source:</b> {{metadata.source}}</div>
+        </div>
+
+        <div class="box">
+            <h2>3) Steganography Analysis</h2>
+            <p>{{explanation}}</p>
+        </div>
+
+        {% if ai_available %}
+        <div class="box"
+            style="background: {% if ai_is_manipulated %}#fef2f2{% else %}#f0fdf4{% endif %}; border: 2px solid {% if ai_is_manipulated %}#fca5a5{% else %}#86efac{% endif %};">
+            <h2>4) AI-Powered Detection Analysis</h2>
+            <div class="kv"><b>AI Verdict:</b>
+                <span class="badge {% if ai_is_manipulated %}red{% else %}green{% endif %}">
+                    {{ ai_verdict }}
+                </span>
+            </div>
+            <div class="kv"><b>Confidence Score:</b> {{ "%.2f"|format(ai_confidence) }}% (Scale: 75-100%)</div>
+            <div class="kv"><b>Detection Method:</b> Deep Learning (EfficientNet-B0 Neural Network)</div>
+            <div class="kv"><b>Certainty Level:</b> {{ ai_result.certainty_level if ai_result else 'N/A' }}</div>
+            <p style="font-size: 13px; color: #64748b; margin-top: 15px; font-style: italic;">
+                An advanced AI model was used to analyze the image and detect any modifications or hidden data.
+                The model is trained on thousands of images to identify abnormal patterns.
+                Confidence scores range from 75% (minimum) to 100% (maximum certainty).
+            </p>
+        </div>
+        {% endif %}
+
+        {% if ela_image %}
+        <div class="box">
+            <h2>{% if ai_available %}5{% else %}4{% endif %}) Error Level Analysis (ELA)</h2>
+            <p>ELA identifies areas within an image that are at different compression levels. In a modified image, the
+                edited area should have a higher error level (brighter) than the rest of the image.</p>
+            <div style="text-align: center;">
+                <img src="{{ela_image}}" alt="ELA Heatmap" />
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="footer">
+            This document was automatically generated by Stellar Forensics Engine - Confidential Investigative Report
+        </div>
+    </div>
+</body>
+
+</html>
