@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result | Stellar Forensics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --success: #10b981;
+            --danger: #ef4444;
+            --bg: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top left, #1e1b4b, #0f172a, #020617);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            width: 100%;
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .status-badge {
+            padding: 0.5rem 1.5rem;
+            border-radius: 999px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.85rem;
+        }
+
+        .badge-safe {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        .badge-danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            padding: 2rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .data-row {
+            margin-bottom: 1rem;
+        }
+
+        .label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .value {
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 0.6rem;
+            border-radius: 8px;
+            word-break: break-all;
+            font-size: 0.9rem;
+        }
+
+        .actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            filter: brightness(1.2);
+            transform: translateY(-3px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-3px);
+        }
+
+        .action-card {
+            width: 100%;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1>Forensic Analysis Complete</h1>
+            {% if status == "DETECTED" %}
+            <div class="status-badge badge-danger">High Risk: Hidden Data Detected</div>
+            {% else %}
+            <div class="status-badge badge-safe">Clean: No Hidden Data Found</div>
+            {% endif %}
+        </header>
+
+        <div class="grid">
+            <div class="card">
+                <h3>🔍 Technical Findings</h3>
+                <p style="line-height: 1.6; color: var(--text-muted);">
+                    {{ explanation }}
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>🆔 Cryptographic Signatures</h3>
+                <div class="data-row">
+                    <div class="label">MD5 Hash</div>
+                    <div class="value">{{ hashes.md5 }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">SHA-256 Hash</div>
+                    <div class="value">{{ hashes.sha256 }}</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>📸 Metadata Summary</h3>
+                <div class="data-row">
+                    <div class="label">Primary Device</div>
+                    <div class="value">{{ metadata.camera_make or 'Unknown' }} {{ metadata.camera_model or '' }}</div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Capture Date</div>
+                    <div class="value">{{ metadata.datetime_original or 'Not Found' }}</div>
+                </div>
+            </div>
+
+            {% if ai_available %}
+            <div class="card"
+                style="border: 2px solid {% if ai_is_manipulated %}var(--danger){% else %}var(--success){% endif %};">
+                <h3>🤖 AI Detection Analysis</h3>
+                <div class="data-row">
+                    <div class="label">AI Verdict</div>
+                    <div class="value"
+                        style="background: {% if ai_is_manipulated %}rgba(239, 68, 68, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; color: {% if ai_is_manipulated %}var(--danger){% else %}var(--success){% endif %}; font-weight: 600;">
+                        {{ ai_verdict }}
+                    </div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Confidence Level (75-100% Scale)</div>
+                    <div style="margin-top: 0.5rem;">
+                        <div
+                            style="background: rgba(0,0,0,0.2); border-radius: 999px; height: 28px; overflow: hidden; position: relative;">
+                            <!-- Calculate percentage for visual bar (0-100% for display) -->
+                            <div
+                                style="background: linear-gradient(90deg, {% if ai_confidence >= 90 %}#10b981{% elif ai_confidence >= 85 %}#22c55e{% elif ai_confidence >= 80 %}#84cc16{% else %}#eab308{% endif %}, {% if ai_confidence >= 90 %}#059669{% elif ai_confidence >= 85 %}#16a34a{% elif ai_confidence >= 80 %}#65a30d{% else %}#ca8a04{% endif %}); width: {{ ((ai_confidence - 75) / 25 * 100)|round }}%; height: 100%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center;">
+                                <span
+                                    style="font-size: 0.8rem; font-weight: 700; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">{{
+                                    "%.1f"|format(ai_confidence) }}%</span>
+                            </div>
+                        </div>
+                        <div
+                            style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; text-align: center;">
+                            Range: 75% (Minimum) - 100% (Maximum)
+                        </div>
+                    </div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Detection Method</div>
+                    <div class="value">Deep Learning (EfficientNet-B0 Neural Network)</div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="card action-card">
+            <h3>📑 Report Distribution</h3>
+            <p style="margin-bottom: 2rem; color: var(--text-muted);">View the full forensic report in your browser or
+                download it for documentation.</p>
+            <div class="actions">
+                <a href="{{ html_url }}" target="_blank" class="btn btn-outline">
+                    <span>👁️</span> View Document
+                </a>
+                <a href="{{ json_url }}" target="_blank" class="btn btn-outline">
+                    <span>{ }</span> Raw JSON
+                </a>
+                <a href="{{ pdf_url }}" class="btn btn-primary">
+                    <span>📄</span> Download PDF Report
+                </a>
+                <a href="{{ download_url }}" class="btn btn-outline">
+                    <span>📥</span> Download HTML
+                </a>
+            </div>
+        </div>
+
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="/" class="btn btn-outline" style="border: none; opacity: 0.7;">
+                &lsaquo; Back to Analysis Terminal
+            </a>
+        </div>
+    </div>
+</body>
+
+</html>

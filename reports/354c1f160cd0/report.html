@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="utf-8" />
+    <title>Digital Forensics Image Report</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            margin: 0;
+            padding: 40px;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .report-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        header {
+            border-bottom: 3px solid #08294b;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        h1 {
+            color: #08294b;
+            margin: 0;
+            font-size: 28px;
+        }
+
+        h2 {
+            color: #08294b;
+            border-right: 5px solid #08294b;
+            padding-right: 15px;
+            margin-top: 30px;
+            font-size: 22px;
+        }
+
+        h3 {
+            color: #444;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .meta {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            font-size: 14px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .meta div b {
+            color: #08294b;
+        }
+
+        .box {
+            border: 1px solid #e1e4e8;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            background: #fff;
+        }
+
+        .summary-box {
+            background: #f0f7ff;
+            border: none;
+            border-right: 8px solid #08294b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            transition: transform 0.3s;
+        }
+
+        img:hover {
+            transform: scale(1.02);
+        }
+
+        pre {
+            background: #272c34;
+            color: #abb2bf;
+            padding: 15px;
+            overflow: auto;
+            border-radius: 10px;
+            font-family: 'Courier New', Courier, monospace;
+            direction: ltr;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 50px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .red {
+            background: #e74c3c;
+        }
+
+        .orange {
+            background: #f39c12;
+        }
+
+        .green {
+            background: #27ae60;
+        }
+
+        .kv {
+            margin: 10px 0;
+        }
+
+        .hint {
+            color: #7f8c8d;
+            font-size: 13px;
+            margin-top: 15px;
+            font-style: italic;
+        }
+
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 12px;
+            color: #95a5a6;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+
+            .report-container {
+                box-shadow: none;
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .btn-download {
+                display: none;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="report-container">
+        <header>
+            <h1>تقرير التحقيق الجنائي الرقمي للصورة</h1>
+            <div style="text-align: left; direction: ltr;">
+                <small>Forensic Report</small>
+            </div>
+        </header>
+
+        <div class="meta">
+            <div><b>رقم التقرير:</b> 354c1f160cd0</div>
+            <div><b>تاريخ الإنشاء (UTC):</b> 2025-12-24 20:15:35</div>
+            <div><b>اسم الملف:</b> ‏لقطة الشاشة ٢٠٢٥-١٢-٢١ في ٢٢.١٢.١٥.png</div>
+            <div><b>حجم الملف:</b> 1196326 بايت</div>
+        </div>
+
+        <div class="box summary-box">
+            <h2>ملخص مبسّط (مناسب لغير المختصين)</h2>
+            <div class="kv">
+                <b>التقييم العام:</b>
+                <span class="badge green">سليم</span>
+            </div>
+            <div class="kv"><b>هل يوجد بيانات/محتوى مخفي؟</b> لا يوجد</div>
+            <div class="kv"><b>التفاصيل:</b> لم يتم العثور على أي بيانات مخفية واضحة في هذه الصورة.</div>
+            <div class="kv"><b>احتمال التلاعب بالصورة:</b> تحذير: نقص بيانات الكاميرا قد يشير إلى معالجة الصورة برمجياً.</div>
+
+            <div class="kv">
+                <b>ملاحظات إضافية:</b>
+                تم فحص البصمة الرقمية والبيانات الوصفية.
+            </div>
+
+            <div class="hint">هذا التقرير هو فحص آلي ولا يغني عن التحقيق الجنائي اليدوي في الحالات المعقدة.</div>
+        </div>
+
+        <div class="box">
+            <h2>1) ملخص سلامة الصورة (Image Integrity)</h2>
+            <p>يتم التحقق من سلامة الملف عبر البصمات الرقمية (Hashes) لضمان عدم تغيير المحتوى.</p>
+            <div style="direction: ltr;">
+                <div class="kv"><b>MD5:</b> <code>0d8f0a9dc902781cefbf9fd2ad6c48c3</code></div>
+                <div class="kv"><b>SHA-256:</b> <code>091f7e556796b56efbb2c08bca868415ec32f0ff6d4aecf89d0689328c6cff84</code></div>
+            </div>
+        </div>
+
+        <div class="box">
+            <h2>2) مؤشرات التلاعب (Metadata Analysis)</h2>
+            <div class="kv"><b>الكاميرا:</b> None None</div>
+            <div class="kv"><b>تاريخ الالتقاط:</b> None</div>
+            <div class="kv"><b>إحداثيات GPS:</b>
+                
+                غير متوفرة
+                
+            </div>
+            <div class="kv"><b>المصدر:</b> PIL</div>
+        </div>
+
+        <div class="box">
+            <h2>3) كشف المحتوى المخفي (Steganography)</h2>
+            <p>لم يتم العثور على أي بيانات مخفية واضحة في هذه الصورة.</p>
+        </div>
+
+        
+        <div class="box">
+            <h2>4) تحليل مستوى الخطأ (ELA - Error Level Analysis)</h2>
+            <p>يستخدم هذا التحليل للكشف عن التلاعب الرقمي عبر إظهار الفروقات في مستويات ضغط الـ JPEG. المناطق الساطعة
+                جداً قد تشير إلى محتوى تمت إضافته أو تعديله برمجياً.</p>
+            <div style="text-align: center;">
+                <img src="/report/354c1f160cd0/file/ela_heatmap.jpg" alt="ELA Heatmap" style="max-width: 80%; border: 3px solid #08294b;" />
+            </div>
+        </div>
+        
+
+        <div class="footer">
+            تم إنشاء هذا التقرير آلياً بواسطة نظام التحقيق الجنائي الرقمي - جميع الحقوق محفوظة
+        </div>
+    </div>
+</body>
+
+</html>

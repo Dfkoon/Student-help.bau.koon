@@ -1,0 +1,45 @@
+{
+  "report_id": "fe9febd8d7c0",
+  "generated_at": "2025-12-25 12:26:11",
+  "input_filename": " -3.jpg",
+  "file_size": 37761,
+  "hashes": {
+    "md5": "24f4585c5cea8bfaa379c61d66e47a63",
+    "sha256": "ffbb152e7b74e64474328f0b26ce745be99fc8d8e75033f627f5d3c82791839d"
+  },
+  "metadata": {
+    "camera_make": null,
+    "camera_model": null,
+    "datetime_original": null,
+    "gps": {
+      "present": false,
+      "latitude": null,
+      "longitude": null
+    },
+    "source": "PIL",
+    "note": null
+  },
+  "status": "NOT_DETECTED",
+  "explanation": "No obvious hidden data found in this image.",
+  "ela_image": "/report/fe9febd8d7c0/file/ela_heatmap.jpg",
+  "plain_badge_class": "green",
+  "plain_overall": "Clean",
+  "plain_hidden_answer": "None",
+  "plain_hidden_explain": "No obvious hidden data found in this image.",
+  "plain_tampering_explain": "Warning: Lack of camera data may indicate software processing.",
+  "plain_signals": "Digital fingerprint and metadata verified.",
+  "plain_note": "This report is an automated analysis and does not replace manual forensic investigation in complex cases.",
+  "ai_result": {
+    "is_manipulated": true,
+    "confidence": 88.35,
+    "raw_score": 0.5341,
+    "verdict": "Suspicious - Potential manipulation detected (Confidence: Moderate-High)",
+    "certainty_level": "Moderate-High",
+    "model_available": false,
+    "success": true
+  },
+  "ai_available": true,
+  "ai_confidence": 88.35,
+  "ai_verdict": "Suspicious - Potential manipulation detected (Confidence: Moderate-High)",
+  "ai_is_manipulated": true
+}

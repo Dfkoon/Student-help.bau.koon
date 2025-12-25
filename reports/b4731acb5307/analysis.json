@@ -1,0 +1,45 @@
+{
+  "report_id": "b4731acb5307",
+  "generated_at": "2025-12-25 11:12:18",
+  "input_filename": "\u200f\u0644\u0642\u0637\u0629 \u0627\u0644\u0634\u0627\u0634\u0629 \u0662\u0660\u0662\u0665-\u0661\u0662-\u0661\u0666 \u0641\u064a \u0662\u0660.\u0660\u0663.\u0663\u0665.png",
+  "file_size": 311212,
+  "hashes": {
+    "md5": "2787d729355ae8220f34d270d9186a55",
+    "sha256": "f56d8d6e29f8e2ca05952199beb88fa91ef8418c9208677b9b5c1b8c6146c9e1"
+  },
+  "metadata": {
+    "camera_make": null,
+    "camera_model": null,
+    "datetime_original": null,
+    "gps": {
+      "present": false,
+      "latitude": null,
+      "longitude": null
+    },
+    "source": "PIL",
+    "note": null
+  },
+  "status": "NOT_DETECTED",
+  "explanation": "No obvious hidden data found in this image.",
+  "ela_image": "/report/b4731acb5307/file/ela_heatmap.jpg",
+  "plain_badge_class": "green",
+  "plain_overall": "Clean",
+  "plain_hidden_answer": "None",
+  "plain_hidden_explain": "No obvious hidden data found in this image.",
+  "plain_tampering_explain": "Warning: Lack of camera data may indicate software processing.",
+  "plain_signals": "Digital fingerprint and metadata verified.",
+  "plain_note": "This report is an automated analysis and does not replace manual forensic investigation in complex cases.",
+  "ai_result": {
+    "is_manipulated": false,
+    "confidence": 87.78,
+    "raw_score": 0.4888,
+    "verdict": "Image appears authentic (Confidence: Moderate-High)",
+    "certainty_level": "Moderate-High",
+    "model_available": false,
+    "success": true
+  },
+  "ai_available": true,
+  "ai_confidence": 87.78,
+  "ai_verdict": "Image appears authentic (Confidence: Moderate-High)",
+  "ai_is_manipulated": false
+}
