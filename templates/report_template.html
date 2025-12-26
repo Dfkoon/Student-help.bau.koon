@@ -190,6 +190,18 @@
         <div class="box">
             <h2>3) Steganography Analysis</h2>
             <p>{{explanation}}</p>
+            {% if payload_url %}
+            <div
+                style="background: #fffbeb; border: 1px solid #fde68a; padding: 15px; border-radius: 8px; margin-top: 10px;">
+                <b
+                    style="color: #92400e; font-size: 13px; text-transform: uppercase; display: block; margin-bottom: 5px;">Extracted
+                    Payload Info:</b>
+                <p style="font-size: 13px; color: #4b5563; margin: 0;">
+                    Additional data was successfully extracted from the image. This data is available for download in
+                    the digital version of this report.
+                </p>
+            </div>
+            {% endif %}
         </div>
 
         {% if ai_available %}

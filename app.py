@@ -210,25 +210,31 @@ def extract_exif_with_pil(image_path: str) -> Dict[str, Any]:
 # =========================
 # Hidden data detection
 # =========================
-def detect_hidden_data(image_path: str, report_path: str) -> Tuple[str, str]:
-    payload = os.path.join(report_path, "payload.bin")
+def detect_hidden_data(image_path: str, report_id: str) -> Tuple[str, str, Optional[str]]:
+    report_path = os.path.join(REPORTS_DIR, report_id)
+    payload_file = os.path.join(report_path, "payload.bin")
 
     # Try steghide (often requires password, but we try empty)
-    safe_run(["steghide", "extract", "-sf", image_path, "-p", "", "-xf", payload])
+    safe_run(["steghide", "extract", "-sf", image_path, "-p", "", "-xf", payload_file])
 
-    if os.path.exists(payload) and os.path.getsize(payload) > 0:
-        return "DETECTED", "Hidden data successfully extracted using Steghide."
+    if os.path.exists(payload_file) and os.path.getsize(payload_file) > 0:
+        return "DETECTED", "Hidden data successfully extracted using Steghide.", "payload.bin"
 
     # Try binwalk
-    bw = safe_run(["binwalk", "-e", image_path])
+    bw = safe_run(["binwalk", "-e", image_path, "-C", report_path])
     if bw["available"]:
-        extracted_dir = os.path.join(os.path.dirname(image_path), f"_{os.path.basename(image_path)}.extracted")
+        extracted_dir_name = f"_{os.path.basename(image_path)}.extracted"
+        extracted_dir = os.path.join(report_path, extracted_dir_name)
         if os.path.isdir(extracted_dir):
             files = os.listdir(extracted_dir)
             if files:
-                return "DETECTED", "Embedded files found within the image."
+                # Zip the extracted directory for download
+                zip_name = f"extracted_files_{report_id}.zip"
+                zip_path = os.path.join(report_path, zip_name)
+                shutil.make_archive(zip_path.replace('.zip', ''), 'zip', extracted_dir)
+                return "DETECTED", "Embedded files found and extracted within the image.", zip_name
 
-    return "NOT_DETECTED", "No obvious hidden data found in this image."
+    return "NOT_DETECTED", "No obvious hidden data found in this image.", None
 
 # =========================
 # Routes
@@ -286,7 +292,7 @@ def gui_analyze():
 
     hashes = compute_hashes(image_path)
     metadata = extract_exif_with_pil(image_path)
-    status, explanation = detect_hidden_data(image_path, report_path)
+    status, explanation, payload_filename = detect_hidden_data(image_path, report_id)
     
     # AI Detection
     ai_result = None
@@ -312,6 +318,27 @@ def gui_analyze():
             'model_available': False
         }
 
+    # Determine Overall Result
+    is_ai_suspicious = ai_result.get('is_manipulated', False) if ai_result else False
+    is_traditional_suspicious = (status == "DETECTED")
+    
+    is_overall_suspicious = is_ai_suspicious or is_traditional_suspicious
+    
+    # Unified Explanation
+    if is_overall_suspicious:
+        overall_verdict = "Suspicious / Contains Hidden Data"
+        overall_badge = "red"
+        if is_ai_suspicious and is_traditional_suspicious:
+            unified_explanation = "Multiple detection methods (AI and traditional) have identified high signs of manipulation or hidden data."
+        elif is_ai_suspicious:
+            unified_explanation = f"AI analysis has flagged this image as suspicious (Verdict: {ai_result.get('verdict', 'Suspicious')})."
+        else:
+            unified_explanation = explanation
+    else:
+        overall_verdict = "Clean"
+        overall_badge = "green"
+        unified_explanation = "No obvious signs of manipulation or hidden data found."
+
     # Dynamic Report Content (English)
     report_data = {
         "report_id": report_id,
@@ -323,11 +350,11 @@ def gui_analyze():
         "status": status,
         "explanation": explanation,
         "ela_image": f"/report/{report_id}/file/{ela_filename}" if ela_success else None,
-        "plain_badge_class": "green" if status == "NOT_DETECTED" else "red",
-        "plain_overall": "Clean" if status == "NOT_DETECTED" else "Suspicious / Contains Hidden Data",
-        "plain_hidden_answer": "None" if status == "NOT_DETECTED" else "Yes, content detected",
-        "plain_hidden_explain": explanation,
-        "plain_tampering_explain": "Based on preliminary EXIF data analysis, the image appears authentic." if metadata['camera_make'] else "Warning: Lack of camera data may indicate software processing.",
+        "plain_badge_class": overall_badge,
+        "plain_overall": overall_verdict,
+        "plain_hidden_answer": "Yes, content detected" if is_overall_suspicious else "None",
+        "plain_hidden_explain": unified_explanation,
+        "plain_tampering_explain": "Based on preliminary EXIF data analysis, the image appears authentic." if metadata.get('camera_make') else "Warning: Lack of camera data may indicate software processing.",
         "plain_signals": "Digital fingerprint and metadata verified.",
         "plain_note": "This report is an automated analysis and does not replace manual forensic investigation in complex cases.",
         # AI Detection Results
@@ -335,7 +362,8 @@ def gui_analyze():
         "ai_available": AI_AVAILABLE and ai_result.get('success', False),
         "ai_confidence": ai_result.get('confidence', 75) if ai_result else 75,
         "ai_verdict": ai_result.get('verdict', 'Not available') if ai_result else 'Not available',
-        "ai_is_manipulated": ai_result.get('is_manipulated', False) if ai_result else False,
+        "ai_is_manipulated": is_ai_suspicious,
+        "payload_url": f"/report/{report_id}/payload" if payload_filename else None,
     }
 
     # Save Analysis JSON
@@ -372,6 +400,24 @@ def view_json(rid):
 def download_report(rid):
     path = os.path.join(REPORTS_DIR, rid, "report.html")
     return send_file(path, as_attachment=True, download_name=f"forensic_report_{rid}.html")
+
+@app.route("/report/<rid>/payload")
+def download_payload(rid):
+    # Find any .bin or .zip file that was extracted
+    report_path = os.path.join(REPORTS_DIR, rid)
+    if not os.path.exists(report_path):
+        return jsonify({"error": "Report not found"}), 404
+    
+    files = os.listdir(report_path)
+    payload_file = None
+    for f in files:
+        if f.endswith(".zip") or f == "payload.bin":
+            payload_file = f
+            break
+            
+    if payload_file:
+        return send_file(os.path.join(report_path, payload_file), as_attachment=True)
+    return jsonify({"error": "No payload found"}), 404
 
 @app.route("/report/<rid>/pdf")
 def download_pdf(rid):

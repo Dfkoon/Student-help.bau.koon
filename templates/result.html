@@ -274,6 +274,11 @@
             <p style="margin-bottom: 2rem; color: var(--text-muted);">View the full forensic report in your browser or
                 download it for documentation.</p>
             <div class="actions">
+                {% if payload_url %}
+                <a href="{{ payload_url }}" class="btn btn-primary" style="background: var(--success);">
+                    <span>📥</span> Download Extracted Data
+                </a>
+                {% endif %}
                 <a href="{{ html_url }}" target="_blank" class="btn btn-outline">
                     <span>👁️</span> View Document
                 </a>
