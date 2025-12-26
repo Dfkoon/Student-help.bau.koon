@@ -202,12 +202,25 @@
                 </span>
             </div>
             <div class="kv"><b>Confidence Score:</b> {{ "%.2f"|format(ai_confidence) }}% (Scale: 75-100%)</div>
-            <div class="kv"><b>Detection Method:</b> Deep Learning (EfficientNet-B0 Neural Network)</div>
+
+            <div
+                style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #e2e8f0;">
+                <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #475569;">Detailed Scoring Breakdown:</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
+                    <div><b>ML Probability:</b> {{ ai_result.ml_probability }}</div>
+                    <div><b>LSB Entropy:</b> {{ ai_result.lsb_entropy }}</div>
+                    <div><b>EXIF Suspicion Score:</b> {{ ai_result.exif_score }}</div>
+                    <div><b>Total Risk Score:</b> {{ ai_result.score }}</div>
+                </div>
+            </div>
+
+            <div class="kv" style="margin-top: 15px;"><b>Detection Method:</b> Hybrid StegoNet (EfficientNet + SRM
+                HighPass)</div>
             <div class="kv"><b>Certainty Level:</b> {{ ai_result.certainty_level if ai_result else 'N/A' }}</div>
             <p style="font-size: 13px; color: #64748b; margin-top: 15px; font-style: italic;">
-                An advanced AI model was used to analyze the image and detect any modifications or hidden data.
-                The model is trained on thousands of images to identify abnormal patterns.
-                Confidence scores range from 75% (minimum) to 100% (maximum certainty).
+                The analysis combines Deep Learning (StegoNet) with statistical heuristics (LSB Entropy & EXIF
+                analysis).
+                A Total Risk Score >= 60 indicates high likelihood of steganography.
             </p>
         </div>
         {% endif %}
