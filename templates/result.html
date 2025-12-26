@@ -192,11 +192,9 @@
     <div class="container">
         <header>
             <h1>Forensic Analysis Complete</h1>
-            {% if plain_overall == "Clean" %}
-            <div class="status-badge badge-safe">Clean: No Hidden Data Found</div>
-            {% else %}
-            <div class="status-badge badge-danger">High Risk: {{ plain_overall }}</div>
-            {% endif %}
+            <div class="status-badge {% if plain_badge_class == 'red' %}badge-danger{% else %}badge-safe{% endif %}">
+                {{ plain_overall }}
+            </div>
         </header>
 
         <div class="grid">
