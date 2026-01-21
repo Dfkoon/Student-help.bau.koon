@@ -92,3 +92,65 @@ def exif_score(image_path):
     except Exception as e:
         print(f"Error scoring EXIF: {e}")
         return 0
+
+def chi_square_test(image_path: str) -> float:
+    """
+    Classic Chi-Square test for LSB steganography.
+    Analyzes 'Pairs of Values' (PoV) distribution.
+    Returns a probability (0-1) where higher = more likely to have hidden data.
+    """
+    try:
+        from PIL import Image
+        import numpy as np
+        
+        img = Image.open(image_path).convert('L')
+        pixels = np.array(img).flatten()
+        
+        # Count frequencies of each pixel value
+        counts = np.zeros(256)
+        for p in pixels:
+            counts[p] += 1
+            
+        chi_sq = 0
+        df = 0
+        
+        # Analyze pairs (0,1), (2,3) ... (254,255)
+        for i in range(0, 256, 2):
+            y_obs = counts[i]
+            y_exp = (counts[i] + counts[i+1]) / 2.0
+            
+            if y_exp > 0:
+                chi_sq += ((y_obs - y_exp) ** 2) / y_exp
+                df += 1
+        
+        if df == 0:
+            return 0.0
+            
+        # Simplified probability estimation (higher chi_sq = higher probability of stego)
+        # In professional steganography, we'd use the incomplete gamma function, 
+        # but a normalized score works well for this heuristic.
+        prob = min(chi_sq / (df * 10), 1.0) # Normalizing roughly
+        return float(prob)
+        
+    except Exception as e:
+        print(f"Chi-Square error: {e}")
+        return 0.0
+
+def bit_plane_noise(image_path: str) -> float:
+    """Analyze high-frequency noise in the LSB plane."""
+    try:
+        from PIL import Image
+        import numpy as np
+        
+        img = Image.open(image_path).convert('L')
+        pixels = np.array(img)
+        lsb_plane = pixels & 1
+        
+        # Calculate horizontal and vertical transitions
+        h_diff = np.abs(lsb_plane[:, :-1] - lsb_plane[:, 1:])
+        v_diff = np.abs(lsb_plane[:-1, :] - lsb_plane[1:, :])
+        
+        noise_density = (np.sum(h_diff) + np.sum(v_diff)) / (lsb_plane.size * 2)
+        return float(noise_density)
+    except:
+        return 0.0

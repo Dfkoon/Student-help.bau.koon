@@ -217,22 +217,23 @@
 
             <div
                 style="background: white; padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px solid #e2e8f0;">
-                <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #475569;">Detailed Scoring Breakdown:</h3>
+                <h3 style="margin: 0 0 10px 0; font-size: 14px; color: #475569;">Precision Analysis Breakdown:</h3>
                 <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 13px;">
                     <div><b>ML Probability:</b> {{ ai_result.ml_probability }}</div>
+                    <div><b>Chi-Square Stat:</b> {{ ai_result.chi_square_prob }}</div>
                     <div><b>LSB Entropy:</b> {{ ai_result.lsb_entropy }}</div>
-                    <div><b>EXIF Suspicion Score:</b> {{ ai_result.exif_score }}</div>
-                    <div><b>Total Risk Score:</b> {{ ai_result.score }}</div>
+                    <div><b>Noise Density:</b> {{ ai_result.noise_density }}</div>
+                    <div><b>EXIF Score:</b> {{ ai_result.exif_score }}</div>
+                    <div><b>Certainty Index:</b> {{ ai_result.certainty }}%</div>
                 </div>
             </div>
 
-            <div class="kv" style="margin-top: 15px;"><b>Detection Method:</b> Hybrid StegoNet (EfficientNet + SRM
-                HighPass)</div>
-            <div class="kv"><b>Certainty Level:</b> {{ ai_result.certainty_level if ai_result else 'N/A' }}</div>
+            <div class="kv" style="margin-top: 15px;"><b>Forensic Method:</b> Ensemble Engine (CNN + Statistical PoV +
+                LSB Noise)</div>
             <p style="font-size: 13px; color: #64748b; margin-top: 15px; font-style: italic;">
-                The analysis combines Deep Learning (StegoNet) with statistical heuristics (LSB Entropy & EXIF
-                analysis).
-                A Total Risk Score >= 60 indicates high likelihood of steganography.
+                The analysis uses a weighted ensemble that cross-references neural network patterns with statistical
+                Chi-Square
+                and bit-plane noise analysis. A confidence score >= 75% indicates a forensic detection.
             </p>
         </div>
         {% endif %}

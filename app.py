@@ -9,12 +9,13 @@ from typing import Dict, Tuple, Any, Optional
 
 from flask import Flask, request, jsonify, send_file, render_template
 from PIL import Image, ExifTags, ImageChops
+from werkzeug.utils import secure_filename
 
 # AI Detection Module
 try:
     from ai_model import quick_predict
     AI_AVAILABLE = True
-    print("✅ AI Detection Model loaded successfully")
+    print("✅ AI Detection Module imported successfully")
 except ImportError as e:
     AI_AVAILABLE = False
     print(f"⚠️ AI Detection not available: {e}")
@@ -255,9 +256,9 @@ def gui_hash():
     if not is_valid:
         return jsonify({"ok": False, "error": message}), 400
     
-    tmp_path = os.path.join(REPORTS_DIR, f"tmp_{uuid.uuid4().hex}.bin")
-
     try:
+        filename = secure_filename(image.filename)
+        tmp_path = os.path.join(REPORTS_DIR, f"tmp_{uuid.uuid4().hex}_{filename}")
         image.save(tmp_path)
         hashes = compute_hashes(tmp_path)
         return jsonify({"ok": True, "hashes": hashes})
@@ -282,7 +283,8 @@ def gui_analyze():
     report_path = os.path.join(REPORTS_DIR, report_id)
     os.makedirs(report_path, exist_ok=True)
 
-    image_path = os.path.join(report_path, image.filename)
+    filename = secure_filename(image.filename)
+    image_path = os.path.join(report_path, filename)
     image.save(image_path)
 
     # Perform ELA
@@ -296,25 +298,32 @@ def gui_analyze():
     
     # AI Detection
     ai_result = None
+    model_path = os.path.join(BASE_DIR, "models", "best_stego_efficientnet.pth")
+    model_exists = os.path.exists(model_path)
+
     if AI_AVAILABLE:
         try:
-            model_path = os.path.join(BASE_DIR, "models", "best_stego_efficientnet.pth")
-            ai_result = quick_predict(image_path, model_path if os.path.exists(model_path) else None)
+            ai_result = quick_predict(image_path, model_path if model_exists else None)
+            if not model_exists:
+                ai_result['success'] = False
+                ai_result['verdict'] = 'نموذج AI مفقود'
+                ai_result['verdict_en'] = 'AI Model Missing'
+                ai_result['note'] = 'Using untrained fallback model logic.'
         except Exception as e:
             print(f"AI Detection Error: {e}")
             ai_result = {
                 'success': False,
                 'confidence': 0,
-                'verdict': 'غير متاح',
-                'verdict_en': 'Not available',
+                'verdict': 'خطأ في التحليل',
+                'verdict_en': 'Analysis Error',
                 'error': str(e)
             }
     else:
         ai_result = {
             'success': False,
             'confidence': 0,
-            'verdict': 'نموذج AI غير محمّل',
-            'verdict_en': 'AI model not loaded',
+            'verdict': 'الذكاء الاصطناعي غير متوفر',
+            'verdict_en': 'AI Not Available',
             'model_available': False
         }
 
@@ -343,7 +352,7 @@ def gui_analyze():
     report_data = {
         "report_id": report_id,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
-        "input_filename": image.filename,
+        "input_filename": secure_filename(image.filename),
         "file_size": os.path.getsize(image_path),
         "hashes": hashes,
         "metadata": metadata,
@@ -359,7 +368,7 @@ def gui_analyze():
         "plain_note": "This report is an automated analysis and does not replace manual forensic investigation in complex cases.",
         # AI Detection Results
         "ai_result": ai_result,
-        "ai_available": AI_AVAILABLE and ai_result.get('success', False),
+        "ai_available": AI_AVAILABLE,
         "ai_confidence": ai_result.get('confidence', 75) if ai_result else 75,
         "ai_verdict": ai_result.get('verdict', 'Not available') if ai_result else 'Not available',
         "ai_is_manipulated": is_ai_suspicious,
@@ -440,7 +449,7 @@ def download_pdf(rid):
             // Trigger print dialog
             setTimeout(function() {
                 window.print();
-            }, 500);
+            }, 800);
         };
     </script>
     """
