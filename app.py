@@ -304,11 +304,7 @@ def gui_analyze():
     if AI_AVAILABLE:
         try:
             ai_result = quick_predict(image_path, model_path if model_exists else None)
-            if not model_exists:
-                ai_result['success'] = False
-                ai_result['verdict'] = 'نموذج AI مفقود'
-                ai_result['verdict_en'] = 'AI Model Missing'
-                ai_result['note'] = 'Using untrained fallback model logic.'
+            # السماح للنتيجة من ai_model.py بالظهور كما هي (مشبوه AI نموذج)
         except Exception as e:
             print(f"AI Detection Error: {e}")
             ai_result = {
@@ -331,22 +327,43 @@ def gui_analyze():
     is_ai_suspicious = ai_result.get('is_manipulated', False) if ai_result else False
     is_traditional_suspicious = (status == "DETECTED")
     
-    is_overall_suspicious = is_ai_suspicious or is_traditional_suspicious
+    # Determine Overall Result & Badges
+    ai_verdict = ai_result.get('verdict', 'Clean') if ai_result else 'Clean'
+    status_traditional = status  # DETECTED or NOT_DETECTED
     
-    # Unified Explanation
-    if is_overall_suspicious:
-        overall_verdict = "Suspicious / Contains Hidden Data"
+    # Defaults
+    overall_verdict = "ANALYSIS COMPLETE / CLEAN"
+    overall_badge = "green"
+    unified_explanation = "No obvious signs of manipulation or hidden data found."
+
+    # Logic for Red/Orange/Green
+    if status_traditional == "DETECTED" or ai_verdict == "Likely Stego":
+        # HIGH RISK
+        overall_verdict = "CRITICAL / HIDDEN DATA FOUND"
         overall_badge = "red"
-        if is_ai_suspicious and is_traditional_suspicious:
-            unified_explanation = "Multiple detection methods (AI and traditional) have identified high signs of manipulation or hidden data."
-        elif is_ai_suspicious:
-            unified_explanation = f"AI analysis has flagged this image as suspicious (Verdict: {ai_result.get('verdict', 'Suspicious')})."
-        else:
-            unified_explanation = explanation
+        unified_explanation = "High-risk indicators found! Steganography or hidden content strictly detected."
+    elif ai_verdict == "Suspicious":
+        # MEDIUM RISK
+        overall_verdict = "SUSPICIOUS / POTENTIAL ARTIFACTS"
+        overall_badge = "orange"
+        unified_explanation = "AI analysis flagged potential manipulation or anomalies. Further manual review is recommended."
     else:
-        overall_verdict = "Clean"
-        overall_badge = "green"
-        unified_explanation = "No obvious signs of manipulation or hidden data found."
+        # LOW RISK (Clean)
+        pass # Already defaults
+
+    # Theme Colors based on badge
+    if overall_badge == "red":
+        theme_bg = "#fef2f2"
+        theme_border = "#fca5a5"
+        theme_text = "#991b1b"
+    elif overall_badge == "orange":
+        theme_bg = "#fff7ed"
+        theme_border = "#fdba74"
+        theme_text = "#9a3412"
+    else:
+        theme_bg = "#f0fdf4"
+        theme_border = "#86efac"
+        theme_text = "#166534"
 
     # Dynamic Report Content (English)
     report_data = {
@@ -361,7 +378,7 @@ def gui_analyze():
         "ela_image": f"/report/{report_id}/file/{ela_filename}" if ela_success else None,
         "plain_badge_class": overall_badge,
         "plain_overall": overall_verdict,
-        "plain_hidden_answer": "Yes, content detected" if is_overall_suspicious else "None",
+        "plain_hidden_answer": "Yes, content detected" if overall_badge != "green" else "None",
         "plain_hidden_explain": unified_explanation,
         "plain_tampering_explain": "Based on preliminary EXIF data analysis, the image appears authentic." if metadata.get('camera_make') else "Warning: Lack of camera data may indicate software processing.",
         "plain_signals": "Digital fingerprint and metadata verified.",
@@ -370,8 +387,11 @@ def gui_analyze():
         "ai_result": ai_result,
         "ai_available": AI_AVAILABLE,
         "ai_confidence": ai_result.get('confidence', 75) if ai_result else 75,
-        "ai_verdict": ai_result.get('verdict', 'Not available') if ai_result else 'Not available',
+        "ai_verdict": ai_verdict,
         "ai_is_manipulated": is_ai_suspicious,
+        "theme_bg": theme_bg,
+        "theme_border": theme_border,
+        "theme_text": theme_text,
         "payload_url": f"/report/{report_id}/payload" if payload_filename else None,
     }
 

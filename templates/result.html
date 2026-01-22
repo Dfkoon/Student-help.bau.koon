@@ -11,6 +11,7 @@
         :root {
             --primary: #6366f1;
             --success: #10b981;
+            --warning: #f97316;
             --danger: #ef4444;
             --bg: #0f172a;
             --card-bg: rgba(30, 41, 59, 0.7);
@@ -76,6 +77,12 @@
             background: rgba(16, 185, 129, 0.2);
             color: var(--success);
             border: 1px solid var(--success);
+        }
+
+        .badge-warning {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--warning);
+            border: 1px solid var(--warning);
         }
 
         .badge-danger {
@@ -192,7 +199,8 @@
     <div class="container">
         <header>
             <h1>Forensic Analysis Complete</h1>
-            <div class="status-badge {% if plain_badge_class == 'red' %}badge-danger{% else %}badge-safe{% endif %}">
+            <div
+                class="status-badge {% if plain_badge_class == 'red' %}badge-danger{% elif plain_badge_class == 'orange' %}badge-warning{% else %}badge-safe{% endif %}">
                 {{ plain_overall }}
             </div>
         </header>
@@ -231,12 +239,12 @@
 
             {% if ai_available %}
             <div class="card"
-                style="border: 2px solid {% if ai_is_manipulated %}var(--danger){% else %}var(--success){% endif %};">
+                style="border: 2px solid {% if plain_badge_class == 'red' %}var(--danger){% elif plain_badge_class == 'orange' %}var(--warning){% else %}var(--success){% endif %};">
                 <h3>🤖 AI Detection Analysis</h3>
                 <div class="data-row">
                     <div class="label">AI Verdict</div>
                     <div class="value"
-                        style="background: {% if ai_is_manipulated %}rgba(239, 68, 68, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; color: {% if ai_is_manipulated %}var(--danger){% else %}var(--success){% endif %}; font-weight: 600;">
+                        style="background: {% if plain_badge_class == 'red' %}rgba(239, 68, 68, 0.1){% elif plain_badge_class == 'orange' %}rgba(249, 115, 22, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; color: {% if plain_badge_class == 'red' %}var(--danger){% elif plain_badge_class == 'orange' %}var(--warning){% else %}var(--success){% endif %}; font-weight: 600;">
                         {{ ai_verdict }}
                     </div>
                 </div>

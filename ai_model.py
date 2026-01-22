@@ -120,12 +120,19 @@ class StegoDetector:
             # PRECISION MULTI-SCORING
             # =============================
             # Weighted ensemble of different forensic tests
-            # 1. ML Probability (Weight: 40%) - Neural Net detected patterns
-            # 2. Chi-Square Stat (Weight: 30%) - Statistical bit distribution
-            # 3. LSB Entropy (Weight: 20%) - Information density in LSB
-            # 4. Bit-Plane Noise (Weight: 10%) - High-frequency noise analysis
             
-            combined_score = (ml_prob * 0.4) + (chi_prob * 0.3) + (min(entropy, 1.0) * 0.2) + (min(noise_val * 2, 1.0) * 0.1)
+            if self.model_loaded:
+                # Full AI + Statistical Analysis
+                # 1. ML Probability (Weight: 40%)
+                # 2. Chi-Square Stat (Weight: 30%)
+                # 3. LSB Entropy (Weight: 20%)
+                # 4. Bit-Plane Noise (Weight: 10%)
+                combined_score = (ml_prob * 0.4) + (chi_prob * 0.3) + (min(entropy, 1.0) * 0.2) + (min(noise_val * 2, 1.0) * 0.1)
+            else:
+                # Statistical Analysis Only (Fallback for Precision)
+                # Redistribute weights since AI model is untrained/missing
+                # Chi-Square (50%), Entropy (30%), Noise (20%)
+                combined_score = (chi_prob * 0.5) + (min(entropy, 1.0) * 0.3) + (min(noise_val * 2, 1.0) * 0.2)
             
             # Map to 0-100 scale for UI (Scaling to professional forensic standards)
             confidence = round(75 + (min(combined_score, 1.0) * 25), 2)

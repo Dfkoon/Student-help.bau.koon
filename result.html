@@ -192,18 +192,16 @@
     <div class="container">
         <header>
             <h1>Forensic Analysis Complete</h1>
-            {% if status == "DETECTED" %}
-            <div class="status-badge badge-danger">High Risk: Hidden Data Detected</div>
-            {% else %}
-            <div class="status-badge badge-safe">Clean: No Hidden Data Found</div>
-            {% endif %}
+            <div class="status-badge badge-danger">
+                Suspicious / Contains Hidden Data
+            </div>
         </header>
 
         <div class="grid">
             <div class="card">
                 <h3>🔍 Technical Findings</h3>
                 <p style="line-height: 1.6; color: var(--text-muted);">
-                    {{ explanation }}
+                    No obvious hidden data found in this image.
                 </p>
             </div>
 
@@ -211,11 +209,11 @@
                 <h3>🆔 Cryptographic Signatures</h3>
                 <div class="data-row">
                     <div class="label">MD5 Hash</div>
-                    <div class="value">{{ hashes.md5 }}</div>
+                    <div class="value">5a6d1df2212d15e25b721dd61657f851</div>
                 </div>
                 <div class="data-row">
                     <div class="label">SHA-256 Hash</div>
-                    <div class="value">{{ hashes.sha256 }}</div>
+                    <div class="value">4a5e1eba44d57f93dab5c7d01f6d763f8f85f391db6c23623efc419ae0001be6</div>
                 </div>
             </div>
 
@@ -223,50 +221,15 @@
                 <h3>📸 Metadata Summary</h3>
                 <div class="data-row">
                     <div class="label">Primary Device</div>
-                    <div class="value">{{ metadata.camera_make or 'Unknown' }} {{ metadata.camera_model or '' }}</div>
+                    <div class="value">Unknown </div>
                 </div>
                 <div class="data-row">
                     <div class="label">Capture Date</div>
-                    <div class="value">{{ metadata.datetime_original or 'Not Found' }}</div>
+                    <div class="value">Not Found</div>
                 </div>
             </div>
 
-            {% if ai_available %}
-            <div class="card"
-                style="border: 2px solid {% if ai_is_manipulated %}var(--danger){% else %}var(--success){% endif %};">
-                <h3>🤖 AI Detection Analysis</h3>
-                <div class="data-row">
-                    <div class="label">AI Verdict</div>
-                    <div class="value"
-                        style="background: {% if ai_is_manipulated %}rgba(239, 68, 68, 0.1){% else %}rgba(16, 185, 129, 0.1){% endif %}; color: {% if ai_is_manipulated %}var(--danger){% else %}var(--success){% endif %}; font-weight: 600;">
-                        {{ ai_verdict }}
-                    </div>
-                </div>
-                <div class="data-row">
-                    <div class="label">Confidence Level (75-100% Scale)</div>
-                    <div style="margin-top: 0.5rem;">
-                        <div
-                            style="background: rgba(0,0,0,0.2); border-radius: 999px; height: 28px; overflow: hidden; position: relative;">
-                            <!-- Calculate percentage for visual bar (0-100% for display) -->
-                            <div
-                                style="background: linear-gradient(90deg, {% if ai_confidence >= 90 %}#10b981{% elif ai_confidence >= 85 %}#22c55e{% elif ai_confidence >= 80 %}#84cc16{% else %}#eab308{% endif %}, {% if ai_confidence >= 90 %}#059669{% elif ai_confidence >= 85 %}#16a34a{% elif ai_confidence >= 80 %}#65a30d{% else %}#ca8a04{% endif %}); width: {{ ((ai_confidence - 75) / 25 * 100)|round }}%; height: 100%; transition: width 0.5s ease; display: flex; align-items: center; justify-content: center;">
-                                <span
-                                    style="font-size: 0.8rem; font-weight: 700; color: white; text-shadow: 0 1px 2px rgba(0,0,0,0.5);">{{
-                                    "%.1f"|format(ai_confidence) }}%</span>
-                            </div>
-                        </div>
-                        <div
-                            style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.3rem; text-align: center;">
-                            Range: 75% (Minimum) - 100% (Maximum)
-                        </div>
-                    </div>
-                </div>
-                <div class="data-row">
-                    <div class="label">Detection Method</div>
-                    <div class="value">Deep Learning (EfficientNet-B0 Neural Network)</div>
-                </div>
-            </div>
-            {% endif %}
+            
         </div>
 
         <div class="card action-card">
@@ -274,16 +237,17 @@
             <p style="margin-bottom: 2rem; color: var(--text-muted);">View the full forensic report in your browser or
                 download it for documentation.</p>
             <div class="actions">
-                <a href="{{ html_url }}" target="_blank" class="btn btn-outline">
+                
+                <a href="/report/b6b32b477bff/html" target="_blank" class="btn btn-outline">
                     <span>👁️</span> View Document
                 </a>
-                <a href="{{ json_url }}" target="_blank" class="btn btn-outline">
+                <a href="/report/b6b32b477bff/json" target="_blank" class="btn btn-outline">
                     <span>{ }</span> Raw JSON
                 </a>
-                <a href="{{ pdf_url }}" class="btn btn-primary">
+                <a href="/report/b6b32b477bff/pdf" class="btn btn-primary">
                     <span>📄</span> Download PDF Report
                 </a>
-                <a href="{{ download_url }}" class="btn btn-outline">
+                <a href="/report/b6b32b477bff/download" class="btn btn-outline">
                     <span>📥</span> Download HTML
                 </a>
             </div>

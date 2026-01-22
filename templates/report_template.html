@@ -114,6 +114,10 @@
             background: #ef4444;
         }
 
+        .orange {
+            background: #f97316;
+        }
+
         .green {
             background: #10b981;
         }
@@ -205,11 +209,10 @@
         </div>
 
         {% if ai_available %}
-        <div class="box"
-            style="background: {% if ai_is_manipulated %}#fef2f2{% else %}#f0fdf4{% endif %}; border: 2px solid {% if ai_is_manipulated %}#fca5a5{% else %}#86efac{% endif %};">
+        <div class="box" style="background: {{theme_bg}}; border: 2px solid {{theme_border}};">
             <h2>4) AI-Powered Detection Analysis</h2>
             <div class="kv"><b>AI Verdict:</b>
-                <span class="badge {% if ai_is_manipulated %}red{% else %}green{% endif %}">
+                <span class="badge {{plain_badge_class}}">
                     {{ ai_verdict }}
                 </span>
             </div>
