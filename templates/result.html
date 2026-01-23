@@ -249,6 +249,28 @@
                     </div>
                 </div>
                 <div class="data-row">
+                    <div class="label">SRM Noise Residual</div>
+                    <div class="value" style="font-family: 'JetBrains Mono', monospace; color: var(--text-main);">
+                        {{ "%.4f"|format(ai_result.srm_residual_score) if ai_result and ai_result.srm_residual_score is
+                        defined else '0.0000' }}
+                    </div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Chroma Anomaly Score</div>
+                    <div class="value" style="font-family: 'JetBrains Mono', monospace; color: var(--text-main);">
+                        {{ "%.4f"|format(ai_result.chroma_anomaly_score) if ai_result and ai_result.chroma_anomaly_score
+                        is defined else '0.0000' }}
+                    </div>
+                </div>
+                <div class="data-row">
+                    <div class="label">Luminance Consistency</div>
+                    <div class="value" style="font-family: 'JetBrains Mono', monospace; color: var(--text-main);">
+                        {{ "%.4f"|format(ai_result.lum_consistency_score) if ai_result and
+                        ai_result.lum_consistency_score
+                        is defined else '0.0000' }}
+                    </div>
+                </div>
+                <div class="data-row">
                     <div class="label">Confidence Level (75-100% Scale)</div>
                     <div style="margin-top: 0.5rem;">
                         <div
@@ -270,6 +292,34 @@
                 <div class="data-row">
                     <div class="label">Detection Method</div>
                     <div class="value">Deep Learning (EfficientNet-B0 Neural Network)</div>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Forensic Vision Section -->
+            {% if grayscale_image %}
+            <div class="card" style="grid-column: 1 / -1;">
+                <h3>👁️ Forensic Vision</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1.5rem;">
+                    Comparison between the original spectrum and luminance-only layer.
+                </p>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div style="text-align: center;">
+                        <div class="label" style="margin-bottom: 0.5rem;">Original Spectrum</div>
+                        <div
+                            style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 16/9; background: #000;">
+                            <img src="{{ image_url }}" alt="Original Image"
+                                style="width: 100%; height: 100%; object-fit: contain;">
+                        </div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="label" style="margin-bottom: 0.5rem;">Luminance Layer (Grayscale)</div>
+                        <div
+                            style="border-radius: 12px; overflow: hidden; border: 1px solid var(--border); aspect-ratio: 16/9; background: #000;">
+                            <img src="{{ grayscale_image }}" alt="Luminance View"
+                                style="width: 100%; height: 100%; object-fit: contain; filter: contrast(1.1);">
+                        </div>
+                    </div>
                 </div>
             </div>
             {% endif %}

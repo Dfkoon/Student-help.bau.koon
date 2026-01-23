@@ -36,6 +36,14 @@ os.makedirs(REPORTS_DIR, exist_ok=True)
 ALLOWED_EXTENSIONS = {'jpg', 'jpeg', 'png', 'webp', 'tiff', 'bmp', 'gif'}
 MAX_FILE_SIZE = 50 * 1024 * 1024  # 50 MB
 
+import numpy as np
+class NumpyEncoder(json.JSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, np.float32):
+            return float(obj)
+        return super(NumpyEncoder, self).default(obj)
+
+
 def validate_file(file) -> Tuple[bool, str]:
     """Validate uploaded file type and size"""
     if not file or file.filename == '':
@@ -287,6 +295,19 @@ def gui_analyze():
     image_path = os.path.join(report_path, filename)
     image.save(image_path)
 
+    # ---------------------------------------------------------
+    # Generate Grayscale Version for Forensic View
+    # ---------------------------------------------------------
+    grayscale_filename = f"gray_{secure_filename(image.filename)}"
+    grayscale_path = os.path.join(report_path, grayscale_filename)
+    try:
+        with Image.open(image_path) as img:
+            gray_img = img.convert("L")
+            gray_img.save(grayscale_path)
+    except Exception as e:
+        print(f"Grayscale conversion failed: {e}")
+        grayscale_filename = None
+
     # Perform ELA
     ela_filename = "ela_heatmap.jpg"
     ela_path = os.path.join(report_path, ela_filename)
@@ -370,12 +391,14 @@ def gui_analyze():
         "report_id": report_id,
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S"),
         "input_filename": secure_filename(image.filename),
+        "image_url": f"/report/{report_id}/file/{secure_filename(image.filename)}",
         "file_size": os.path.getsize(image_path),
         "hashes": hashes,
         "metadata": metadata,
         "status": status,
         "explanation": explanation,
         "ela_image": f"/report/{report_id}/file/{ela_filename}" if ela_success else None,
+        "grayscale_image": f"/report/{report_id}/file/{grayscale_filename}" if grayscale_filename else None,
         "plain_badge_class": overall_badge,
         "plain_overall": overall_verdict,
         "plain_hidden_answer": "Yes, content detected" if overall_badge != "green" else "None",
@@ -397,7 +420,7 @@ def gui_analyze():
 
     # Save Analysis JSON
     with open(os.path.join(report_path, "analysis.json"), "w") as f:
-        json.dump(report_data, f, indent=2)
+        json.dump(report_data, f, indent=2, cls=NumpyEncoder)
 
     # Generate HTML Report from template
     html_content = render_template("report_template.html", **report_data)

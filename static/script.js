@@ -241,3 +241,67 @@ new TrueFocus({
     animationDuration: 2,
     pauseBetweenAnimations: 1
 });
+
+// Dynamic Loading Animation Logic
+const loadingMessages = [
+    "Initializing Secure Environment...",
+    "Loading Neural Network Weights...",
+    "Extracting Bit-Plane Layers...",
+    "Extracting Luminance Layer...",
+    "Calculating Shannon Entropy...",
+    "Applying SRM Filters...",
+    "Analyzing Chroma Channels...",
+    "Performing Chi-Square Analysis...",
+    "Validating Cryptographic Signatures...",
+    "Generating Final Forensic Report..."
+];
+
+function showLoading() {
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    if (loadingOverlay) {
+        loadingOverlay.style.display = 'flex';
+        const statusText = document.getElementById('loadingStatus');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercentage = document.getElementById('progressPercentage');
+
+        if (statusText && progressBar && progressPercentage) {
+            let step = 0;
+            let progress = 0;
+
+            // Show first message immediately
+            statusText.textContent = loadingMessages[0];
+            progressBar.style.width = '0%';
+            progressPercentage.textContent = '0%';
+
+            // Update message every 1.5 seconds
+            setInterval(() => {
+                step = (step + 1) % loadingMessages.length;
+                statusText.textContent = loadingMessages[step];
+            }, 1500);
+
+            // Animate progress bar from 0% to 95% over ~12 seconds
+            setInterval(() => {
+                if (progress < 95) {
+                    progress += Math.random() * 8; // Random increment for realistic feel
+                    progress = Math.min(progress, 95); // Cap at 95%
+                    progressBar.style.width = progress + '%';
+                    progressPercentage.textContent = Math.floor(progress) + '%';
+                }
+            }, 400);
+        }
+    }
+}
+
+// Attach Loading Screen to Form Submission
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.querySelector('form');
+    if (form) {
+        form.addEventListener('submit', (e) => {
+            // Basic validation check before showing loader
+            const fileInput = document.getElementById('imageInput');
+            if (fileInput && fileInput.files.length > 0) {
+                showLoading();
+            }
+        });
+    }
+});
